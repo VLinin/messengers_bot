@@ -16,7 +16,8 @@ class CreateDialogStagesTable extends Migration
         Schema::create('dialog_stages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('parent_stage_id');
+            $table->string('parent_stage_ex')->nullable();
+            $table->unsignedInteger('parent_stage_id')->nullable();
         });
     }
 
