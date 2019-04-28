@@ -67,10 +67,6 @@ class CreateRelations extends Migration
             $table->foreign('parent_stage_id')->references('id')->on('dialog_stages');
         });
 
-        //dialog_buttons
-        Schema::table('dialog_buttons',function (Blueprint $table) {
-            $table->foreign('dialog_stage_id')->references('id')->on('dialog_stages');
-        });
 
         //distribution_services
         Schema::table('distribution_services',function (Blueprint $table) {
@@ -83,6 +79,11 @@ class CreateRelations extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
         });
 
+        //dialog_button_dialog_stages
+        Schema::table('dialog_button_dialog_stages',function (Blueprint $table) {
+            $table->foreign('dialog_stage_id')->references('id')->on('dialog_stages');
+            $table->foreign('dialog_button_id')->references('id')->on('dialog_buttons');
+        });
     }
 
 }

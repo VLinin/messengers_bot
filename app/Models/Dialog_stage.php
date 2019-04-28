@@ -11,7 +11,7 @@ class Dialog_stage extends Model
     }
 
     public function dialog_buttons(){
-        return $this->hasMany(Dialog_button::class);
+        return $this->belongsToMany(Dialog_button::class);
     }
 
     public function children(){

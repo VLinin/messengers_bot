@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dialog_button extends Model
 {
-    public function dialog_stage(){
-        return $this->belongsTo(Dialog_stage::class);
+    public function dialog_stages(){
+        return $this->belongsToMany(Dialog_stage::class);
     }
 }
