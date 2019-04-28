@@ -18,6 +18,7 @@ class CreateDialogButtonsTable extends Migration
             $table->string('sign_text');
             $table->string('send_text');
             $table->string('color');
+            $table->boolean('order_mode')->default(false);
             $table->unsignedInteger('dialog_stage_id');
         });
     }

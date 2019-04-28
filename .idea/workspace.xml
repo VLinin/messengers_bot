@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c536da43-a3cd-40cd-b984-f7c3e08e4e4a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" afterPath="$PROJECT_DIR$/app/Models/User.php" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_26_102603_create_dialog_stages_table.php" afterPath="$PROJECT_DIR$/database/migrations/2019_04_26_102603_create_dialog_stages_table.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -268,12 +266,12 @@
       <option name="presentableId" value="Default" />
       <updated>1555958400565</updated>
       <workItem from="1555958402426" duration="749000" />
-      <workItem from="1556273370528" duration="10419000" />
+      <workItem from="1556273370528" duration="11021000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11168000" />
+    <option name="totallyTimeSpent" value="11770000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="30" width="697" height="745" extended-state="0" />
