@@ -28,6 +28,8 @@ class CreateDialogStagesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('dialog_stages');
+        Schema::enableForeignKeyConstraints();
     }
 }

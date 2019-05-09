@@ -18,6 +18,8 @@ class CreateProductFeedbacksTable extends Migration
             $table->text('text');
             $table->unsignedInteger('client_id');
             $table->unsignedInteger('product_id');
+            $table->unsignedInteger('service_id');
+            $table->boolean('checked')->default(false);
             $table->timestamps();
         });
     }
@@ -29,6 +31,9 @@ class CreateProductFeedbacksTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('product_feedbacks');
+        Schema::enableForeignKeyConstraints();
+
     }
 }

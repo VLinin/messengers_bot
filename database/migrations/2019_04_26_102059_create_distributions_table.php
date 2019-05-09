@@ -27,6 +27,8 @@ class CreateDistributionsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('distributions');
+        Schema::enableForeignKeyConstraints();
     }
 }

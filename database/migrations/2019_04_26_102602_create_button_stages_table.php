@@ -27,6 +27,8 @@ class CreateButtonStagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('button_stages');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('dialog_button_dialog_stages');
+        Schema::enableForeignKeyConstraints();
     }
 }

@@ -17,6 +17,7 @@ class CreateRelations extends Migration
         Schema::table('product_feedbacks',function (Blueprint $table) {
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('service_id')->references('id')->on('services');
         });
 
         //order_products
@@ -84,6 +85,7 @@ class CreateRelations extends Migration
             $table->foreign('dialog_stage_id')->references('id')->on('dialog_stages');
             $table->foreign('dialog_button_id')->references('id')->on('dialog_buttons');
         });
+
     }
 
 }

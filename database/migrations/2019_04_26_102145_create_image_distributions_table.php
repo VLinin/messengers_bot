@@ -27,6 +27,8 @@ class CreateImageDistributionsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('image_distributions');
+        Schema::enableForeignKeyConstraints();
     }
 }

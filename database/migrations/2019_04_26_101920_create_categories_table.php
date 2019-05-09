@@ -27,6 +27,8 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('image_categories');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('categories');
+        Schema::enableForeignKeyConstraints();
     }
 }

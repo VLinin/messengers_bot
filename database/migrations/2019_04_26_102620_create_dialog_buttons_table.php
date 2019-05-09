@@ -30,6 +30,8 @@ class CreateDialogButtonsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('dialog_buttons');
+        Schema::enableForeignKeyConstraints();
     }
 }
