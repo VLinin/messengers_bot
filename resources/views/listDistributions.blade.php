@@ -15,26 +15,42 @@
             <th scope="row">1</th>
             <td>Пробный текст рыссылки для наблюдения офорлмения</td>
             <td>22.05.2019</td>
-            <td><button type="button" class="btn btn-danger">Отменить</button></td>
+            <td>
+                <form method="post" action="/cancelDistribution">
+                    <button type="submit" class="btn btn-danger">Отменить</button>
+                </form>
+            </td>
         </tr>
         <tr>
             <th scope="row">1</th>
             <td>Пробный текст рыссылки для наблюдения офорлмения</td>
             <td>22.05.2019</td>
-            <td><button type="button" class="btn btn-danger">Отменить</button></td>
+            <td>
+                <form method="post" action="/cancelDistribution">
+                    <button type="submit" class="btn btn-danger">Отменить</button>
+                </form>
+            </td>
         </tr>
         <tr>
             <th scope="row">1</th>
             <td>Пробный текст рыссылки для наблюдения офорлмения</td>
             <td>22.05.2019</td>
-            <td><button type="button" class="btn btn-danger">Отменить</button></td>
+            <td>
+                <form method="post" action="/cancelDistribution">
+                <button type="submit" class="btn btn-danger">Отменить</button>
+                </form>
+            </td>
         </tr>
         @foreach(\App\Distribution::query() as $item)
             <tr>
                 <th scope="row">{{$item->id}}</th>
                 <td>{{$item->text}}</td>
                 <td>{{$item->run_date}}</td>
-                <td><button type="button" class="btn btn-danger">Отменить</button></td>
+                <td>
+                    <form method="post" action="/cancelDistribution">
+                        <button type="submit" class="btn btn-danger" id="btn" value="{{$item->id}}">Отменить</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>

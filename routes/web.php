@@ -1,5 +1,6 @@
 <?php
 
+//views
 Route::get('/', function () {
     return view('start');
 })->name('start');
@@ -23,6 +24,28 @@ Route::get('/feedback', function () {
 Route::get('/tokens', function () {
     return view('tokens');
 })->name('tokens');
+
+Route::get('/feedback_answ',function(){
+    return view('feedback_answ');
+});
+
+//actions
+
+Route::post('/checkFeedback','actionController@checkFeedback');
+
+Route::post('/sendFeedback','actionController@sendFeedback');
+
+Route::post('/addDistribution','actionController@addDistribution');
+
+Route::post('/cancelDistribution','actionController@cancelDistribution');
+
+Route::post('/chngToken','actionController@chngToken');
+
+Route::get('test',function (){
+    $pr_f=new \App\Product_feedback();
+    $t=$pr_f->getInfoToShow();
+    dump($t);
+});
 
 
 

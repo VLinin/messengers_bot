@@ -17,17 +17,45 @@
             <td>Иванов Иван</td>
             <td>Хороший продукт!</td>
             <td>Веревка хлопковая</td>
-            <td><button type="button" class="btn btn-info">Ответить</button></td>
+            <td>
+                <form method="get" action="/feedback_answ">
+                    <button type="submit" class="btn btn-info" >Ответить</button>
+                </form>
+                <form method="post" action="/feedback_check">
+                    <button type="submit" class="btn btn-danger"> Скрыть</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td scope="row">Сервис1</td>
+            <td>Иванов Иван</td>
+            <td>Хороший продукт!</td>
+            <td>Веревка хлопковая</td>
+            <td>
+                <form method="get" action="/feedback_answ">
+                    <button type="submit" class="btn btn-info" >Ответить</button>
+                </form>
+                <form method="post" action="/checkFeedback">
+                    <button type="submit" class="btn btn-danger">Скрыть</button>
+                </form>
+            </td>
         </tr>
         <tr>
 
-        @foreach(\App\Distribution::query() as $item)
+        @foreach((new \App\Product_feedback())->getInfoToShow() as $item)
             <tr>
-                <td>{{$item->id}}</td>
+                <td>{{$item->services->name}}</td>
+                <td>{{$item->clients->fio}}</td>
                 <td>{{$item->text}}</td>
-                <td>{{$item->run_date}}</td>
-                <td>{{$item->run_date}}</td>
-                <td><button type="button" class="btn btn-info">Ответить</button></td>
+                <td>{{$item->products->name}}</td>
+                <td>
+                    <form method="get" action="/feedback_answ">
+                        <button type="submit" class="btn btn-info" id="btn" value="{{$item->id}}">Ответить</button>
+                    </form>
+                    <form method="post" action="/checkFeedback">
+                        <button type="submit" class="btn btn-danger" id="btn" value="{{$item->id}}">Скрыть</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>

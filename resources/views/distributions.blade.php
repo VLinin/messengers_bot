@@ -13,7 +13,7 @@
         </div>
 
         <h5>Дата проведения:</h5>
-        <input type="date" class="input-group-text" padding-top="2px" padding-bottom="2px">
+        <input type="date" class="input-group-text" id="date">
 
         <h5>Сервисы для рассылки:</h5>
         <div class="form-group">
@@ -22,19 +22,27 @@
                 <label class="form-check-label" for="gridCheck">
                     Сервис1
                 </label>
+                <br>
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                    Сервис2
+                </label>
             </div>
         </div>
 
-        @foreach(\App\Service::all() as $item)
+
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck{{$item->id}}">
-                    <label class="form-check-label" for="gridCheck">
-                        {{$item->name}}
-                    </label>
+                    @foreach(\App\Service::all() as $item)
+                        <input class="form-check-input" type="checkbox" id="gridCheck{{$item->id}}">
+                        <label class="form-check-label" for="gridCheck">
+                            {{$item->name}}
+                        </label>
+                        <br>
+                    @endforeach
                 </div>
             </div>
-        @endforeach
+
         <button type="submit" class="btn btn-primary" align="center">Отправить</button>
     </form>
 

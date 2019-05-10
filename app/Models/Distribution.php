@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Distribution extends Model
 {
+    protected $fillable = ['id', 'text','run_date'];
+
     public function services(){
         return $this->belongsToMany(Service::class);
     }
@@ -13,4 +15,6 @@ class Distribution extends Model
     public function images(){
         return $this->belongsToMany(Image::class);
     }
+
+
 }

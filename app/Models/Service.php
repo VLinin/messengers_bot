@@ -21,4 +21,9 @@ class Service extends Model
     public function distributions(){
         return $this->belongsToMany(Distribution::class);
     }
+
+    public function changeToken($id,$token){
+        \DB::table('services')->where('id',$id)->update(['token'=>$token]);
+    }
+
 }
