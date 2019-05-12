@@ -18,6 +18,7 @@ class CreateDialogsTable extends Migration
             $table->unsignedInteger('client_id');
             $table->unsignedInteger('dialog_stage_id');
             $table->unsignedInteger('service_id');
+            $table->string('chat_id');
         });
     }
 

@@ -10,10 +10,6 @@ class Service extends Model
         return $this->hasMany(Dialog::class);
     }
 
-    public function clients(){
-        return $this->belongsToMany(Client::class);
-    }
-
     public function orders(){
         return $this->hasMany(Order::class);
     }
