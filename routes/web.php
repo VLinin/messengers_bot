@@ -35,7 +35,7 @@ Route::post('/checkFeedback','actionController@checkFeedback');
 
 Route::post('/sendFeedback','actionController@sendFeedback');
 
-Route::post('/addDistribution','actionController@addDistribution');
+Route::post('/addDistribution', 'actionController@addDistribution');
 
 Route::post('/cancelDistribution','actionController@cancelDistribution');
 
@@ -43,7 +43,7 @@ Route::post('/chngToken','actionController@chngToken');
 
 Route::get('test',function (){
     $pr_f=new \App\Product_feedback();
-    $t=$pr_f->getInfoToShow();
+    $t=$pr_f->getInfoToAnswer(2);
     dump($t);
 });
 

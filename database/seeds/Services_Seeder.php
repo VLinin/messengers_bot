@@ -11,6 +11,16 @@ class Services_Seeder extends Seeder
      */
     public function run()
     {
-        //
+
+        DB::table('services')->insert([
+            'name' => 'ВКонтакте',
+            'enable' => true,
+        ]);
+
+        DB::table('services')->insert([
+            'name' => 'Facebook',
+            'enable' => true,
+        ]);
+
     }
 }

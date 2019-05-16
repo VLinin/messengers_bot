@@ -11,6 +11,18 @@ class Statuses_Seeder extends Seeder
      */
     public function run()
     {
-        //
+
+        DB::table('statuses')->insert([
+            'name' => 'Завершен',
+        ]);
+
+        DB::table('statuses')->insert([
+            'name' => 'Выполняется',
+        ]);
+
+        DB::table('statuses')->insert([
+            'name' => 'Формирование',
+        ]);
+
     }
 }

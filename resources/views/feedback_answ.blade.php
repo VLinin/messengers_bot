@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
     @php
-    if(isset($_POST['btn'])){
-           $id= $_POST['btn'];
+    if(isset($_GET['id'])){
+           $id= $_GET['id'];
            $info=(new \App\Product_feedback())->getInfoToAnswer($id);
     }
     @endphp
@@ -10,19 +10,21 @@
     <form method="post" action="sendFeedback">
         <div class="form-group">
             <label for="fio">ФИО клиента</label>
-            <input type="text" class="form-control" id="fio" readonly value="{{$info->fio}}">
+            <input type="text" class="form-control" id="fio" name="fio" readonly value="{{$info[0]->fio}}">
         </div>
         <div class="form-group">
             <label for="feedback">Текст отзыва клиента</label>
-            <textarea class="form-control" id="feedback" rows="4" readonly>{{$info->text}}</textarea>
+            <textarea class="form-control" id="feedback" rows="4" readonly>{{$info[0]->text}}</textarea>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="service_id" readonly value="{{$info->service->id}}" hidden>
+            <input type="text" class="form-control" id="service_id" name="service_id" readonly value="{{$info[0]->service_id}}" hidden>
         </div>
         <div class="form-group">
             <label for="text">Текст ответа</label>
-            <textarea class="form-control" id="text" rows="4"></textarea>
+            <textarea class="form-control" id="text" name="text" rows="4"></textarea>
         </div>
+        <input type="hidden" name="feedback_id" value="{{$info[0]->id}}">
+        <input type="hidden" name="client_id" value="{{$info[0]->client_id}}">
         <button type="submit" class="btn btn-primary">Отправить</button>
     </form>
 

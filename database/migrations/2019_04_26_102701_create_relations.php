@@ -57,11 +57,6 @@ class CreateRelations extends Migration
             $table->foreign('status_id')->references('id')->on('statuses');
         });
 
-        //dialog_stages
-        Schema::table('dialog_stages',function (Blueprint $table) {
-            $table->foreign('parent_stage_id')->references('id')->on('dialog_stages');
-        });
-
 
         //distribution_services
         Schema::table('distribution_services',function (Blueprint $table) {
