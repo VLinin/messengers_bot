@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach(\App\Distribution::all()->where('run_date','>',\Carbon\Carbon::now()) as $item)
+        @foreach(\App\Distribution::all()->where('run_date','>=',\Carbon\Carbon::now()) as $item)
             <tr>
                 <th scope="row">{{$item->id}}</th>
                 <td>{{$item->text}}</td>

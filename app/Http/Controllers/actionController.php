@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Distribution;
 use App\Product_feedback;
 use App\Service;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -104,6 +105,20 @@ class actionController extends Controller
         $serv=new Service();
         $serv->changeToken($request->post('id'),$request->post('text'));
         return view('tokens');
+    }
+
+    public static function getStatData($bd, $ed){
+
+        $query=DB::table('orders')
+            ->join('services','orders.service_id','=','services.id')
+            ->whereBetween('created_at', [$bd, Carbon::createFromDate($ed)->add(1,'day')])
+            ->select(DB::raw('count(orders.id) as count, services.name'))
+            ->groupBy('services.name')
+            ->get();
+        foreach ($query as $item){
+            $data[]=[$item->name,$item->count];
+        }
+        return json_encode($data);
     }
 
 }

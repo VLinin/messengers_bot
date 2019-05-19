@@ -14,7 +14,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 1,
             'client_id' => random_int(1,10),
-            'service_id' => 1
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 1,
@@ -28,7 +29,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 2,
             'client_id' => random_int(1,10),
-            'service_id' => null
+            'service_id' => 3,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 2,
@@ -42,7 +44,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 3,
             'client_id' => random_int(1,10),
-            'service_id' => 2
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 3,
@@ -56,7 +59,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 4,
             'client_id' => random_int(1,10),
-            'service_id' => 1
+            'service_id' => 3,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 4,
@@ -70,7 +74,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 5,
             'client_id' => random_int(1,10),
-            'service_id' => 1
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 5,
@@ -84,7 +89,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 6,
             'client_id' => random_int(1,10),
-            'service_id' => null
+            'service_id' => 1,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 6,
@@ -98,7 +104,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 7,
             'client_id' => random_int(1,10),
-            'service_id' => 2
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 7,
@@ -112,7 +119,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 8,
             'client_id' => random_int(1,10),
-            'service_id' => null
+            'service_id' => 3,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 8,
@@ -126,7 +134,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 9,
             'client_id' => random_int(1,10),
-            'service_id' => 1
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 9,
@@ -140,7 +149,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 10,
             'client_id' => random_int(1,10),
-            'service_id' => 1
+            'service_id' => 1,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 10,
@@ -154,7 +164,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 11,
             'client_id' => random_int(1,10),
-            'service_id' => null
+            'service_id' => 3,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 11,
@@ -168,7 +179,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 12,
             'client_id' => random_int(1,10),
-            'service_id' =>null
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 12,
@@ -182,7 +194,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 13,
             'client_id' => random_int(1,10),
-            'service_id' => 2
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 13,
@@ -196,7 +209,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 14,
             'client_id' => random_int(1,10),
-            'service_id' => null
+            'service_id' => 3,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 14,
@@ -210,7 +224,8 @@ class Orders_Seeder extends Seeder
         DB::table('orders')->insert([
             'id' => 15,
             'client_id' => random_int(1,10),
-            'service_id' => 2
+            'service_id' => 2,
+            'created_at' => Carbon\Carbon::now()
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 15,
