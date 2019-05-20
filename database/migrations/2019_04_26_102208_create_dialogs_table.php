@@ -15,11 +15,11 @@ class CreateDialogsTable extends Migration
     {
         Schema::create('dialogs', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('client_id');
+            $table->unsignedInteger('client_id')->nullable();
             $table->unsignedInteger('dialog_stage_id');
             $table->unsignedInteger('service_id');
             $table->string('chat_id');
-            $table->unsignedInteger('pre_stage');
+            $table->unsignedInteger('pre_stage')->nullable();
         });
     }
 

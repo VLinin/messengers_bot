@@ -1,6 +1,9 @@
 <?php
 
 //views
+use App\Client;
+use App\Dialog_stage;
+
 Route::get('/', function () {
     return view('start');
 })->name('start');
@@ -50,21 +53,14 @@ Route::post('/dwnldExcel','actionController@makeExcel');
 
 
 
-//Route::get('test',function (){
-//    $query=$data=DB::table('orders')
-//        ->join('services','orders.service_id','=','services.id')
-//        ->whereBetween('created_at', ['2019-05-01', '2019-05-25'])
-//        ->select(DB::raw('count(orders.id) as count, services.name'))
-//        ->groupBy('services.name')
-//        ->get();
-//    $data=[
-//        ['Платформа', 'Количество заказов'],
-//    ];
-//    foreach ($query as $item){
-//        $data[]=[$item->name,$item->count];
-//    }
-//    dump($data);
-//});
+Route::get('test',function (){
+    $dialog_query=\DB::table('dialogs')
+        ->where('dialogs.chat_id','=',456)
+        ->where('dialogs.service_id','=',2)
+        ->select('dialogs.id','dialogs.client_id as client','dialogs.dialog_stage_id as stage')
+        ->get();
+    dump(isset($dialog_query[0]->client));
+});
 
 
 
