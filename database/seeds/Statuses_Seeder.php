@@ -13,14 +13,17 @@ class Statuses_Seeder extends Seeder
     {
 
         DB::table('statuses')->insert([
+            'id' => 1,
             'name' => 'Завершен',
         ]);
 
         DB::table('statuses')->insert([
+            'id' => 2,
             'name' => 'Выполняется',
         ]);
 
         DB::table('statuses')->insert([
+            'id' => 3,
             'name' => 'Формирование',
         ]);
 

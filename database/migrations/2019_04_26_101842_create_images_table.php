@@ -16,6 +16,8 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
             $table->text('path');
+            $table->text('vk')->nullable();
+
         });
     }
 

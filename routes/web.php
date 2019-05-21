@@ -1,8 +1,12 @@
 <?php
 
 //views
+use App\Category;
 use App\Client;
+use App\Dialog;
 use App\Dialog_stage;
+use App\Image;
+use App\Product;
 
 Route::get('/', function () {
     return view('start');
@@ -54,12 +58,16 @@ Route::post('/dwnldExcel','actionController@makeExcel');
 
 
 Route::get('test',function (){
-    $dialog_query=\DB::table('dialogs')
+    $order=\DB::table('dialogs')
+        ->join('clients','clients.id','=','dialogs.client_id')
+        ->join('orders','clients.id','=','orders.client_id')
+        ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+        ->select('order_statuses.status_id as status','orders.id as order')
         ->where('dialogs.chat_id','=',456)
         ->where('dialogs.service_id','=',2)
-        ->select('dialogs.id','dialogs.client_id as client','dialogs.dialog_stage_id as stage')
+        ->where('order_statuses.status_id', '=' ,3)
         ->get();
-    dump(isset($dialog_query[0]->client));
+    dump($order);
 });
 
 

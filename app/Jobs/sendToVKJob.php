@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Image;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -49,8 +50,13 @@ class sendToVKJob implements ShouldQueue
         $vk = new VKApiClient();
         try {
             if($this->photo != null){
-                $ph_path=$this->uploadphoto($vk);
-                $this->sendWithPhoto($vk, $ph_path);
+                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
+                if(isset($vkQuery[0]->vk)){
+                    $this->sendWithPhoto($vk, $vkQuery[0]->vk);
+                }else{
+                    $ph_path=$this->uploadphoto($vk);
+                    $this->sendWithPhoto($vk, $ph_path);
+                }
             }else{
                 $this->sendWithoutPhoto($vk);
             }
@@ -112,6 +118,7 @@ class sendToVKJob implements ShouldQueue
             "server"=>$result['server'],
             "hash"=>$result['hash'],
             ));
+        Image::where('path','=',$this->photo)->update('vk',$photo[0]['id']);
         return $photo[0]['id'];
     }
 }

@@ -20,6 +20,7 @@ class CreateDialogsTable extends Migration
             $table->unsignedInteger('service_id');
             $table->string('chat_id');
             $table->unsignedInteger('pre_stage')->nullable();
+            $table->timestamps();
         });
     }
 

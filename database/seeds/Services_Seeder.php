@@ -18,12 +18,14 @@ class Services_Seeder extends Seeder
         ]);
 
         DB::table('services')->insert([
+            'id' => 2,
             'name' => 'ВКонтакте',
             'enable' => true,
         ]);
 
         DB::table('services')->insert([
-            'name' => 'Facebook',
+            'id' => 3,
+            'name' => 'Telegram',
             'enable' => true,
         ]);
 

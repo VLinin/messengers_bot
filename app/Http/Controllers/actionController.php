@@ -72,14 +72,14 @@ class actionController extends Controller
             if ($request->post('gridCheck1')=="on"){
                 DB::table('distribution_services')->insert([
                     'distribution_id' => $distId,
-                    'service_id' => 1
+                    'service_id' => 2
                 ]);
             }
 
             if ($request->post('gridCheck2')=="on"){
                 DB::table('distribution_services')->insert([
                     'distribution_id' => $distId,
-                    'service_id' => 2
+                    'service_id' => 3
                 ]);
             }
             return view('listDistributions');
