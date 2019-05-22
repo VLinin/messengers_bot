@@ -49,7 +49,10 @@ Route::post('/chngToken','actionController@chngToken');
 
 Route::post('/dwnldExcel','actionController@makeExcel');
 
+//services
 
+Route::post('/vk','vkController@index');
+Route::post('/vk','telergramController@index');
 
 //Route::get('test',function (){
 //
