@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Image;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -51,11 +52,15 @@ class sendToVKJob implements ShouldQueue
         try {
             if($this->photo != null){
                 $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
-                if(isset($vkQuery[0]->vk)){
+                if($vkQuery[0]->vk != null){
                     $this->sendWithPhoto($vk, $vkQuery[0]->vk);
                 }else{
                     $ph_path=$this->uploadphoto($vk);
-                    $this->sendWithPhoto($vk, $ph_path);
+                    if($ph_path!=null){
+                        $this->sendWithPhoto($vk, $ph_path);
+                    }else{
+                        $this->sendWithoutPhoto($vk);
+                    }
                 }
             }else{
                 $this->sendWithoutPhoto($vk);
@@ -79,7 +84,7 @@ class sendToVKJob implements ShouldQueue
         $vk->messages()->send($this->token,
             [
                 'peer_id' => $this->id,
-                'message' => $this->text,
+                'message' => urlencode($this->text),
                 'attachment' => $path,
                 'v' => '5.95',
                 'keyboard' => $this->keyboard
@@ -90,7 +95,7 @@ class sendToVKJob implements ShouldQueue
         $vk->messages()->send($this->token,
             [
                 'peer_id' => $this->id,
-                'message' => $this->text,
+                'message' => urlencode($this->text),
                 'v' => '5.95',
                 'keyboard' => $this->keyboard
             ]);
@@ -103,7 +108,11 @@ class sendToVKJob implements ShouldQueue
         $uploadServer=$vk->photos()->getUploadServer($this->token,array("group_id"=>$group_id,"album_id"=>$alb_id));
         $uploadURL=$uploadServer["upload_url"];
         //загружаем фото
-        $cfile = curl_file_create($this->photo,'image/jpeg','temp.jpg');
+        try {
+            $cfile = curl_file_create(\Storage::get($this->photo), 'image/jpeg', 'temp.jpg');
+        } catch (FileNotFoundException $e) {
+            return null;
+        }
         $ch = curl_init($uploadURL);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -121,4 +130,5 @@ class sendToVKJob implements ShouldQueue
         Image::where('path','=',$this->photo)->update('vk',$photo[0]['id']);
         return $photo[0]['id'];
     }
+
 }

@@ -72,7 +72,7 @@ class vkController extends Controller
                 $dialog->save();
                 $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
                         Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
-                sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1));
+                sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1,$peer,2));
                 return 0;
             }
         }else{
@@ -99,30 +99,55 @@ class vkController extends Controller
                 }else{
                     $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
                         Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
-                    sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1));
+                    sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1,$peer,2));
                     return 0;
                 }
             }
         }
     }
 
-    public static function makeKeyboardVK($id){
+    public static function makeKeyboardVK($id,$from_id,$service_id){
         $kbrd=[
             "one_time" => true,
             "buttons" => []
         ];
-        $query=Dialog_stage::find($id)->dialog_buttons();
+        $query=Dialog_stage::find($id)->dialog_buttons()->get();
         foreach ($query as $btn){
-            $kbrd['buttons'][]=[
-                [
-                    "action"=> [
-                        "type" => "text",
-                        "payload" => "{'do':'".$query[0]->payload."'}",
-                        "label" => $query[0]->sign_text
-                    ],
-                    "color" => $query[0]->color
-                ]
-            ];
+            if($btn->id==6 || $btn->id==7){
+                $order=\DB::table('dialogs')
+                    ->join('clients','clients.id','=','dialogs.client_id')
+                    ->join('orders','clients.id','=','orders.client_id')
+                    ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                    ->select('order_statuses.status_id as status','orders.id as order')
+                    ->where('dialogs.chat_id','=',$from_id)
+                    ->where('dialogs.service_id','=',$service_id)
+                    ->where('order_statuses.status_id', '=' ,3)
+                    ->get();
+                if(isset($order[0])){
+                    $kbrd['buttons'][]=[
+                        [
+                            "action"=> [
+                                "type" => "text",
+                                "payload" => "{'do':'".$query[0]->payload."'}",
+                                "label" => $query[0]->sign_text
+                            ],
+                            "color" => $query[0]->color
+                        ]
+                    ];
+                }
+            }else{
+                $kbrd['buttons'][]=[
+                    [
+                        "action"=> [
+                            "type" => "text",
+                            "payload" => "{'do':'".$query[0]->payload."'}",
+                            "label" => $query[0]->sign_text
+                        ],
+                        "color" => $query[0]->color
+                    ]
+                ];
+            }
+
         }
         return $kbrd;
     }
