@@ -55,9 +55,8 @@ class sendToVKJob implements ShouldQueue
         $url = 'https://api.vk.com/method/messages.send';
         $params = array(
             'random_id' => random_int(0,234456),
-            'peer_id' => 194004680,    // Кому отправляем
-            'message' =>"Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
-                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",   // Что отправляем
+            'peer_id' => $this->id,    // Кому отправляем
+            'message' =>$this->text,   // Что отправляем
             'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
             'v' => '5.95',
         );
