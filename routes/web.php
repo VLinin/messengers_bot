@@ -54,6 +54,10 @@ Route::post('/dwnldExcel','actionController@makeExcel');
 Route::post('/vk','vkController@index');
 Route::post('/tlgrm','telergramController@index');
 
+Route::get('/androidAuth','androidController@auth');
+Route::get('/androidOrders','androidController@orders');
+Route::get('/androidProducts','androidController@products');
+
 //Route::get('test',function (){
 //
 //
