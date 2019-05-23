@@ -44,40 +44,24 @@ class sendToVKJob implements ShouldQueue
         $this->id=$id;
         $this->photo=$photo;
         $this->keyboard=$keyboard;
-
     }
 
     public function handle()
     {
-        $vk = new VKApiClient();
-        try {
-            if($this->photo != null){
-                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
-                if($vkQuery[0]->vk != null){
-                    $this->sendWithPhoto($vk, $vkQuery[0]->vk);
-                }else{
-                    $ph_path=$this->uploadphoto($vk);
-                    if($ph_path!=null){
-                        $this->sendWithPhoto($ph_path);
-                    }else{
-                        $this->sendWithoutPhoto();
-                    }
-                }
+        if($this->photo != null){
+            $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
+            if($vkQuery[0]->vk != null){
+                $this->sendWithPhoto($vkQuery[0]->vk);
             }else{
-                $this->sendWithoutPhoto();
+                $ph_path=$this->uploadphoto();
+                if($ph_path!=null){
+                    $this->sendWithPhoto($ph_path);
+                }else{
+                    $this->sendWithoutPhoto();
+                }
             }
-        } catch (VKApiMessagesCantFwdException $e) {
-        } catch (VKApiMessagesChatBotFeatureException $e) {
-        } catch (VKApiMessagesChatUserNoAccessException $e) {
-        } catch (VKApiMessagesContactNotFoundException $e) {
-        } catch (VKApiMessagesDenySendException $e) {
-        } catch (VKApiMessagesKeyboardInvalidException $e) {
-        } catch (VKApiMessagesPrivacyException $e) {
-        } catch (VKApiMessagesTooLongForwardsException $e) {
-        } catch (VKApiMessagesTooLongMessageException $e) {
-        } catch (VKApiMessagesUserBlockedException $e) {
-        } catch (VKApiException $e) {
-        } catch (VKClientException $e) {
+        }else{
+            $this->sendWithoutPhoto();
         }
     }
 
@@ -103,38 +87,62 @@ class sendToVKJob implements ShouldQueue
         )));
     }
 
-    public function uploadphoto($vk){
+    public function uploadphoto(){
+        $url = 'https://api.vk.com/method/photos.getUploadServer';
         $user_token="365c7ec1ffc49087c9d4bb749e563b5cc7ea8552649ed52c4c7385848684ba6f229099b09adf306764169";
         $group_id="182538296"; //id группы вк
         $alb_id="264876553";
         //получаем адресс сервиса для загрузки фото
-        $uploadServer=$vk->photos()->getUploadServer($user_token,array("group_id"=>$group_id,"album_id"=>$alb_id));
-        $uploadURL=$uploadServer["upload_url"];
-
+        $params = array(
+            "group_id" => $group_id,
+            "album_id" => $alb_id,
+            'access_token' => $user_token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'v' => '5.95',
+        );
+        // В $result вернется id отправленного сообщения
+        $result = file_get_contents($url, false, stream_context_create(array(
+            'http' => array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($params)
+            )
+        )));
+        $server_url=json_decode($result)->response->upload_url;
         //загружаем фото
         try {
-            $cfile = curl_file_create(\Storage::disk('public')->path('pr1.png'), 'image/png', 'temp.png');
+            $cfile = curl_file_create(\Storage::disk('public')->path($this->photo), 'image/png', 'temp.png');
             dump($cfile);
         } catch (FileNotFoundException $e) {
             return null;
         }
-        $ch = curl_init($uploadURL);
+        $ch = curl_init($server_url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, array("file" => $cfile));
         $result = json_decode(curl_exec($ch),true);
         curl_close($ch);
-        dump($result);
         //сохраняем фото
-        $photo=$vk->photos()->save($user_token,array(
+        $url = 'https://api.vk.com/method/photos.save';
+        $params = array(
             "group_id"=>$group_id,
             "album_id"=>$alb_id,
             "photos_list"=>$result['photos_list'],
             "server"=>$result['server'],
             "hash"=>$result['hash'],
-        ));
-        Image::where('path','=',$this->photo)->update('vk',$photo[0]['id']);
-        return $photo[0]['id'];
+            'access_token' => $user_token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'v' => '5.95',
+        );
+        // В $result вернется id отправленного сообщения
+        $result = file_get_contents($url, false, stream_context_create(array(
+            'http' => array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($params)
+            )
+        )));
+        $photo_id=json_decode($result)->response[0]->id;
+        Image::where('path','=',$this->photo)->update('vk',$photo_id);
+        return $photo_id;
     }
 
     public function sendWithoutPhoto(){

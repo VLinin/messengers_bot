@@ -66,35 +66,8 @@ Route::get('/androidProducts','androidController@products');
 
 
 Route::get('/test',function () {
-    $url = 'https://api.vk.com/method/messages.send';
-    $params = array(
-        'random_id' => random_int(0,234456),
-        'peer_id' => 194004680,    // Кому отправляем
-        'message' =>"Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
-                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",   // Что отправляем
-        'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
-        'v' => '5.95',
-    );
-
-    // В $result вернется id отправленного сообщения
-    $result = file_get_contents($url, false, stream_context_create(array(
-        'http' => array(
-            'method'  => 'POST',
-            'header'  => 'Content-type: application/x-www-form-urlencoded',
-            'content' => http_build_query($params)
-        )
-    )));
-    echo $result;
-//    $vk = new VKApiClient();
-//    $vk->messages()->send("34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
-//        [
-//            'random_id' => random_int(0,234456),
-//            'peer_id' => 194004680,
-//            'message' => "Для взаимодействия с системой укажите свой мобильный телефон начиная с 8....
-//                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",
-//            'v' => '5.95',
-//            'keyboard' => json_encode(\App\Http\Controllers\vkController::makeKeyboardVK(1,194004680,2), JSON_UNESCAPED_UNICODE),
-//        ]);
+    $vkQuery=Image::where('path','=','pr1.png')->select('vk')->get();
+    dump($vkQuery[0]->vk != null);
 });
 
 
