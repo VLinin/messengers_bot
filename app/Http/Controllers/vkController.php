@@ -78,7 +78,7 @@ class vkController extends Controller
             }
         }else{
             if(isset($dialog_query[0]->client)){
-                return 1;
+                return $dialog_query[0]->stage;
             }else{
                 if (is_numeric($data->object->text) && strlen($data->object->text)==11){
                     $client=Client::where('phone','=',$data->object->text)->get();
