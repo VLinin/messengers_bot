@@ -23,5 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(Orders_Seeder::class);
         $this->call(Distributions_Seeder::class);
 
+        //android
+        $this->call(Android_auth_Seeder::class);
+
     }
 }

@@ -19,7 +19,7 @@ class Orders_Seeder extends Seeder
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 1,
-            'status_id'=> 1
+            'status_id'=> 2
         ]);
         DB::table('order_products')->insert([
             'product_id' => random_int(1,75),
@@ -49,7 +49,7 @@ class Orders_Seeder extends Seeder
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 3,
-            'status_id'=> 1
+            'status_id'=> 2
         ]);
         DB::table('order_products')->insert([
             'product_id' => random_int(1, 10),
@@ -139,7 +139,7 @@ class Orders_Seeder extends Seeder
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 9,
-            'status_id'=> 1
+            'status_id'=> 2
         ]);
         DB::table('order_products')->insert([
             'product_id' => random_int(1,75),
@@ -184,7 +184,7 @@ class Orders_Seeder extends Seeder
         ]);
         DB::table('order_statuses')->insert([
             'order_id' => 12,
-            'status_id'=> 1
+            'status_id'=> 2
         ]);
         DB::table('order_products')->insert([
             'product_id' => random_int(1,75),
