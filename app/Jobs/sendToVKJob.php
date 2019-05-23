@@ -41,11 +41,8 @@ class sendToVKJob implements ShouldQueue
     public function __construct($id, $text,$photo, $keyboard)
     {
         $this->text=$text;
-        \Log::info('text:'.$this->text);
         $this->id=$id;
-        \Log::info('chat:'.$this->id);
         $this->photo=$photo;
-        \Log::info('photo:'.$this->photo);
         $this->keyboard=$keyboard;
 
     }
@@ -58,6 +55,7 @@ class sendToVKJob implements ShouldQueue
             'peer_id' => $this->id,    // Кому отправляем
             'message' =>$this->text,   // Что отправляем
             'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
             'v' => '5.95',
         );
 
@@ -157,7 +155,25 @@ class sendToVKJob implements ShouldQueue
         return $photo[0]['id'];
     }
 
-    public function sendWithoutPhoto($vk){
+    public function sendWithoutPhoto(){
+        $url = 'https://api.vk.com/method/messages.send';
+        $params = array(
+            'random_id' => random_int(0,234456),
+            'peer_id' => $this->id,    // Кому отправляем
+            'message' =>$this->text,   // Что отправляем
+            'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
+            'v' => '5.95',
+        );
+
+        // В $result вернется id отправленного сообщения
+        $result = file_get_contents($url, false, stream_context_create(array(
+            'http' => array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($params)
+            )
+        )));
         $vk->messages()->send($this->token,
             [
                 'random_id' => random_int(0,234456),
