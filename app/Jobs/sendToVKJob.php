@@ -54,22 +54,30 @@ class sendToVKJob implements ShouldQueue
     {
         $vk = new VKApiClient();
         try {
-            if($this->photo != null){
-                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
-                if($vkQuery[0]->vk != null){
-                    $this->sendWithPhoto($vk, $vkQuery[0]->vk);
-                }else{
-                    $ph_path=$this->uploadphoto($vk);
-                    if($ph_path!=null){
-                        $this->sendWithPhoto($vk, $ph_path);
-                    }else{
-                        $this->sendWithoutPhoto($vk);
-                    }
-                }
-            }else{
-                \Log::info('send withou photo');
-                $this->sendWithoutPhoto($vk);
-            }
+            $vk->messages()->send($this->token,
+                [
+                    'random_id' => random_int(0,234456),
+                    'peer_id' => $this->id,
+                    'message' => $this->text,
+                    'v' => '5.95',
+                    'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
+                ]);
+//            if($this->photo != null){
+//                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
+//                if($vkQuery[0]->vk != null){
+//                    $this->sendWithPhoto($vk, $vkQuery[0]->vk);
+//                }else{
+//                    $ph_path=$this->uploadphoto($vk);
+//                    if($ph_path!=null){
+//                        $this->sendWithPhoto($vk, $ph_path);
+//                    }else{
+//                        $this->sendWithoutPhoto($vk);
+//                    }
+//                }
+//            }else{
+//                \Log::info('send withou photo');
+//                $this->sendWithoutPhoto($vk);
+//            }
         } catch (VKApiMessagesCantFwdException $e) {
         } catch (VKApiMessagesChatBotFeatureException $e) {
         } catch (VKApiMessagesChatUserNoAccessException $e) {
