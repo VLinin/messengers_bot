@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c536da43-a3cd-40cd-b984-f7c3e08e4e4a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +21,8 @@
       <file leaf-file-name="sendToVKJob.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Jobs/sendToVKJob.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1691">
-              <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state relative-caret-position="139">
+              <caret line="34" column="106" lean-forward="false" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="106" />
               <folding>
                 <element signature="e#28#42#0#PHP" expanded="true" />
               </folding>
@@ -29,7 +30,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CurlHttpClient.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CurlHttpClient.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/vkcom/vk-php-sdk/src/VK/TransportClient/Curl/CurlHttpClient.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
@@ -39,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="web.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="web.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="139">
+              <caret line="69" column="26" lean-forward="true" selection-start-line="69" selection-start-column="26" selection-end-line="69" selection-end-column="26" />
               <folding>
                 <element signature="e#16#37#0#PHP" expanded="true" />
               </folding>
@@ -54,8 +55,8 @@
       <file leaf-file-name="vkController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/vkController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1360">
-              <caret line="120" column="57" lean-forward="true" selection-start-line="120" selection-start-column="57" selection-end-line="120" selection-end-column="57" />
+            <state relative-caret-position="170">
+              <caret line="75" column="89" lean-forward="true" selection-start-line="75" selection-start-column="80" selection-end-line="75" selection-end-column="89" />
               <folding />
             </state>
           </provider>
@@ -122,9 +123,9 @@
         <option value="$PROJECT_DIR$/database/seeds/Orders_Seeder.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" />
         <option value="$PROJECT_DIR$/vendor/vkcom/vk-php-sdk/src/VK/TransportClient/Curl/CurlHttpClient.php" />
+        <option value="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
       </list>
     </option>
   </component>
@@ -226,10 +227,10 @@
       <path value="$PROJECT_DIR$/vendor/vkcom/vk-php-sdk" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="517" />
     <option name="y" value="30" />
-    <option name="width" value="697" />
+    <option name="width" value="856" />
     <option name="height" value="745" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -378,15 +379,16 @@
       <workItem from="1558522213513" duration="17564000" />
       <workItem from="1558559162547" duration="500000" />
       <workItem from="1558570759282" duration="1331000" />
-      <workItem from="1558618164791" duration="20588000" />
+      <workItem from="1558618164791" duration="21286000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177953000" />
+    <option name="totallyTimeSpent" value="178651000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
+    <frame x="517" y="30" width="856" height="745" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7170953" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -397,7 +399,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.394822" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40065682" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -782,16 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding>
-            <element signature="e#16#37#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/ProductAddController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -800,29 +792,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/vkcom/vk-php-sdk/src/VK/TransportClient/Curl/CurlHttpClient.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/vkController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1360">
-          <caret line="120" column="57" lean-forward="true" selection-start-line="120" selection-start-column="57" selection-end-line="120" selection-end-column="57" />
+        <state relative-caret-position="170">
+          <caret line="75" column="89" lean-forward="true" selection-start-line="75" selection-start-column="80" selection-end-line="75" selection-end-column="89" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Jobs/sendToVKJob.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1691">
-          <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="139">
+          <caret line="34" column="106" lean-forward="false" selection-start-line="34" selection-start-column="19" selection-end-line="34" selection-end-column="106" />
           <folding>
             <element signature="e#28#42#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/vkcom/vk-php-sdk/src/VK/TransportClient/Curl/CurlHttpClient.php">
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-          <folding />
+        <state relative-caret-position="139">
+          <caret line="69" column="26" lean-forward="true" selection-start-line="69" selection-start-column="26" selection-end-line="69" selection-end-column="26" />
+          <folding>
+            <element signature="e#16#37#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

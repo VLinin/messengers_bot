@@ -54,13 +54,14 @@ class sendToVKJob implements ShouldQueue
     {
         $vk = new VKApiClient();
         try {
-            $vk->messages()->send($this->token,
+            $vk->messages()->send("34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
                 [
                     'random_id' => random_int(0,234456),
-                    'peer_id' => $this->id,
-                    'message' => $this->text,
+                    'peer_id' => 194004680,//$this->id,
+                    'message' => "Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
+                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",//$this->text,
                     'v' => '5.95',
-                    'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
+                    'keyboard' => json_encode(\App\Http\Controllers\vkController::makeKeyboardVK(1,194004680,2), JSON_UNESCAPED_UNICODE),
                 ]);
 //            if($this->photo != null){
 //                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
