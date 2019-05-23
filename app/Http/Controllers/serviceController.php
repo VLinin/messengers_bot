@@ -230,14 +230,7 @@ class serviceController extends Controller
                                 }
                             }
                             break;
-                        default:
-                            $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
 
-                            }
                     }
                 }
                 break;
@@ -377,14 +370,6 @@ class serviceController extends Controller
                                 }
                             }
                             break;
-                        default:
-                            $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
                     }
                 }
 
