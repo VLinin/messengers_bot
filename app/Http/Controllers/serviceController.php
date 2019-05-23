@@ -208,7 +208,7 @@ class serviceController extends Controller
                             ->select('order_statuses.status_id as status','orders.id as order')
                             ->where('dialogs.chat_id','=',$from_id)
                             ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
+                            ->where('order_statuses.status_id', '=' ,2)
                             ->get();
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
                         if(isset($order[0])){
@@ -354,7 +354,7 @@ class serviceController extends Controller
                             ->select('order_statuses.status_id as status','orders.id as order')
                             ->where('dialogs.chat_id','=',$from_id)
                             ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
+                            ->where('order_statuses.status_id', '=' ,2)
                             ->get();
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
                         if(isset($order[0])){
@@ -503,7 +503,7 @@ class serviceController extends Controller
                             ->select('order_statuses.status_id as status','orders.id as order')
                             ->where('dialogs.chat_id','=',$from_id)
                             ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
+                            ->where('order_statuses.status_id', '=' ,2)
                             ->get();
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
                         if(isset($order[0])){
@@ -643,7 +643,7 @@ class serviceController extends Controller
                             ->select('order_statuses.status_id as status','orders.id as order')
                             ->where('dialogs.chat_id','=',$from_id)
                             ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
+                            ->where('order_statuses.status_id', '=' ,2)
                             ->get();
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
                         if(isset($order[0])){

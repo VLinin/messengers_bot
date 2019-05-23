@@ -107,12 +107,12 @@ class vkController extends Controller
         }
     }
 
-    public static function makeKeyboardVK($id,$from_id,$service_id){
+    public static function makeKeyboardVK($stage_id,$from_id,$service_id){
         $kbrd=[
             "one_time" => true,
             "buttons" => []
         ];
-        $query=Dialog_stage::find($id)->dialog_buttons()->get();
+        $query=Dialog_stage::find($stage_id)->dialog_buttons()->get();
         foreach ($query as $btn){
             if($btn->id==6 || $btn->id==7){
                 $order=\DB::table('dialogs')
@@ -129,10 +129,10 @@ class vkController extends Controller
                         [
                             "action"=> [
                                 "type" => "text",
-                                "payload" => "{'do':'".$query[0]->payload."'}",
-                                "label" => $query[0]->sign_text
+                                "payload" => json_encode(['do' =>$btn->payload], JSON_UNESCAPED_UNICODE),
+                                "label" => $btn->sign_text
                             ],
-                            "color" => $query[0]->color
+                            "color" => $btn->color
                         ]
                     ];
                 }
@@ -141,10 +141,10 @@ class vkController extends Controller
                     [
                         "action"=> [
                             "type" => "text",
-                            "payload" => "{'do':'".$query[0]->payload."'}",
-                            "label" => $query[0]->sign_text
+                            "payload" => json_encode(['do' => $btn->payload], JSON_UNESCAPED_UNICODE),
+                            "label" => $btn->sign_text
                         ],
-                        "color" => $query[0]->color
+                        "color" => $btn->color
                     ]
                 ];
             }

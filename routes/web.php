@@ -2,6 +2,11 @@
 
 //views
 
+use App\Dialog_stage;
+use App\Image;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use VK\Client\VKApiClient;
+
 Route::get('/', function () {
     return view('start');
 })->name('start');
@@ -58,11 +63,10 @@ Route::get('/androidAuth','androidController@auth');
 Route::get('/androidOrders','androidController@orders');
 Route::get('/androidProducts','androidController@products');
 
-//Route::get('test',function (){
+
+
+//Route::get('/test',function () {
 //
-//
-//    dump(isset((Image::where('path','=','pr2.png')->select('vk')->get())[0]->vk));
-//    dump((Image::where('path','=','pr2.png')->select('vk')->get())[0]->vk == null);
 //});
 
 
