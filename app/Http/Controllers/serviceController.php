@@ -19,8 +19,8 @@ class serviceController extends Controller
 
     public static function stageProcess($stage, $data, $service_id){
         if($service_id == 2){
-            if(isset($data->object->payload['do'])){
-                $payload = $data->object->payload['do'];
+            if(isset($data->object->payload)){
+                $payload = json_decode($data->object->payload)->do;
             }else{
                 $payload=null;
             }
