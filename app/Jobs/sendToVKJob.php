@@ -52,46 +52,64 @@ class sendToVKJob implements ShouldQueue
 
     public function handle()
     {
-        $vk = new VKApiClient();
-        try {
-            $vk->messages()->send("34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
-                [
-                    'random_id' => random_int(0,234456),
-                    'peer_id' => 194004680,//$this->id,
-                    'message' => "Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
-                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",//$this->text,
-                    'v' => '5.95',
-                    'keyboard' => json_encode(\App\Http\Controllers\vkController::makeKeyboardVK(1,194004680,2), JSON_UNESCAPED_UNICODE),
-                ]);
-//            if($this->photo != null){
-//                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
-//                if($vkQuery[0]->vk != null){
-//                    $this->sendWithPhoto($vk, $vkQuery[0]->vk);
-//                }else{
-//                    $ph_path=$this->uploadphoto($vk);
-//                    if($ph_path!=null){
-//                        $this->sendWithPhoto($vk, $ph_path);
-//                    }else{
-//                        $this->sendWithoutPhoto($vk);
-//                    }
-//                }
-//            }else{
-//                \Log::info('send withou photo');
-//                $this->sendWithoutPhoto($vk);
-//            }
-        } catch (VKApiMessagesCantFwdException $e) {
-        } catch (VKApiMessagesChatBotFeatureException $e) {
-        } catch (VKApiMessagesChatUserNoAccessException $e) {
-        } catch (VKApiMessagesContactNotFoundException $e) {
-        } catch (VKApiMessagesDenySendException $e) {
-        } catch (VKApiMessagesKeyboardInvalidException $e) {
-        } catch (VKApiMessagesPrivacyException $e) {
-        } catch (VKApiMessagesTooLongForwardsException $e) {
-        } catch (VKApiMessagesTooLongMessageException $e) {
-        } catch (VKApiMessagesUserBlockedException $e) {
-        } catch (VKApiException $e) {
-        } catch (VKClientException $e) {
-        }
+        $url = 'https://api.vk.com/method/messages.send';
+        $params = array(
+            'random_id' => random_int(0,234456),
+            'peer_id' => 194004680,    // Кому отправляем
+            'message' =>"Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
+                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",   // Что отправляем
+            'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'v' => '5.95',
+        );
+
+        // В $result вернется id отправленного сообщения
+        $result = file_get_contents($url, false, stream_context_create(array(
+            'http' => array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($params)
+            )
+        )));
+//        $vk = new VKApiClient();
+//        try {
+////            $vk->messages()->send("34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
+////                [
+////                    'random_id' => random_int(0,234456),
+////                    'peer_id' => 194004680,//$this->id,
+////                    'message' => "Для взаимодействия с системой укажите свой мобильный телефон начиная с 8....
+////                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!",//$this->text,
+////                    'v' => '5.95',
+////                    'keyboard' => json_encode(\App\Http\Controllers\vkController::makeKeyboardVK(1,194004680,2), JSON_UNESCAPED_UNICODE),
+////                ]);
+////            if($this->photo != null){
+////                $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
+////                if($vkQuery[0]->vk != null){
+////                    $this->sendWithPhoto($vk, $vkQuery[0]->vk);
+////                }else{
+////                    $ph_path=$this->uploadphoto($vk);
+////                    if($ph_path!=null){
+////                        $this->sendWithPhoto($vk, $ph_path);
+////                    }else{
+////                        $this->sendWithoutPhoto($vk);
+////                    }
+////                }
+////            }else{
+////                \Log::info('send withou photo');
+////                $this->sendWithoutPhoto($vk);
+////            }
+//        } catch (VKApiMessagesCantFwdException $e) {
+//        } catch (VKApiMessagesChatBotFeatureException $e) {
+//        } catch (VKApiMessagesChatUserNoAccessException $e) {
+//        } catch (VKApiMessagesContactNotFoundException $e) {
+//        } catch (VKApiMessagesDenySendException $e) {
+//        } catch (VKApiMessagesKeyboardInvalidException $e) {
+//        } catch (VKApiMessagesPrivacyException $e) {
+//        } catch (VKApiMessagesTooLongForwardsException $e) {
+//        } catch (VKApiMessagesTooLongMessageException $e) {
+//        } catch (VKApiMessagesUserBlockedException $e) {
+//        } catch (VKApiException $e) {
+//        } catch (VKClientException $e) {
+//        }
     }
 
     public function sendWithPhoto($vk, $path){
