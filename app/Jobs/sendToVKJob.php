@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Dialog;
 use App\Image;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -32,18 +33,20 @@ class sendToVKJob implements ShouldQueue
     private $text;
     private $photo;
     private $keyboard;
+    private $dialoginfo;
     private $token="34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913";
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($id, $text,$photo, $keyboard)
+    public function __construct($id, $text,$photo, $keyboard, $dialoginfo)
     {
         $this->text=$text;
         $this->id=$id;
         $this->photo=$photo;
         $this->keyboard=$keyboard;
+        $this->dialoginfo=$dialoginfo;
     }
 
     public function handle()
@@ -51,17 +54,20 @@ class sendToVKJob implements ShouldQueue
         if($this->photo != null){
             $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
             if($vkQuery[0]->vk != null){
-                $this->sendWithPhoto($vkQuery[0]->vk);
+                $result=$this->sendWithPhoto($vkQuery[0]->vk);
             }else{
                 $ph_path=$this->uploadphoto();
                 if($ph_path!=null){
-                    $this->sendWithPhoto($ph_path);
+                    $result=$this->sendWithPhoto($ph_path);
                 }else{
-                    $this->sendWithoutPhoto();
+                    $result=$this->sendWithoutPhoto();
                 }
             }
         }else{
-            $this->sendWithoutPhoto();
+            $result=$this->sendWithoutPhoto();
+        }
+        if($result){
+            Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
         }
     }
 
@@ -85,6 +91,11 @@ class sendToVKJob implements ShouldQueue
                 'content' => http_build_query($params)
             )
         )));
+        if(isset(json_decode($result)->error)){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public function uploadphoto(){
@@ -164,6 +175,12 @@ class sendToVKJob implements ShouldQueue
                 'content' => http_build_query($params)
             )
         )));
+
+        if(isset(json_decode($result)->error)){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 }
