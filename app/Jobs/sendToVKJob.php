@@ -44,6 +44,12 @@ class sendToVKJob implements ShouldQueue
         $this->id=$id;
         $this->photo=$photo;
         $this->keyboard=$keyboard;
+        file_put_contents("/log.txt",
+            PHP_EOL . "text=".$this->text.
+            PHP_EOL."id=".$this->id.
+            PHP_EOL."photo=".$this->photo,
+            FILE_APPEND);
+
     }
 
     public function handle()
@@ -63,6 +69,9 @@ class sendToVKJob implements ShouldQueue
                     }
                 }
             }else{
+                file_put_contents("/file.txt",
+                    PHP_EOL . "sendWithoutPhoto",
+                    FILE_APPEND);
                 $this->sendWithoutPhoto($vk);
             }
         } catch (VKApiMessagesCantFwdException $e) {
