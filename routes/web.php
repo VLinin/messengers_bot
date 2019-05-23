@@ -52,7 +52,7 @@ Route::post('/dwnldExcel','actionController@makeExcel');
 //services
 
 Route::post('/vk','vkController@index');
-Route::post('/vk','telergramController@index');
+Route::post('/tlgrm','telergramController@index');
 
 //Route::get('test',function (){
 //

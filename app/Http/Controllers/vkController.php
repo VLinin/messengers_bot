@@ -15,7 +15,7 @@ class vkController extends Controller
         $data = json_decode($request->getContent());
         $confirm_word="64a06e38";
         $scr_key="scr1547";
-        $peer=$data->object->from_id;
+
 
         if ($data->secret!==$scr_key){
             return null;
@@ -25,6 +25,7 @@ class vkController extends Controller
             case 'confirmation':
                 return '8c9db1bb';
             case 'message_new':
+                $peer=$data->object->from_id;
                 $stage=$this->dialogTest($peer, $data);
                 if ($stage!=0){
                     serviceController::stageProcess($stage, $data, 2);
