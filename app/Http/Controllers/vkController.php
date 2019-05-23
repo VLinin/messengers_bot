@@ -23,7 +23,7 @@ class vkController extends Controller
 
         switch ($data->type) {
             case 'confirmation':
-                return '8c9db1bb';
+                return $confirm_word;
             case 'message_new':
                 $peer=$data->object->from_id;
                 $stage=$this->dialogTest($peer, $data);
