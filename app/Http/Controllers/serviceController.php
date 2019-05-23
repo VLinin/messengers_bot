@@ -38,7 +38,7 @@ class serviceController extends Controller
             case 1:             //Начальная стадия
                 //to 2 stage
                 Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 1]);
-                $text="Приступим к взаимодействию! \n
+                $text="Приступим к взаимодействию! <br>
                         В этом чате можно осуществлять заказы, отправлять отзывы и получать интересную информацию!
                         Для работы используйте кнопки с предоставленными вариантами.
                       ";
@@ -55,9 +55,9 @@ class serviceController extends Controller
                     case 'make_order':    //to 3
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 2]);
                         $categories=Category::all();
-                        $text='Выберите категорию из списка и отправите её номер: \n ';
+                        $text='Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. \n ';
+                            $text=$text.$category->id.") ".$category->name.'. <br> ';
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
@@ -82,11 +82,11 @@ class serviceController extends Controller
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                             ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                        $text='Список завершенных заказов: \n ';
+                        $text='Список завершенных заказов: <br> ';
                         foreach ($orders as $order){
-                            $text=$text.$order->id.') Заказ от '.$order->created_at.' завершен. \n';
+                            $text=$text.$order->id.') Заказ от '.$order->created_at.' завершен. <br>';
                             if($order->updated_at!=null){
-                                $text=$text.' Последнее изменение от '.$order->updated_at.' \n ';
+                                $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
                             }
                         }
                         if($service_id == 2){
@@ -97,9 +97,7 @@ class serviceController extends Controller
                         }
                         break;
                     default:
-                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!
-                        '.$payload.'
-                        '.$data->object->payload;
+                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
                         }
@@ -115,10 +113,10 @@ class serviceController extends Controller
                         $category=Category::find($message);
                         if(isset($category->id)){
                             Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 4, 'pre_stage' => 3,'spec_info' => $category->id]);
-                            $text='Выберите товар из списка и отправьте его номер: \n ';
+                            $text='Выберите товар из списка и отправьте его номер: <br> ';
                             $products=Product::all()->where('category_id','=',$category->id);
                             foreach ($products as $product){
-                                $text=$text.$product->id.") ".$product->name.'. - '.$product->price.'р. \n ';
+                                $text=$text.$product->id.") ".$product->name.'. - '.$product->price.'р. <br> ';
                             }
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id));
@@ -136,110 +134,111 @@ class serviceController extends Controller
                             }
                         }
                     }
-                }
-                switch ($payload){
-                    case 'to_begin': //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                }else{
+                    switch ($payload){
+                        case 'to_begin': //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        case 'cancel_order':  //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        case 'done_order':    //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,2)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
+                            if(isset($order[0])){
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                                $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        default:
+                            $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
                             }
                             if($service_id == 3){
 
                             }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    case 'cancel_order':  //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    case 'done_order':    //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,2)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
-                        if(isset($order[0])){
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
-                            $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    default:
-                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
-                        }
-                        if($service_id == 3){
-
-                        }
+                    }
                 }
                 break;
 
@@ -249,7 +248,7 @@ class serviceController extends Controller
                         $product=Product::find($message);
                         if(isset($product->id)){
                             Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 5, 'pre_stage' => 4, 'spec_info' => $message]);
-                            $text=$product->name.' - '.$product->price.' \n '.$product->decription;
+                            $text=$product->name.' - '.$product->price.' <br> '.$product->decription;
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',1)->get())[0]->path;
                             if($service_id == 2){
@@ -268,124 +267,125 @@ class serviceController extends Controller
                             }
                         }
                     }
-                }
-                switch ($payload){
-                    case 'back':          //to 3
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 4]);
-                        $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ';
-                        foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. \n ';
-                        }
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
-                        }
-                        if($service_id == 3){
-
-                        }
-                        break;
-                    case 'to_begin':      //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                }else{
+                    switch ($payload){
+                        case 'back':          //to 3
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 4]);
+                            $categories=Category::all();
+                            $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                            foreach ($categories as $category){
+                                $text=$text.$category->id.") ".$category->name.'. <br> ';
+                            }
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
                             }
                             if($service_id == 3){
 
                             }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
+                            break;
+                        case 'to_begin':      //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        case 'cancel_order':  //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        case 'done_order':    //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,2)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
+                            if(isset($order[0])){
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                                $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        default:
+                            $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2));
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id));
                             }
                             if($service_id == 3){
 
                             }
-                        }
-                        break;
-                    case 'cancel_order':  //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    case 'done_order':    //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,2)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
-                        if(isset($order[0])){
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
-                            $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    default:
-                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id));
-                        }
-                        if($service_id == 3){
-
-                        }
+                    }
                 }
 
                 break;
@@ -422,9 +422,9 @@ class serviceController extends Controller
                     case 'back':          //to 3
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 5]);
                         $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ';
+                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер:<br> ';
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. \n ';
+                            $text=$text.$category->id.") ".$category->name.'. <br> ';
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
@@ -546,9 +546,9 @@ class serviceController extends Controller
                         \DB::table('order_products')->where('id', '=', $dialog_info->spec_info)->update(['amount' => $message]);
                         Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 6]);
                         $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ';
+                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. \n ';
+                            $text=$text.$category->id.") ".$category->name.'. <br> ';
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
@@ -557,124 +557,125 @@ class serviceController extends Controller
 
                         }
                     }
-                }
-                switch ($payload){
-                    case 'back':          //to 3
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 6]);
-                        $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ';
-                        foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. \n ';
-                        }
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
-                        }
-                        if($service_id == 3){
-
-                        }
-                        break;
-                    case 'to_begin':      //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>6]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                }else{
+                    switch ($payload){
+                        case 'back':          //to 3
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 6]);
+                            $categories=Category::all();
+                            $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                            foreach ($categories as $category){
+                                $text=$text.$category->id.") ".$category->name.'. <br> ';
+                            }
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
                             }
                             if($service_id == 3){
 
                             }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
+                            break;
+                        case 'to_begin':      //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>6]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        case 'cancel_order':  //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 6]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        case 'done_order':    //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,2)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
+                            if(isset($order[0])){
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                                $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }
+                            break;
+                        default:
+                            $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(5,$from_id,$service_id));
                             }
                             if($service_id == 3){
 
                             }
-                        }
-                        break;
-                    case 'cancel_order':  //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 6]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    case 'done_order':    //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,2)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
-                        if(isset($order[0])){
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
-                            $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    default:
-                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(5,$from_id,$service_id));
-                        }
-                        if($service_id == 3){
-
-                        }
+                    }
                 }
 
                 break;
@@ -687,11 +688,11 @@ class serviceController extends Controller
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                             ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                        $text='Заказы в обработке: \n ';
+                        $text='Заказы в обработке: <br> ';
                         foreach ($orders as $order){
-                            $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. \n';
+                            $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. <br>';
                             if($order->updated_at!=null){
-                                $text=$text.' Последнее изменение от '.$order->updated_at.' \n ';
+                                $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
                             }
                         }
                         if($service_id == 2){
@@ -704,9 +705,9 @@ class serviceController extends Controller
                     case 'product_list':  //to 3
                         Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 7]);
                         $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ';
+                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. \n ';
+                            $text=$text.$category->id.") ".$category->name.'. <br> ';
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id));
@@ -728,9 +729,9 @@ class serviceController extends Controller
                             Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->update(['dialog_stage_id' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
                             $products=\DB::table('order_products')->join('products','products.id','=','order_products.product_id')
                                 ->where('order_id', '=', 1)->select('products.id','products.name', 'products.price','order_products.amount')->get();
-                            $text='Введите номер товара из заказа для формирования отзыва. \n Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': \n ';
+                            $text='Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': <br> ';
                             foreach ($products as $product){
-                                $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. \n ';
+                                $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. <br> ';
                             }
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9,$from_id,$service_id));
@@ -748,50 +749,51 @@ class serviceController extends Controller
                             }
                         }
                     }
-                }
-                switch ($payload){
-                    case 'back':          //to 7
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 7, 'pre_stage' => 8]);
-                        $text='Вы вернулись в меню информации. Выберите тип информации, которую хотите получить, используя варианты на кнопках!';
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(7,$from_id,$service_id));
-                        }
-                        if($service_id == 3){
-
-                        }
-                        break;
-                    case 'to_begin':      //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>8]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                }else{
+                    switch ($payload){
+                        case 'back':          //to 7
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 7, 'pre_stage' => 8]);
+                            $text='Вы вернулись в меню информации. Выберите тип информации, которую хотите получить, используя варианты на кнопках!';
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(7,$from_id,$service_id));
                             }
                             if($service_id == 3){
 
                             }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
+                            break;
+                        case 'to_begin':      //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>8]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
 
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
                             }
-                        }
-                        break;
+                            break;
+                    }
                 }
 
                 break;
@@ -803,7 +805,7 @@ class serviceController extends Controller
                         $product=Product::find($message);
                         if(isset($product->id)){
                             Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 10, 'pre_stage' => 9, 'spec_info' => $message]);
-                            $text='Формирование отзыва на '.$product->name.' - '.$product->price.' \n '.$product->decription.' \n Отпрвьте сообщение с текстом отзыва!';
+                            $text='Формирование отзыва на '.$product->name.' - '.$product->price.' <br> '.$product->decription.' <br> Отпрвьте сообщение с текстом отзыва!';
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(10,$from_id,$service_id));
                             }
@@ -820,82 +822,83 @@ class serviceController extends Controller
                             }
                         }
                     }
-                }
-                switch ($payload){
-                    case 'back':          //to 8/11
-                        $pre_stage=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('pre_stage')->get())[0]->pre_stage;
-                        if ($pre_stage == 8){
-                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 8, 'pre_stage' => 7]);
-                            $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0];
-                            $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
-                                ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
-                                ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                            $text='Заказы в обработке: \n ';
-                            foreach ($orders as $order){
-                                $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. \n';
-                                if($order->updated_at!=null){
-                                    $text=$text.' Последнее изменение от '.$order->updated_at.' \n ';
+                }else{
+                    switch ($payload){
+                        case 'back':          //to 8/11
+                            $pre_stage=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('pre_stage')->get())[0]->pre_stage;
+                            if ($pre_stage == 8){
+                                Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 8, 'pre_stage' => 7]);
+                                $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0];
+                                $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
+                                    ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
+                                    ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
+                                $text='Заказы в обработке: <br> ';
+                                foreach ($orders as $order){
+                                    $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. <br>';
+                                    if($order->updated_at!=null){
+                                        $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
+                                    }
+                                }
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
+                                }
+                            }elseif ($pre_stage == 11){
+                                Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 11, 'pre_stage' => 2]);
+                                $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0];
+                                $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
+                                    ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
+                                    ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
+                                $text='Список завершенных заказов: <br> ';
+                                foreach ($orders as $order){
+                                    $text=$text.$order->id.') Заказ от '.$order->created_at.' завершен. <br>';
+                                    if($order->updated_at!=null){
+                                        $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
+                                    }
+                                }
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
                                 }
                             }
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
+                            break;
+                        case 'to_begin':      //to 2
+                            $order=\DB::table('dialogs')
+                                ->join('clients','clients.id','=','dialogs.client_id')
+                                ->join('orders','clients.id','=','orders.client_id')
+                                ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
+                                ->select('order_statuses.status_id as status','orders.id as order')
+                                ->where('dialogs.chat_id','=',$from_id)
+                                ->where('dialogs.service_id','=',$service_id)
+                                ->where('order_statuses.status_id', '=' ,3)
+                                ->get();
+                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>9]);
+                            if(isset($order[0])){
+                                \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
+                                \DB::table('orders')->where('id','=',$order[0]->order)->delete();
+                                $text="Вы вернулись в главное меню! Формирование заказа отменено.";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
 
-                            }
-                        }elseif ($pre_stage == 11){
-                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 11, 'pre_stage' => 2]);
-                            $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0];
-                            $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
-                                ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
-                                ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                            $text='Список завершенных заказов: \n ';
-                            foreach ($orders as $order){
-                                $text=$text.$order->id.') Заказ от '.$order->created_at.' завершен. \n';
-                                if($order->updated_at!=null){
-                                    $text=$text.' Последнее изменение от '.$order->updated_at.' \n ';
+                                }
+                            }else{
+                                $text="Вы вернулись в главное меню!";
+                                if($service_id == 2){
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
+                                }
+                                if($service_id == 3){
+
                                 }
                             }
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
-                    case 'to_begin':      //to 2
-                        $order=\DB::table('dialogs')
-                            ->join('clients','clients.id','=','dialogs.client_id')
-                            ->join('orders','clients.id','=','orders.client_id')
-                            ->join('order_statuses', 'orders.id','=','order_statuses.order_id')
-                            ->select('order_statuses.status_id as status','orders.id as order')
-                            ->where('dialogs.chat_id','=',$from_id)
-                            ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,3)
-                            ->get();
-                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>9]);
-                        if(isset($order[0])){
-                            \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
-                            \DB::table('orders')->where('id','=',$order[0]->order)->delete();
-                            $text="Вы вернулись в главное меню! Формирование заказа отменено.";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }else{
-                            $text="Вы вернулись в главное меню!";
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id));
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                        break;
+                            break;
+                    }
                 }
 
                 break;
@@ -944,9 +947,9 @@ class serviceController extends Controller
                             Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->update(['dialog_stage_id' => 9, 'pre_stage' => 11, 'spec_info' => $message]);
                             $products=\DB::table('order_products')->join('products','products.id','=','order_products.product_id')
                                 ->where('order_id', '=', 1)->select('products.id','products.name', 'products.price','order_products.amount')->get();
-                            $text='Введите номер товара из заказа для формирования отзыва. \n Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': \n ';
+                            $text='Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': <br> ';
                             foreach ($products as $product){
-                                $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. \n ';
+                                $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. <br> ';
                             }
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9,$from_id,$service_id));
