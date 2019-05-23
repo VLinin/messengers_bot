@@ -63,7 +63,10 @@ Route::get('/androidAuth','androidController@auth');
 Route::get('/androidOrders','androidController@orders');
 Route::get('/androidProducts','androidController@products');
 
-
+Route::get('/vktest',function () {
+    dump(\App\Client::all());
+    dump(\App\Dialog::all());
+});
 
 Route::get('/test',function () {
     $vkQuery=Image::where('path','=','pr1.png')->select('vk')->get();
