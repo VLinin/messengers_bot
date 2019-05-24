@@ -81,9 +81,9 @@ class serviceController extends Controller
                         $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0]->client_id;
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
-                            ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
+                            ->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
                         if ($orders->toArray() == []){
-                            $text='Список завершенных заказов пуст. 
+                            $text='Список заказов пуст. 
                             Пожалуйста, воспользуйтесь кнопкой для возвращения к главному меню!';
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>2,'spec_info'=>null]);
