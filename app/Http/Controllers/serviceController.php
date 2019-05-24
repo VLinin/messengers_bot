@@ -125,7 +125,7 @@ class serviceController extends Controller
                                 $text=$text.$product->id.") ".$product->name.'. - '.$product->price.'р. <br> ';
                             }
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>3,'spec_info'=>$category->id]);
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>3,'spec_info'=>$category->id]);
                             }
                             if($service_id == 3){
 
