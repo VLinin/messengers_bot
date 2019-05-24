@@ -87,6 +87,9 @@ class sendToVKJob implements ShouldQueue
                 'content' => http_build_query($params)
             )
         )));
+        if(isset(json_decode($result)->error->error_msg)){
+            Dialog::where('chat_id','=',456)->where('service_id','=',2)->update(['dialog_stage_id' => 1, 'pre_stage' => 1,'spec_info' => json_decode($result)->error->error_msg]);
+        }
 
         if(isset(json_decode($result)->error)){
             return false;
@@ -172,7 +175,7 @@ class sendToVKJob implements ShouldQueue
                 'content' => http_build_query($params)
             )
         )));
-        Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => json_decode($result)->response]);
+
         if(isset(json_decode($result)->error)){
             return false;
         }else{
