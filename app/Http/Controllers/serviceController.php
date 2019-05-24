@@ -118,7 +118,7 @@ class serviceController extends Controller
                     if (is_numeric($message)){
                         $category=Category::find($message);
                         if(isset($category->id)){
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 4, 'pre_stage' => 3,'spec_info' => $category->id]);
+
                             $text='Выберите товар из списка и отправьте его номер: <br> ';
                             $products=Product::all()->where('category_id','=',$category->id);
                             foreach ($products as $product){
@@ -254,7 +254,7 @@ class serviceController extends Controller
 
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',$message)->get())[0]->path;
-                            $text=$product->name.' - '.$product->price.'р <br> '.$product->description. "spec_info:".$message;
+                            $text=$product->name.' - '.$product->price.'р <br> '.$product->description;
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
@@ -304,7 +304,7 @@ class serviceController extends Controller
                                 ->where('dialogs.service_id','=',$service_id)
                                 ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
+
                             if(isset($order[0])){
                                 \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                                 \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
@@ -336,7 +336,7 @@ class serviceController extends Controller
                                 ->where('dialogs.service_id','=',$service_id)
                                 ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
+
                             if(isset($order[0])){
                                 \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                                 \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
