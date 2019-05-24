@@ -33,9 +33,8 @@ class actionController extends Controller
         switch ($service_id){
             case 2:
                 $dialog=Dialog::where('client_id','=', $client_id)->where('service_id','=',$service_id)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get();
-                dump($dialog);
                 sendToVKJob::dispatch($dialog->chat_id, $text, null, vkController::makeKeyboardVK($dialog->dialog_stage_id, $dialog->chat_id, $service_id),['next_stage'=>$dialog->dialog_stage_id,'pre_stage'=>$dialog->pre_stage,'spec_info'=>$dialog->spec_info]);
-                \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
+//                \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
                 break;
             case 3:
 
