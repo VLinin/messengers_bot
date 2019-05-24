@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Dialog;
 use App\Distribution;
+use App\Jobs\sendToVKJob;
 use App\Product_feedback;
 use App\Service;
 use Carbon\Carbon;
@@ -30,15 +32,13 @@ class actionController extends Controller
         $service_id=$request->post('service_id');
         switch ($service_id){
             case 1:
-                dump($service_id ,$fio,$client_id, $text);
-                //callmethod($fio,$text);
+                $dialog=Dialog::where('client_id','=', $client_id)->where('service_id','=',$service_id)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get();
+                sendToVKJob::dispatch($dialog->chat_id, $text, null, vkController::makeKeyboardVK($dialog->dialog_stage_id, $dialog->chat_id, $service_id),['next_stage'=>$dialog->dialog_stage_id,'pre_stage'=>$dialog->pre_stage,'spec_info'=>$dialog->spec_info]);
                 \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
-                dump('отмечено в бд');
                 break;
             case 2:
-                dump($service_id ,$fio,$client_id, $text);
+
                 \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
-                dump('отмечено в бд');
                 break;
         }
         return view('feedback');
