@@ -75,8 +75,8 @@ class sendToVKJob implements ShouldQueue
         $params = array(
             'random_id' => random_int(0,234456),
             'peer_id' => $this->id,    // Кому отправляем
-            'message' =>$this->text.' <br> '.$ph_id,   // Что отправляем
-            'attachment' => 'photo-'.vkController::$alb_id.'_'.$ph_id,
+            'message' =>$this->text,   // Что отправляем
+            'attachment' => 'photo-182538296_'.$ph_id,
             'access_token' => $this->token,
             'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
             'v' => '5.95',

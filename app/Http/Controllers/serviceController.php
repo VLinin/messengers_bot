@@ -81,7 +81,7 @@ class serviceController extends Controller
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                             ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                        if (!isset($orders[0])){
+                        if ($orders == null){
                             $text='Список заказов пуст. 
                             Пожалуйста, воспользуйтесь кнопкой для возвращения к главному меню!';
                             if($service_id == 2){
@@ -253,7 +253,7 @@ class serviceController extends Controller
 
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',$message)->get())[0]->path;
-                            $text=$product->name.' - '.$product->price.'р <br> '.$product->description.' <br>'.$image_path;
+                            $text=$product->name.' - '.$product->price.'р <br> '.$product->description;
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
@@ -683,7 +683,7 @@ class serviceController extends Controller
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                             ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                        if (!isset($orders[0])){
+                        if ($orders==null){
                             $text='Список заказов пуст. 
                             Пожалуйста, воспользуйтесь кнопкой для возвращения к главному меню!';
                             if($service_id == 2){
