@@ -961,6 +961,8 @@ class serviceController extends Controller
 
 
 
+                    }else{
+                        sendToVKJob::dispatch($from_id, $message, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
                     }
                 }elseif ($payload=='cancel'){ //to 2
 //                    Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>10]);
