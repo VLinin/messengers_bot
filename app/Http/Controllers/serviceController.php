@@ -218,11 +218,11 @@ class serviceController extends Controller
                                 ->select('order_statuses.status_id as status','orders.id as order')
                                 ->where('dialogs.chat_id','=',$from_id)
                                 ->where('dialogs.service_id','=',$service_id)
-                                ->where('order_statuses.status_id', '=' ,2)
+                                ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
 //                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 3]);
                             if(isset($order[0])){
-                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>2]);
                                 $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
                                 if($service_id == 2){
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
@@ -358,11 +358,11 @@ class serviceController extends Controller
                                 ->select('order_statuses.status_id as status','orders.id as order')
                                 ->where('dialogs.chat_id','=',$from_id)
                                 ->where('dialogs.service_id','=',$service_id)
-                                ->where('order_statuses.status_id', '=' ,2)
+                                ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
 //                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 4]);
                             if(isset($order[0])){
-                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>2]);
                                 $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
                                 if($service_id == 2){
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
@@ -500,11 +500,11 @@ class serviceController extends Controller
                             ->select('order_statuses.status_id as status','orders.id as order')
                             ->where('dialogs.chat_id','=',$from_id)
                             ->where('dialogs.service_id','=',$service_id)
-                            ->where('order_statuses.status_id', '=' ,2)
+                            ->where('order_statuses.status_id', '=' ,3)
                             ->get();
 //                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
                         if(isset($order[0])){
-                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                            \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>2]);
                             $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
@@ -640,11 +640,11 @@ class serviceController extends Controller
                                 ->select('order_statuses.status_id as status','orders.id as order')
                                 ->where('dialogs.chat_id','=',$from_id)
                                 ->where('dialogs.service_id','=',$service_id)
-                                ->where('order_statuses.status_id', '=' ,2)
+                                ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
 //                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 6]);
                             if(isset($order[0])){
-                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>1]);
+                                \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>2]);
                                 $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
                                 if($service_id == 2){
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
