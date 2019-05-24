@@ -390,16 +390,25 @@ class serviceController extends Controller
                 switch ($payload){
                     case 'add_to_order':  //to 6
                         $d_info=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0];
-                        //создание заказа
-                        $order_id=\DB::table('orders')->insertGetId([
-                            'service_id' => $service_id,
-                            'client_id' => $d_info->client_id,
-                            'created_at' => Carbon::now()
-                        ]);
-                        \DB::table('order_statuses')->insert([
-                           'order_id' => $order_id,
-                           'status_id' => 3
-                        ]);
+                        //проверка существования заказа
+                        $order=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
+                            ->where('order_statuses.status_id','=',3)->where('orders.client_id','=',10)
+                            ->select('orders.id')->get();;
+                            if (isset($order[0])){
+                                $order_id=$order[0]->id;
+                            }else{
+                                //создание заказа
+                                $order_id=\DB::table('orders')->insertGetId([
+                                    'service_id' => $service_id,
+                                    'client_id' => $d_info->client_id,
+                                    'created_at' => Carbon::now()
+                                ]);
+                                \DB::table('order_statuses')->insert([
+                                    'order_id' => $order_id,
+                                    'status_id' => 3
+                                ]);
+                            }
+
                         //добавление товара
                         $product_order_record=\DB::table('order_products')->insertGetId([
                             'order_id' => $order_id,
@@ -934,12 +943,19 @@ class serviceController extends Controller
                         $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
 
                             //записываем отзыв
-                            $product_feedback= new Product_feedback();
-                            $product_feedback->client_id=$dialog_info->client_id;
-                            $product_feedback->product_id=$dialog_info->spec_info;
-                            $product_feedback->service_id=$service_id;
-                            $product_feedback->text_id=$message;
-                            $product_feedback->save();
+                            \DB::table('product_feedbacks')->insert([
+                                'text'=>$message,
+                            'client_id'=>$dialog_info->client_id,
+                            'product_id'=>$dialog_info->spec_info,
+                            'service_id'=>$service_id,
+                            'created_at'=>Carbon::now()
+                            ]);
+//                            $product_feedback= new Product_feedback();
+//                            $product_feedback->client_id=$dialog_info->client_id;
+//                            $product_feedback->product_id=$dialog_info->spec_info;
+//                            $product_feedback->service_id=$service_id;
+//                            $product_feedback->text_id=$message;
+//                            $product_feedback->save();
 
                             $text='Отзыв принят в обработку! Вы вернулись в главное меню';
                             if($service_id == 2){
@@ -954,6 +970,14 @@ class serviceController extends Controller
                     $text="Вы вернулись в главное меню!";
                     if($service_id == 2){
                         sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>null]);
+                    }
+                    if($service_id == 3){
+
+                    }
+                }else{
+                    $text='Ошибка!';
+                    if($service_id == 2){
+                        sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
                     }
                     if($service_id == 3){
 
