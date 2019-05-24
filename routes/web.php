@@ -65,11 +65,17 @@ Route::get('/androidAuth','androidController@auth');
 Route::get('/androidOrders','androidController@orders');
 Route::get('/androidProducts','androidController@products');
 
-//Route::get('/vktest',function () {
-//    dump(\App\Client::all());
-//    dump(\App\Dialog::all());
-//    dump(\App\Image::all());
-//});
+Route::get('/vkClient',function () {
+    dump(\App\Client::all());
+    dump(\App\Dialog::all());
+    dump(\App\Image::all());
+});
+Route::get('/vkDialog',function () {
+    dump(\App\Dialog::all());
+});
+Route::get('/vkOrder',function () {
+    dump(\App\Dialog::all());
+});
 //
 //Route::get('/mage',function () {
 //    $img=\App\Image::all();
