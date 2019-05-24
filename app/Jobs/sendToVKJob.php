@@ -66,10 +66,6 @@ class sendToVKJob implements ShouldQueue
         }
         if($result){
             Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
-        }else{ //del
-            if (isset($this->res->error)){
-                Dialog::where('chat_id','=',456)->where('service_id','=',2)->update(['dialog_stage_id' => 1, 'pre_stage' => 1,'spec_info' => json_decode($result)->error->error_msg]);
-            }
         }
     }
 
@@ -110,7 +106,7 @@ class sendToVKJob implements ShouldQueue
         $params = array(
             "group_id" => $group_id,
             "album_id" => $alb_id,
-            'access_token' => $user_token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'access_token' => $user_token,
             'v' => '5.95',
         );
         // В $result вернется id отправленного сообщения
@@ -144,9 +140,7 @@ class sendToVKJob implements ShouldQueue
             "server"=>$result['server'],
             "hash"=>$result['hash'],
             'access_token' => $user_token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
-            'v' => '5.95',
         );
-        // В $result вернется id отправленного сообщения
         $result = file_get_contents($url, false, stream_context_create(array(
             'http' => array(
                 'method'  => 'POST',

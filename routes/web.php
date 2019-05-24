@@ -71,17 +71,18 @@ Route::get('/vktest',function () {
 });
 
 Route::get('/test',function () {
-    $url = 'https://api.vk.com/method/messages.send';
+
+    $url = 'https://api.vk.com/method/photos.getUploadServer';
+    $user_token="365c7ec1ffc49087c9d4bb749e563b5cc7ea8552649ed52c4c7385848684ba6f229099b09adf306764169";
+    $group_id="182538296"; //id группы вк
+    $alb_id="264876553";
+    //получаем адресс сервиса для загрузки фото
     $params = array(
-        'random_id' => random_int(0,234456),
-        'peer_id' => 194004688,    // Кому отправляем
-        'message' =>'test',   // Что отправляем
-        'attachment' => 'photo-182538296_'.'4562',
-        'access_token' => "34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
-//        'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
+        "group_id" => $group_id,
+        "album_id" => $alb_id,
+        'access_token' => $user_token,
         'v' => '5.95',
     );
-
     // В $result вернется id отправленного сообщения
     $result = file_get_contents($url, false, stream_context_create(array(
         'http' => array(
@@ -90,8 +91,42 @@ Route::get('/test',function () {
             'content' => http_build_query($params)
         )
     )));
-    dump(json_decode($result));
-    Dialog::where('chat_id','=',456)->where('service_id','=',2)->update(['dialog_stage_id' => 1, 'pre_stage' => 1,'spec_info' => json_decode($result)->error->error_msg]);
+    $server_url=json_decode($result)->response->upload_url;
+    //загружаем фото
+    try {
+        $cfile = curl_file_create(\Storage::disk('public')->path('pr8.png'), 'image/png', 'temp.png');
+        dump($cfile);
+    } catch (FileNotFoundException $e) {
+        return null;
+    }
+    $ch = curl_init($server_url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, array("file" => $cfile));
+    $result = json_decode(curl_exec($ch),true);
+    curl_close($ch);
+    //сохраняем фото
+    $url = 'https://api.vk.com/method/photos.save';
+    $params = array(
+        "group_id"=>$group_id,
+        "album_id"=>$alb_id,
+        "photos_list"=>$result['photos_list'],
+        "server"=>$result['server'],
+        "hash"=>$result['hash'],
+        'access_token' => $user_token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+        'v' => '5.95',
+    );
+    $result = file_get_contents($url, false, stream_context_create(array(
+        'http' => array(
+            'method'  => 'POST',
+            'header'  => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($params)
+        )
+    )));
+    $photo_id=json_decode($result)->response[0]->id;
+    dump($result);
+    dump($photo_id);
+
 });
 
 
