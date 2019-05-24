@@ -83,7 +83,11 @@ Route::get('/androidProducts','androidController@products');
 //
 Route::get('/test',function () {
 
-    dump(Image::where('path','=','pr1.png')->select('vk')->get()[0]->vk);
+    $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
+        ->where('orders.service_id','=',2)
+        ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.status_id' ,'orders.id','orders.client_id')->get();
+    dump($orders->toArray());
+    dump($orders->toArray() == []);
 
 });
 
