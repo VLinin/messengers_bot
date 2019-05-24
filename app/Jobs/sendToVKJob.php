@@ -34,6 +34,7 @@ class sendToVKJob implements ShouldQueue
     private $photo;
     private $keyboard;
     private $dialoginfo;
+    private $res; //del
     private $token="34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913";
     /**
      * Create a new job instance.
@@ -64,6 +65,10 @@ class sendToVKJob implements ShouldQueue
         }
         if($result){
             Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
+        }else{ //del
+            if (isset($this->res->error)){
+                Dialog::where('chat_id','=',456)->where('service_id','=',2)->update(['dialog_stage_id' => 1, 'pre_stage' => 1,'spec_info' => json_decode($result)->error->error_msg]);
+            }
         }
     }
 
@@ -87,10 +92,7 @@ class sendToVKJob implements ShouldQueue
                 'content' => http_build_query($params)
             )
         )));
-        if(isset(json_decode($result)->error->error_msg)){
-            Dialog::where('chat_id','=',456)->where('service_id','=',2)->update(['dialog_stage_id' => 1, 'pre_stage' => 1,'spec_info' => json_decode($result)->error->error_msg]);
-        }
-
+        $this->res=json_decode($result);
         if(isset(json_decode($result)->error)){
             return false;
         }else{
@@ -175,7 +177,7 @@ class sendToVKJob implements ShouldQueue
                 'content' => http_build_query($params)
             )
         )));
-
+        $this->res=json_decode($result);
         if(isset(json_decode($result)->error)){
             return false;
         }else{
