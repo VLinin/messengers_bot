@@ -931,9 +931,8 @@ class serviceController extends Controller
             case 10:            //Формирование отзыва
                 #message        //to 2
                 if($payload == null){ //to 10
-                    if ($message!='Отмена'){
                         $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
-                        try{
+
                             //записываем отзыв
                             $product_feedback= new Product_feedback();
                             $product_feedback->client_id=$dialog_info->client_id;
@@ -949,21 +948,7 @@ class serviceController extends Controller
                             if($service_id == 3){
 
                             }
-                        }catch (\mysqli_sql_exception $e){
-                            $text='Ошибка! <br> Вы вернулись в главное меню.';
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
-                            }
-                            if($service_id == 3){
 
-                            }
-                        }
-
-
-
-                    }else{
-                        sendToVKJob::dispatch($from_id, $message, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
-                    }
                 }elseif ($payload=='cancel'){ //to 2
 //                    Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>10]);
                     $text="Вы вернулись в главное меню!";
