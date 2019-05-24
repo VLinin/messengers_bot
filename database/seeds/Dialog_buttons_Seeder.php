@@ -11,12 +11,6 @@ class Dialog_buttons_Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('dialog_buttons')->insert([
-            'id' => 1,
-            'sign_text' => 'Начать',
-            'color' => 'positive',
-            'payload' => 'start',
-        ]);
 
         DB::table('dialog_buttons')->insert([
             'id' => 2,

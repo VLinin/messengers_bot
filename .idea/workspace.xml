@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c536da43-a3cd-40cd-b984-f7c3e08e4e4a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/vkController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" afterPath="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/Dialog_buttons_Seeder.php" afterPath="$PROJECT_DIR$/database/seeds/Dialog_buttons_Seeder.php" />
+      <change beforePath="$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php" afterPath="$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,21 +22,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="serviceController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="serviceController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="247" column="78" lean-forward="false" selection-start-line="247" selection-start-column="78" selection-end-line="247" selection-end-column="78" />
+            <state relative-caret-position="2137">
+              <caret line="1005" column="100" lean-forward="false" selection-start-line="1005" selection-start-column="100" selection-end-line="1005" selection-end-column="100" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vkController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="vkController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/vkController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="41" column="28" lean-forward="true" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+            <state relative-caret-position="156">
+              <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -43,8 +45,8 @@
       <file leaf-file-name="sendToVKJob.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Jobs/sendToVKJob.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="62" column="13" lean-forward="true" selection-start-line="57" selection-start-column="12" selection-end-line="62" selection-end-column="13" />
+            <state relative-caret-position="499">
+              <caret line="78" column="64" lean-forward="false" selection-start-line="78" selection-start-column="64" selection-end-line="78" selection-end-column="64" />
               <folding>
                 <element signature="e#28#43#0#PHP" expanded="true" />
               </folding>
@@ -55,8 +57,8 @@
       <file leaf-file-name="web.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="71">
-              <caret line="59" column="26" lean-forward="false" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="26" />
+            <state relative-caret-position="400">
+              <caret line="80" column="26" lean-forward="false" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="26" />
               <folding>
                 <element signature="e#16#31#0#PHP" expanded="true" />
               </folding>
@@ -79,7 +81,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Models/Distribution.php" />
         <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
         <option value="$PROJECT_DIR$/app/Models/Service.php" />
         <option value="$PROJECT_DIR$/app/Models/Client.php" />
@@ -95,7 +96,6 @@
         <option value="$PROJECT_DIR$/database/seeds/Products_Seeder.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_102603_create_dialog_stages_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_102620_create_dialog_buttons_table.php" />
-        <option value="$PROJECT_DIR$/database/seeds/Dialog_buttons_Seeder.php" />
         <option value="$PROJECT_DIR$/database/seeds/Clients_Seeder.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_101716_create_products_table.php" />
         <option value="$PROJECT_DIR$/resources/views/distributions.blade.php" />
@@ -108,7 +108,6 @@
         <option value="$PROJECT_DIR$/resources/views/statistics.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_101945_create_clients_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_102701_create_relations.php" />
-        <option value="$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_102602_create_button_stages_table.php" />
         <option value="$PROJECT_DIR$/database/seeds/Services_Seeder.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/actionController.php" />
@@ -126,10 +125,13 @@
         <option value="$PROJECT_DIR$/database/seeds/Orders_Seeder.php" />
         <option value="$PROJECT_DIR$/vendor/vkcom/vk-php-sdk/src/VK/TransportClient/Curl/CurlHttpClient.php" />
         <option value="$PROJECT_DIR$/database/seeds/Distributions_Seeder.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" />
+        <option value="$PROJECT_DIR$/app/Jobs/uploadPhotoToVkJob.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
+        <option value="$PROJECT_DIR$/database/seeds/Dialog_buttons_Seeder.php" />
+        <option value="$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
       </list>
     </option>
   </component>
@@ -424,12 +426,12 @@
       <workItem from="1558559162547" duration="500000" />
       <workItem from="1558570759282" duration="1331000" />
       <workItem from="1558618164791" duration="31453000" />
-      <workItem from="1558694660296" duration="8765000" />
+      <workItem from="1558694660296" duration="10478000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197583000" />
+    <option name="totallyTimeSpent" value="199296000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
@@ -444,7 +446,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.394822" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.394822" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -488,13 +490,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/migrations/2019_04_26_102523_create_distribution_services_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/feedback.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -545,13 +540,6 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Temp/ProductAddController.php" />
-    <entry file="file://$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="182" column="0" lean-forward="true" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/Dialog_stage.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -662,13 +650,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
           <caret line="20" column="37" lean-forward="false" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/database/seeds/Dialog_buttons_Seeder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="95" column="11" lean-forward="false" selection-start-line="95" selection-start-column="11" selection-end-line="95" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -801,38 +782,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="247" column="78" lean-forward="false" selection-start-line="247" selection-start-column="78" selection-end-line="247" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="71">
-          <caret line="59" column="26" lean-forward="false" selection-start-line="59" selection-start-column="12" selection-end-line="59" selection-end-column="26" />
-          <folding>
-            <element signature="e#16#31#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Jobs/sendToVKJob.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="62" column="13" lean-forward="true" selection-start-line="57" selection-start-column="12" selection-end-line="62" selection-end-column="13" />
+        <state relative-caret-position="499">
+          <caret line="78" column="64" lean-forward="false" selection-start-line="78" selection-start-column="64" selection-end-line="78" selection-end-column="64" />
           <folding>
             <element signature="e#28#43#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Jobs/uploadPhotoToVkJob.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116">
+          <caret line="59" column="54" lean-forward="true" selection-start-line="59" selection-start-column="54" selection-end-line="59" selection-end-column="54" />
+          <folding>
+            <element signature="e#28#66#0#PHP" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/vkController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="41" column="28" lean-forward="true" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+        <state relative-caret-position="156">
+          <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="182" column="35" lean-forward="false" selection-start-line="182" selection-start-column="35" selection-end-line="182" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/database/seeds/Dialog_buttons_Seeder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306">
+          <caret line="12" column="5" lean-forward="false" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="80" column="26" lean-forward="false" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="26" />
+          <folding>
+            <element signature="e#16#31#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2137">
+          <caret line="1005" column="100" lean-forward="false" selection-start-line="1005" selection-start-column="100" selection-end-line="1005" selection-end-column="100" />
           <folding />
         </state>
       </provider>

@@ -15,10 +15,6 @@ class Dialog_stages_Seeder extends Seeder
             'id' => 1,
             'name' => 'Начальная стадия',
         ]);
-        DB::table('dialog_button_dialog_stage')->insert([
-            'dialog_stage_id' => 1,
-            'dialog_button_id' => 1
-        ]);
 
         DB::table('dialog_stages')->insert([
             'id' => 2,
@@ -176,6 +172,15 @@ class Dialog_stages_Seeder extends Seeder
         DB::table('dialog_button_dialog_stage')->insert([
             'dialog_stage_id' => 11,
             'dialog_button_id' => 12
+        ]);
+
+        DB::table('dialog_stages')->insert([
+            'id' => 12,
+            'name' => 'Просьба вернуться к главному меню ',
+        ]);
+        DB::table('dialog_button_dialog_stage')->insert([
+            'dialog_stage_id' => 12,
+            'dialog_button_id' => 5
         ]);
 
     }
