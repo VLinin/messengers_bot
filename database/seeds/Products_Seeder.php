@@ -25,7 +25,8 @@ class Products_Seeder extends Seeder
         ]);
         DB::table('images')->insert([
             'id' => 1,
-            'path' => 'pr1.png'
+            'path' => 'pr1.png',
+            'vk' => 456239092
         ]);
         DB::table('image_products')->insert([
             'product_id' => 1,
@@ -42,7 +43,8 @@ class Products_Seeder extends Seeder
         ]);
         DB::table('images')->insert([
             'id' => 2,
-            'path' => 'pr2.png'
+            'path' => 'pr2.png',
+            'vk' => 456239093
         ]);
         DB::table('image_products')->insert([
             'product_id' => 2,
@@ -60,6 +62,7 @@ class Products_Seeder extends Seeder
         ]);
         DB::table('images')->insert([
             'id' => 3,
+            'vk' => 456239094,
             'path' => 'pr3.png'
         ]);
         DB::table('image_products')->insert([
@@ -77,6 +80,7 @@ class Products_Seeder extends Seeder
         ]);
         DB::table('images')->insert([
             'id' => 4,
+            'vk' => 456239095,
             'path' => 'pr4.png'
         ]);
         DB::table('image_products')->insert([
@@ -94,6 +98,7 @@ class Products_Seeder extends Seeder
         ]);
         DB::table('images')->insert([
             'id' => 5,
+            'vk' => 456239096,
             'path' => 'pr5.png'
         ]);
         DB::table('image_products')->insert([
@@ -110,6 +115,7 @@ class Products_Seeder extends Seeder
         ]);
         DB::table('images')->insert([
             'id' => 6,
+            'vk' => 456239097,
             'path' => 'pr6.png'
         ]);
         DB::table('image_products')->insert([
@@ -127,6 +133,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 7,
+            'vk' => 456239098,
             'path' => 'pr7.png'
         ]);
         DB::table('image_products')->insert([
@@ -148,6 +155,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('image_products')->insert([
             'product_id' => 8,
+            'vk' => 456239099,
             'image_id' => 8
         ]);
 
@@ -164,6 +172,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 9,
+            'vk' => 456239100,
             'path' => 'pr9.png'
         ]);
         DB::table('image_products')->insert([
@@ -181,6 +190,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 10,
+            'vk' => 456239101,
             'path' => 'pr10.png'
         ]);
         DB::table('image_products')->insert([
@@ -198,6 +208,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 11,
+            'vk' => 456239102,
             'path' => 'pr11.png'
         ]);
         DB::table('image_products')->insert([
@@ -217,6 +228,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 12,
+            'vk' => 456239103,
             'path' => 'pr12.png'
         ]);
         DB::table('image_products')->insert([
@@ -235,6 +247,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 13,
+            'vk' => 456239104,
             'path' => 'pr13.png'
         ]);
         DB::table('image_products')->insert([
@@ -252,6 +265,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 14,
+            'vk' => 456239105,
             'path' => 'pr14.png'
         ]);
         DB::table('image_products')->insert([
@@ -269,6 +283,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 15,
+            'vk' => 456239106,
             'path' => 'pr15.png'
         ]);
         DB::table('image_products')->insert([
@@ -291,6 +306,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 16,
+            'vk' => 456239107,
             'path' => 'pr16.png'
         ]);
         DB::table('image_products')->insert([
@@ -310,6 +326,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 17,
+            'vk' => 456239108,
             'path' => 'pr17.png'
         ]);
         DB::table('image_products')->insert([
@@ -329,6 +346,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 18,
+            'vk' => 456239109,
             'path' => 'pr18.png'
         ]);
         DB::table('image_products')->insert([
@@ -346,6 +364,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 19,
+            'vk' => 456239110,
             'path' => 'pr19.png'
         ]);
         DB::table('image_products')->insert([
@@ -362,6 +381,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 20,
+            'vk' => 456239111,
             'path' => 'pr20.png'
         ]);
         DB::table('image_products')->insert([
@@ -379,6 +399,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 21,
+            'vk' => 456239112,
             'path' => 'pr21.png'
         ]);
         DB::table('image_products')->insert([
@@ -396,6 +417,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 22,
+            'vk' => 456239113,
             'path' => 'pr22.png'
         ]);
         DB::table('image_products')->insert([
@@ -414,6 +436,7 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 23,
+            'vk' => 456239114,
             'path' => 'pr23.png'
         ]);
         DB::table('image_products')->insert([
@@ -434,6 +457,7 @@ Fluff Marshmallow Vanilla- нежный кремовый зефир маршмэ
         ]);
         DB::table('images')->insert([
             'id' => 24,
+            'vk' => 456239115,
             'path' => 'pr24.png'
         ]);
         DB::table('image_products')->insert([
@@ -451,6 +475,7 @@ Fluff Marshmallow Vanilla- нежный кремовый зефир маршмэ
         ]);
         DB::table('images')->insert([
             'id' => 25,
+            'vk' => 456239116,
             'path' => 'pr25.png'
         ]);
         DB::table('image_products')->insert([
@@ -471,6 +496,7 @@ Fluff Marshmallow Vanilla- нежный кремовый зефир маршмэ
         ]);
         DB::table('images')->insert([
             'id' => 26,
+            'vk' => 456239117,
             'path' => 'pr26.png'
         ]);
         DB::table('image_products')->insert([
@@ -492,6 +518,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 27,
+            'vk' => 456239118,
             'path' => 'pr27.png'
         ]);
         DB::table('image_products')->insert([
@@ -508,6 +535,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 28,
+            'vk' => 456239119,
             'path' => 'pr28.png'
         ]);
         DB::table('image_products')->insert([
@@ -527,6 +555,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 29,
+            'vk' => 456239120,
             'path' => 'pr29.png'
         ]);
         DB::table('image_products')->insert([
@@ -543,6 +572,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 30,
+            'vk' => 456239121,
             'path' => 'pr30.png'
         ]);
         DB::table('image_products')->insert([
@@ -559,6 +589,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 31,
+            'vk' => 456239122,
             'path' => 'pr31.png'
         ]);
         DB::table('image_products')->insert([
@@ -575,6 +606,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 32,
+            'vk' => 456239123,
             'path' => 'pr32.png'
         ]);
         DB::table('image_products')->insert([
@@ -591,6 +623,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 33,
+            'vk' => 456239124,
             'path' => 'pr33.png'
         ]);
         DB::table('image_products')->insert([
@@ -608,6 +641,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 34,
+            'vk' => 456239125,
             'path' => 'pr34.png'
         ]);
         DB::table('image_products')->insert([
@@ -624,6 +658,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 35,
+            'vk' => 456239126,
             'path' => 'pr35.png'
         ]);
         DB::table('image_products')->insert([
@@ -640,6 +675,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 36,
+            'vk' => 456239127,
             'path' => 'pr36.png'
         ]);
         DB::table('image_products')->insert([
@@ -657,6 +693,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 37,
+            'vk' => 456239128,
             'path' => 'pr37.png'
         ]);
         DB::table('image_products')->insert([
@@ -674,6 +711,7 @@ Today Bear Cake- мимишный кексик в форме мишки от и�
         ]);
         DB::table('images')->insert([
             'id' => 38,
+            'vk' => 456239129,
             'path' => 'pr38.png'
         ]);
         DB::table('image_products')->insert([
@@ -693,6 +731,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 39,
+            'vk' => 456239130,
             'path' => 'pr39.png'
         ]);
         DB::table('image_products')->insert([
@@ -709,6 +748,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 40,
+            'vk' => 456239131,
             'path' => 'pr40.png'
         ]);
         DB::table('image_products')->insert([
@@ -726,6 +766,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 41,
+            'vk' => 456239132,
             'path' => 'pr41.png'
         ]);
         DB::table('image_products')->insert([
@@ -743,6 +784,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 42,
+            'vk' => 456239133,
             'path' => 'pr42.png'
         ]);
         DB::table('image_products')->insert([
@@ -759,6 +801,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 43,
+            'vk' => 456239134,
             'path' => 'pr43.png'
         ]);
         DB::table('image_products')->insert([
@@ -776,6 +819,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 44,
+            'vk' => 456239135,
             'path' => 'pr44.png'
         ]);
         DB::table('image_products')->insert([
@@ -792,6 +836,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 45,
+            'vk' => 456239136,
             'path' => 'pr45.png'
         ]);
         DB::table('image_products')->insert([
@@ -808,6 +853,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 46,
+            'vk' => 456239137,
             'path' => 'pr46.png'
         ]);
         DB::table('image_products')->insert([
@@ -825,6 +871,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 47,
+            'vk' => 456239138,
             'path' => 'pr47.png'
         ]);
         DB::table('image_products')->insert([
@@ -842,6 +889,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 48,
+            'vk' => 456239139,
             'path' => 'pr48.png'
         ]);
         DB::table('image_products')->insert([
@@ -859,6 +907,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 49,
+            'vk' => 456239140,
             'path' => 'pr49.png'
         ]);
         DB::table('image_products')->insert([
@@ -876,6 +925,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 50,
+            'vk' => 456239141,
             'path' => 'pr50.png'
         ]);
         DB::table('image_products')->insert([
@@ -893,6 +943,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 51,
+            'vk' => 456239142,
             'path' => 'pr51.png'
         ]);
         DB::table('image_products')->insert([
@@ -909,6 +960,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 52,
+            'vk' => 456239143,
             'path' => 'pr52.png'
         ]);
         DB::table('image_products')->insert([
@@ -927,6 +979,7 @@ Milka TUC - мини-версия шоколадки Милка Тук с одн
         ]);
         DB::table('images')->insert([
             'id' => 53,
+            'vk' => 456239144,
             'path' => 'pr53.png'
         ]);
         DB::table('image_products')->insert([
@@ -946,6 +999,7 @@ Crush Strawberry - как будто пьешь настоящую клубни�
         ]);
         DB::table('images')->insert([
             'id' => 54,
+            'vk' => 456239145,
             'path' => 'pr54.png'
         ]);
         DB::table('image_products')->insert([
@@ -966,6 +1020,7 @@ Crush Peach - это чудесный напиток для любителей �
         ]);
         DB::table('images')->insert([
             'id' => 55,
+            'vk' => 456239146,
             'path' => 'pr55.png'
         ]);
         DB::table('image_products')->insert([
@@ -983,6 +1038,7 @@ Crush Peach - это чудесный напиток для любителей �
         ]);
         DB::table('images')->insert([
             'id' => 56,
+            'vk' => 456239147,
             'path' => 'pr56.png'
         ]);
         DB::table('image_products')->insert([
@@ -1003,6 +1059,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 57,
+            'vk' => 456239148,
             'path' => 'pr57.png'
         ]);
         DB::table('image_products')->insert([
@@ -1020,6 +1077,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 58,
+            'vk' => 456239149,
             'path' => 'pr58.png'
         ]);
         DB::table('image_products')->insert([
@@ -1036,6 +1094,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 59,
+            'vk' => 456239150,
             'path' => 'pr59.png'
         ]);
         DB::table('image_products')->insert([
@@ -1053,6 +1112,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 60,
+            'vk' => 456239151,
             'path' => 'pr60.png'
         ]);
         DB::table('image_products')->insert([
@@ -1069,6 +1129,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 61,
+            'vk' => 456239152,
             'path' => 'pr61.png'
         ]);
         DB::table('image_products')->insert([
@@ -1085,6 +1146,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 62,
+            'vk' => 456239153,
             'path' => 'pr62.png'
         ]);
         DB::table('image_products')->insert([
@@ -1102,6 +1164,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 63,
+            'vk' => 456239154,
             'path' => 'pr63.png'
         ]);
         DB::table('image_products')->insert([
@@ -1119,6 +1182,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 64,
+            'vk' => 456239155,
             'path' => 'pr64.png'
         ]);
         DB::table('image_products')->insert([
@@ -1140,6 +1204,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 65,
+            'vk' => 456239156,
             'path' => 'pr65.png'
         ]);
         DB::table('image_products')->insert([
@@ -1157,6 +1222,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 66,
+            'vk' => 456239157,
             'path' => 'pr66.png'
         ]);
         DB::table('image_products')->insert([
@@ -1174,6 +1240,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 67,
+            'vk' => 456239158,
             'path' => 'pr67.png'
         ]);
         DB::table('image_products')->insert([
@@ -1190,6 +1257,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 68,
+            'vk' => 456239159,
             'path' => 'pr68.png'
         ]);
         DB::table('image_products')->insert([
@@ -1206,6 +1274,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 69,
+            'vk' => 456239160,
             'path' => 'pr69.png'
         ]);
         DB::table('image_products')->insert([
@@ -1223,6 +1292,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 70,
+            'vk' => 456239161,
             'path' => 'pr70.png'
         ]);
         DB::table('image_products')->insert([
@@ -1240,6 +1310,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 71,
+            'vk' => 456239162,
             'path' => 'pr71.png'
         ]);
         DB::table('image_products')->insert([
@@ -1257,6 +1328,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 72,
+            'vk' => 456239163,
             'path' => 'pr72.png'
         ]);
         DB::table('image_products')->insert([
@@ -1274,6 +1346,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 73,
+            'vk' => 456239164,
             'path' => 'pr73.png'
         ]);
         DB::table('image_products')->insert([
@@ -1290,6 +1363,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 74,
+            'vk' => 456239165,
             'path' => 'pr74.png'
         ]);
         DB::table('image_products')->insert([
@@ -1306,6 +1380,7 @@ Abe-Seika - нежные жевательные конфетки со вкусо
         ]);
         DB::table('images')->insert([
             'id' => 75,
+            'vk' => 456239166,
             'path' => 'pr75.png'
         ]);
         DB::table('image_products')->insert([

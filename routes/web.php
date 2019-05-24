@@ -65,22 +65,29 @@ Route::get('/androidAuth','androidController@auth');
 Route::get('/androidOrders','androidController@orders');
 Route::get('/androidProducts','androidController@products');
 
-Route::get('/vktest',function () {
-    dump(\App\Client::all());
-    dump(\App\Dialog::all());
-    dump(\App\Image::all());
-});
-
-
-
-
-Route::get('/test',function () {
-    $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
-        ->where('orders.client_id','=',1)->where('orders.service_id','=',2)
-        ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-    dump(isset($orders[0]));
-
-});
+//Route::get('/vktest',function () {
+//    dump(\App\Client::all());
+//    dump(\App\Dialog::all());
+//    dump(\App\Image::all());
+//});
+//
+//Route::get('/mage',function () {
+//    $img=\App\Image::all();
+//    foreach ($img as $i){
+//        dump($i->path." - ".$i->vk);
+//    }
+//});
+//
+//
+//
+//
+//Route::get('/test',function () {
+//    $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
+//        ->where('orders.client_id','=',1)->where('orders.service_id','=',2)
+//        ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
+//    dump(isset($orders[0]));
+//
+//});
 
 
 

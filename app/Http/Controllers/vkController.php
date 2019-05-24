@@ -163,11 +163,13 @@ class vkController extends Controller
     public function uploadPhotosToVk(){
         $images=Image::all();
         foreach ($images as $image){
-            $res=$this->getUploadServer();
-            if($res!=null){
-                $res=$this->uploadPhoto($res, $image->path);
-                if ($res!=null){
-                    $this->savePhoto($res, $image->path);
+            if ($image->vk==null){
+                $res=$this->getUploadServer();
+                if($res!=null){
+                    $res=$this->uploadPhoto($res, $image->path);
+                    if ($res!=null){
+                        $this->savePhoto($res, $image->path);
+                    }
                 }
             }
         }
