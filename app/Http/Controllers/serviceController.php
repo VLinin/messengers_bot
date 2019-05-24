@@ -251,10 +251,14 @@ class serviceController extends Controller
                     if (is_numeric($message)){
                         $product=Product::find($message);
                         if(isset($product->id)){
-
+                            $text='';
+                            $d_info=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0];
+                            if($product->category_id!=$d_info->spec_info){
+                                $text='Выбранный товар не из этой категории, но тоже у нас имеется! <br> ';
+                            }
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',$message)->get())[0]->path;
-                            $text=$product->name.' - '.$product->price.'р <br> '.$product->description;
+                            $text=$text.$product->name.' - '.$product->price.'р <br> '.$product->description;
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
