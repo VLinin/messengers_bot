@@ -58,8 +58,8 @@ class sendToVKJob implements ShouldQueue
 //            if(isset($vkQuery[0]->vk)){
 //                $result=$this->sendWithPhoto($vkQuery[0]->vk);
 //            }else{
-                $ph_id=$this->uploadphoto();
-                $result=$this->sendWithPhoto($ph_id);
+//                $ph_id=$this->uploadphoto();
+                $result=$this->sendWithPhoto('456239021');
 //            }
         }else{
             $result=$this->sendWithoutPhoto();
@@ -155,7 +155,7 @@ class sendToVKJob implements ShouldQueue
             )
         )));
         $photo_id=json_decode($result)->response[0]->id;
-        Image::where('path','=',$this->photo)->update(['vk'=>$photo_id]);
+//        Image::where('path','=',$this->photo)->update(['vk'=>$photo_id]);
         return $photo_id;
     }
 
