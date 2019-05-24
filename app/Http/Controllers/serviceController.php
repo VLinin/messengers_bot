@@ -751,7 +751,7 @@ class serviceController extends Controller
                         if($order_info!=null){
 
                             $products=\DB::table('order_products')->join('products','products.id','=','order_products.product_id')
-                                ->where('order_id', '=', 1)->select('products.id','products.name', 'products.price','order_products.amount')->get();
+                                ->where('order_id', '=', $message)->select('products.id','products.name', 'products.price','order_products.amount')->get();
                             $text='Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': <br> ';
                             foreach ($products as $product){
                                 $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. <br> ';
