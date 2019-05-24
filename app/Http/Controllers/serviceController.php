@@ -3,17 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Client;
 use App\Dialog;
-use App\Dialog_stage;
 use App\Jobs\sendToVKJob;
 use App\Order;
 use App\Product;
-use App\Product_feedback;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use VK\Client\VKApiClient;
+
 
 class serviceController extends Controller
 {
@@ -274,7 +270,6 @@ class serviceController extends Controller
                 }else{
                     switch ($payload){
                         case 'back':          //to 3
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 4]);
                             $categories=Category::all();
                             $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                             foreach ($categories as $category){
@@ -564,7 +559,6 @@ class serviceController extends Controller
                 }else{
                     switch ($payload){
                         case 'back':          //to 3
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 6]);
                             $categories=Category::all();
                             $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                             foreach ($categories as $category){
@@ -775,7 +769,6 @@ class serviceController extends Controller
                 }else{
                     switch ($payload){
                         case 'back':          //to 7
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 7, 'pre_stage' => 8]);
                             $text='Вы вернулись в меню информации. Выберите тип информации, которую хотите получить, используя варианты на кнопках!';
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>8,'spec_info'=>null]);
@@ -858,8 +851,8 @@ class serviceController extends Controller
                         case 'back':          //to 8/11
                             $pre_stage=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('pre_stage')->get())[0]->pre_stage;
                             if ($pre_stage == 8){
-//                                Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 8, 'pre_stage' => 7]);
-                                $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0];
+
+                                $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0]->client_id;
                                 $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                                     ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                                     ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
@@ -877,8 +870,8 @@ class serviceController extends Controller
 
                                 }
                             }elseif ($pre_stage == 11){
-//                                Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 11, 'pre_stage' => 2]);
-                                $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0];
+
+                                $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0]->client_id;
                                 $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                                     ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                                     ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
@@ -947,12 +940,6 @@ class serviceController extends Controller
                             'service_id'=>$service_id,
                             'created_at'=>Carbon::now()
                             ]);
-//                            $product_feedback= new Product_feedback();
-//                            $product_feedback->client_id=$dialog_info->client_id;
-//                            $product_feedback->product_id=$dialog_info->spec_info;
-//                            $product_feedback->service_id=$service_id;
-//                            $product_feedback->text_id=$message;
-//                            $product_feedback->save();
 
                             $text='Отзыв принят в обработку! Вы вернулись в главное меню';
                             if($service_id == 2){
