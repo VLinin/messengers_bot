@@ -92,9 +92,9 @@ class serviceController extends Controller
 
                             }
                         }else {
-                            $text = 'Список завершенных заказов: <br> ';
+                            $text = 'Выберите заказ из списка и отправьте его номер. <br> Список заказов: <br> ';
                             foreach ($orders as $order) {
-                                $text = $text . $order->id . ') Заказ от ' . $order->created_at . ' завершен. <br>';
+                                $text = $text . $order->id . ') Заказ от ' . $order->created_at . ' <br>';
                                 if ($order->updated_at != null) {
                                     $text = $text . ' Последнее изменение от ' . $order->updated_at . ' <br> ';
                                 }
@@ -392,7 +392,7 @@ class serviceController extends Controller
                         $d_info=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0];
                         //проверка существования заказа
                         $order=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
-                            ->where('order_statuses.status_id','=',3)->where('orders.client_id','=',10)
+                            ->where('order_statuses.status_id','=',3)->where('orders.client_id','=',$d_info->client_id)
                             ->select('orders.id')->get();;
                             if (isset($order[0])){
                                 $order_id=$order[0]->id;
@@ -425,7 +425,7 @@ class serviceController extends Controller
 
                         break;
                     case 'back':          //to 3
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 5]);
+
                         $categories=Category::all();
                         $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер:<br> ';
                         foreach ($categories as $category){
@@ -448,7 +448,7 @@ class serviceController extends Controller
                             ->where('dialogs.service_id','=',$service_id)
                             ->where('order_statuses.status_id', '=' ,3)
                             ->get();
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>5]);
+
                         if(isset($order[0])){
                             \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                             \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
@@ -480,7 +480,7 @@ class serviceController extends Controller
                             ->where('dialogs.service_id','=',$service_id)
                             ->where('order_statuses.status_id', '=' ,3)
                             ->get();
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
+
                         if(isset($order[0])){
                             \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                             \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
@@ -512,7 +512,7 @@ class serviceController extends Controller
                             ->where('dialogs.service_id','=',$service_id)
                             ->where('order_statuses.status_id', '=' ,3)
                             ->get();
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 5]);
+
                         if(isset($order[0])){
                             \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>2]);
                             $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
@@ -549,7 +549,6 @@ class serviceController extends Controller
                     if (is_numeric($message)) {
                         $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
                         \DB::table('order_products')->where('id', '=', $dialog_info->spec_info)->update(['amount' => $message]);
-//                        Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 6]);
                         $categories=Category::all();
                         $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
@@ -688,7 +687,7 @@ class serviceController extends Controller
             case 7:             //Меню информации
                 switch ($payload){
                     case 'order_info':    //to 8
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 8, 'pre_stage' => 7]);
+//
                         $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0]->client_id;
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
@@ -703,7 +702,7 @@ class serviceController extends Controller
 
                             }
                         }else{
-                            $text='Заказы в обработке: <br> ';
+                            $text='Введите номер заказа для просмотра содержимого. <br> Заказы в обработке: <br> ';
                             foreach ($orders as $order){
                                 $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. <br>';
                                 if($order->updated_at!=null){
@@ -720,7 +719,6 @@ class serviceController extends Controller
 
                         break;
                     case 'product_list':  //to 3
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 3, 'pre_stage' => 7]);
                         $categories=Category::all();
                         $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
