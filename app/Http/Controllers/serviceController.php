@@ -931,24 +931,36 @@ class serviceController extends Controller
             case 10:            //Формирование отзыва
                 #message        //to 2
                 if($payload == null){ //to 10
-                    if ($message!='Отмена' && $message!=null){
-                        $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0]->client_id;
-                        //записываем отзыв
-                        $product_feedback= new Product_feedback();
-                        $product_feedback->client_id=$dialog_info->client_id;
-                        $product_feedback->product_id=$dialog_info->spec_info;
-                        $product_feedback->service_id=$service_id;
-                        $product_feedback->text_id=$message;
-                        $product_feedback->save();
+                    if ($message!='Отмена'){
+                        $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
+                        try{
+                            //записываем отзыв
+                            $product_feedback= new Product_feedback();
+                            $product_feedback->client_id=$dialog_info->client_id;
+                            $product_feedback->product_id=$dialog_info->spec_info;
+                            $product_feedback->service_id=$service_id;
+                            $product_feedback->text_id=$message;
+                            $product_feedback->save();
 
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 10, 'spec_info' => $message]);
-                        $text='Отзыв принят в обработку! Вы вернулись в главное меню';
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
-                        }
-                        if($service_id == 3){
+                            $text='Отзыв принят в обработку! Вы вернулись в главное меню';
+                            if($service_id == 2){
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
+                            }
+                            if($service_id == 3){
 
+                            }
+                        }catch (\mysqli_sql_exception $e){
+                            $text='Ошибка! <br> Вы вернулись в главное меню.';
+                            if($service_id == 2){
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
+                            }
+                            if($service_id == 3){
+
+                            }
                         }
+
+
+
                     }
                 }elseif ($payload=='cancel'){ //to 2
 //                    Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>10]);

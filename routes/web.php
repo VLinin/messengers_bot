@@ -95,11 +95,9 @@ Route::get('/vkOrder',function () {
 //
 Route::get('/test',function () {
 
-    $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
-        ->where('orders.service_id','=',2)
-        ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.status_id' ,'orders.id','orders.client_id')->get();
-    dump($orders->toArray());
-    dump($orders->toArray() == []);
+
+
+    dump(Dialog::where('chat_id', '=', 456)->where('service_id', '=', 2)->select('client_id', 'spec_info')->get()[0]);
 
 });
 
