@@ -415,7 +415,7 @@ class serviceController extends Controller
                             'product_id' => $d_info->spec_info
                         ]);
                         //переход к следующей стадии
-                        $text="Какое количество товара вы хотите добавить в заказ? Напишите число.";
+                        $text="Какое количество товара вы хотите добавить в заказ? Напишите число.".$d_info->spec_info;
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>5,'spec_info'=>$product_order_record]);
                         }
