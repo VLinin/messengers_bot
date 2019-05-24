@@ -32,14 +32,14 @@ class actionController extends Controller
         $service_id=$request->post('service_id');
         switch ($service_id){
             case 2:
-//                $dialog=Dialog::where('client_id','=', $client_id)->where('service_id','=',$service_id)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get();
+                $dialog=Dialog::where('client_id','=', $client_id)->where('service_id','=',$service_id)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get();
                 $url = 'https://api.vk.com/method/messages.send';
                 $params = array(
                     'random_id' => random_int(0,234456),
-                    'peer_id' => 194004680,    // Кому отправляем
-                    'message' =>"test",   // Что отправляем
+                    'peer_id' => $dialog->chat_id,    // Кому отправляем
+                    'message' =>$text,   // Что отправляем
                     'access_token' => "34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
-//                    'keyboard' => json_encode(vkController::makeKeyboardVK($dialog->dialog_stage_id, $dialog->chat_id, $service_id), JSON_UNESCAPED_UNICODE),
+//                    'keyboard' => json_encode(vkController::makeKeyboardVK(1, $dialog->chat_id, $service_id), JSON_UNESCAPED_UNICODE),
                     'v' => '5.95',
                 );
 
