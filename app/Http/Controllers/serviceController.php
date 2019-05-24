@@ -415,7 +415,6 @@ class serviceController extends Controller
                             'product_id' => $d_info->spec_info
                         ]);
                         //переход к следующей стадии
-//                        Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 6, 'pre_stage' => 5, 'spec_info' => $product_order_record]);
                         $text="Какое количество товара вы хотите добавить в заказ? Напишите число.";
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>5,'spec_info'=>$product_order_record]);
@@ -536,7 +535,7 @@ class serviceController extends Controller
                     default:
                         $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                         if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>null,'spec_info'=>null]);
+                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>null,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
                         }
                         if($service_id == 3){
 
@@ -676,7 +675,7 @@ class serviceController extends Controller
                         default:
                             $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                             if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>null,'spec_info'=>null]);
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>6,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
                             }
                             if($service_id == 3){
 
