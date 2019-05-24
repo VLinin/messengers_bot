@@ -243,7 +243,7 @@ class serviceController extends Controller
 
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',$message)->get())[0]->path;
-                            $text=$product->name.' - '.$product->price.'р <br> '.$product->decription.' <br>'.$image_path;
+                            $text=$product->name.' - '.$product->price.'р <br> '.$product->description.' <br>'.$image_path;
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
