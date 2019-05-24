@@ -73,7 +73,7 @@ class vkController extends Controller
                 $dialog->save();
                 $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
                         Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
-                sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1,$peer,2));
+                sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1,$peer,2),['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
                 return 0;
             }
         }else{
@@ -100,7 +100,7 @@ class vkController extends Controller
                 }else{
                     $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
                         Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
-                    sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1,$peer,2));
+                    sendToVKJob::dispatch($peer, $text, null, $this->makeKeyboardVK(1,$peer,2),['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
                     return 0;
                 }
             }
