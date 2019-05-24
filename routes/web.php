@@ -75,6 +75,12 @@ Route::get('/vkDialog',function () {
 });
 Route::get('/vkOrder',function () {
     dump(\App\Order::all());
+    $client_id=(Dialog::where('chat_id','=',194004680)->where('service_id','=',2)->select('client_id')->get())[0];
+    dump($client_id);
+    $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
+        ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',2)
+        ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
+    dump($orders);
 });
 //
 //Route::get('/mage',function () {

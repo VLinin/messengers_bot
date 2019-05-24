@@ -82,7 +82,7 @@ class serviceController extends Controller
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                             ->where('order_statuses.status_id','=',1)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
                         if ($orders->toArray() == []){
-                            $text='Список заказов пуст. 
+                            $text='Список завершенных заказов пуст. 
                             Пожалуйста, воспользуйтесь кнопкой для возвращения к главному меню!';
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>2,'spec_info'=>null]);
@@ -684,7 +684,7 @@ class serviceController extends Controller
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                             ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
                         if ($orders->toArray() == []){
-                            $text='Список заказов пуст. 
+                            $text='Список заказов в выполнении пуст. 
                             Пожалуйста, воспользуйтесь кнопкой для возвращения к главному меню!';
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>7,'spec_info'=>null]);
