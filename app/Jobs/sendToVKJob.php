@@ -53,15 +53,11 @@ class sendToVKJob implements ShouldQueue
     {
         if($this->photo != null){
             $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
-            if($vkQuery[0]->vk != null){
+            if(isset($vkQuery[0]->vk)){
                 $result=$this->sendWithPhoto($vkQuery[0]->vk);
             }else{
-                $ph_path=$this->uploadphoto();
-                if($ph_path!=null){
-                    $result=$this->sendWithPhoto($ph_path);
-                }else{
-                    $result=$this->sendWithoutPhoto();
-                }
+                $ph_id=$this->uploadphoto();
+                $result=$this->sendWithPhoto($ph_id);
             }
         }else{
             $result=$this->sendWithoutPhoto();
@@ -71,14 +67,14 @@ class sendToVKJob implements ShouldQueue
         }
     }
 
-    public function sendWithPhoto($path){
+    public function sendWithPhoto($ph_id){
         $url = 'https://api.vk.com/method/messages.send';
         $params = array(
             'random_id' => random_int(0,234456),
             'peer_id' => $this->id,    // Кому отправляем
             'message' =>$this->text,   // Что отправляем
-            'attachment' => 'photo-182538296_'.$path,
-            'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'attachment' => 'photo-182538296_'.$ph_id,
+            'access_token' => $this->token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
             'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
             'v' => '5.95',
         );
@@ -152,7 +148,7 @@ class sendToVKJob implements ShouldQueue
             )
         )));
         $photo_id=json_decode($result)->response[0]->id;
-        Image::where('path','=',$this->photo)->update('vk',$photo_id);
+        Image::where('path','=',$this->photo)->update(['vk'=>$photo_id]);
         return $photo_id;
     }
 
@@ -162,7 +158,7 @@ class sendToVKJob implements ShouldQueue
             'random_id' => random_int(0,234456),
             'peer_id' => $this->id,    // Кому отправляем
             'message' =>$this->text,   // Что отправляем
-            'access_token' => '34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913',  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
+            'access_token' => $this->token,  // access_token можно вбить хардкодом, если работа будет идти из под одного юзера
             'keyboard' => json_encode($this->keyboard, JSON_UNESCAPED_UNICODE),
             'v' => '5.95',
         );
