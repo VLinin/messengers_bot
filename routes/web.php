@@ -70,6 +70,34 @@ Route::get('/vktest',function () {
     dump(\App\Dialog::all());
 });
 
+Route::get('/testGetServer',function () {
+
+    $url = 'https://api.vk.com/method/photos.getUploadServer';
+
+    //получаем адресс сервиса для загрузки фото
+    $params = array(
+        "group_id" => "182538296",
+        "album_id" => "264876553",
+        'access_token' => "365c7ec1ffc49087c9d4bb749e563b5cc7ea8552649ed52c4c7385848684ba6f229099b09adf306764169",
+        'v' => '5.95',
+    );
+    // В $result вернется id отправленного сообщения
+    $result = file_get_contents($url, false, stream_context_create(array(
+        'http' => array(
+            'method'  => 'POST',
+            'header'  => 'Content-type: application/x-www-form-urlencoded',
+            'content' => http_build_query($params)
+        )
+    )));
+    dump($result);
+    if(isset(json_decode($result)->response)){
+        return json_decode($result)->response->upload_url;
+    }else{
+        return null;
+    }
+});
+
+
 Route::get('/test',function () {
 
     $url = 'https://api.vk.com/method/photos.getUploadServer';
