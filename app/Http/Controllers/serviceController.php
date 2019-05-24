@@ -10,6 +10,7 @@ use App\Jobs\sendToVKJob;
 use App\Order;
 use App\Product;
 use App\Product_feedback;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use VK\Client\VKApiClient;
@@ -392,7 +393,8 @@ class serviceController extends Controller
                         //создание заказа
                         $order_id=\DB::table('orders')->insertGetId([
                             'service_id' => $service_id,
-                            'client_id' => $d_info->client_id
+                            'client_id' => $d_info->client_id,
+                            'created_at' => Carbon::now()
                         ]);
                         \DB::table('order_statuses')->insert([
                            'order_id' => $order_id,
@@ -930,7 +932,7 @@ class serviceController extends Controller
                 #message        //to 2
                 if($payload == null){ //to 10
                     if ($message!='Отмена' && $message!=null){
-                        $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
+                        $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0]->client_id;
                         //записываем отзыв
                         $product_feedback= new Product_feedback();
                         $product_feedback->client_id=$dialog_info->client_id;
