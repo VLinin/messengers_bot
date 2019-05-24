@@ -33,25 +33,25 @@ class actionController extends Controller
         switch ($service_id){
             case 2:
                 $dialog=Dialog::where('client_id','=', $client_id)->where('service_id','=',$service_id)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get();
-                dump($dialog);
-//                $url = 'https://api.vk.com/method/messages.send';
-//                $params = array(
-//                    'random_id' => random_int(0,234456),
-//                    'peer_id' => $dialog->chat_id,    // Кому отправляем
-//                    'message' =>$text,   // Что отправляем
-//                    'access_token' => "34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
-////                    'keyboard' => json_encode(vkController::makeKeyboardVK(1, $dialog->chat_id, $service_id), JSON_UNESCAPED_UNICODE),
-//                    'v' => '5.95',
-//                );
-//
-//                // В $result вернется id отправленного сообщения
-//                $result = file_get_contents($url, false, stream_context_create(array(
-//                    'http' => array(
-//                        'method'  => 'POST',
-//                        'header'  => 'Content-type: application/x-www-form-urlencoded',
-//                        'content' => http_build_query($params)
-//                    )
-//                )));
+
+                $url = 'https://api.vk.com/method/messages.send';
+                $params = array(
+                    'random_id' => random_int(0,234456),
+                    'peer_id' => $dialog[0]->chat_id,    // Кому отправляем
+                    'message' =>$text,   // Что отправляем
+                    'access_token' => "34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913",
+//                    'keyboard' => json_encode(vkController::makeKeyboardVK(1, $dialog->chat_id, $service_id), JSON_UNESCAPED_UNICODE),
+                    'v' => '5.95',
+                );
+
+                // В $result вернется id отправленного сообщения
+                $result = file_get_contents($url, false, stream_context_create(array(
+                    'http' => array(
+                        'method'  => 'POST',
+                        'header'  => 'Content-type: application/x-www-form-urlencoded',
+                        'content' => http_build_query($params)
+                    )
+                )));
 //                sendToVKJob::dispatch($dialog->chat_id, $text, null, vkController::makeKeyboardVK($dialog->dialog_stage_id, $dialog->chat_id, $service_id),['next_stage'=>$dialog->dialog_stage_id,'pre_stage'=>$dialog->pre_stage,'spec_info'=>$dialog->spec_info]);
 //                \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
                 break;
