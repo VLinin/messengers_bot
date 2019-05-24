@@ -70,7 +70,8 @@ Route::get('/vktest',function () {
 });
 
 Route::get('/test',function () {
-
+    $product=Product::find("8");
+    echo $product->price." - <br> ".$product->description;
 });
 
 

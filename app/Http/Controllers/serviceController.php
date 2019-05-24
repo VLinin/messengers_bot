@@ -240,8 +240,9 @@ class serviceController extends Controller
                     if (is_numeric($message)){
                         $product=Product::find($message);
                         if(isset($product->id)){
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 5, 'pre_stage' => 4, 'spec_info' => $message]);
-                            $text=$product->name.' - '.$product->price.' <br> '.$product->decription;
+//
+                            $text=$product->name.' - '.$product->price.' 
+                                   '.$product->decription;
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',$message)->get())[0]->path;
                             if($service_id == 2){
