@@ -421,7 +421,7 @@ class serviceController extends Controller
                             'product_id' => $d_info->spec_info
                         ]);
                         //переход к следующей стадии
-                        $text="Какое количество товара вы хотите добавить в заказ? Напишите число.".$d_info->spec_info;
+                        $text="Какое количество товара вы хотите добавить в заказ? Напишите число.";
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>5,'spec_info'=>$product_order_record]);
                         }
@@ -556,7 +556,7 @@ class serviceController extends Controller
                         $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
                         \DB::table('order_products')->where('id', '=', $dialog_info->spec_info)->update(['amount' => $message]);
                         $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                        $text='Товар добавлен в количестве '.$message.'шт. <br> Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
                             $text=$text.$category->id.") ".$category->name.'. <br> ';
                         }
