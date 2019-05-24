@@ -728,7 +728,7 @@ class serviceController extends Controller
                         break;
                     case 'product_list':  //to 3
                         $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                        $text='Выберите категорию из списка и отправите её номер: <br> ';
                         foreach ($categories as $category){
                             $text=$text.$category->id.") ".$category->name.'. <br> ';
                         }
@@ -755,27 +755,38 @@ class serviceController extends Controller
                 #order          //to 9
                 if($payload == null){ //to 9
                     if (is_numeric($message)) {
-                        $order_info=Order::find($message);
-                        if($order_info!=null){
+                        $client_id = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id')->get())[0]->client_id;
+                        $order_info = Order::find($message);
+                        if ($client_id == $order_info->client_id) {
+                            if ($order_info != null) {
 
-                            $products=\DB::table('order_products')->join('products','products.id','=','order_products.product_id')
-                                ->where('order_id', '=', $message)->select('products.id','products.name', 'products.price','order_products.amount')->get();
-                            $text='Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': <br> ';
-                            foreach ($products as $product){
-                                $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. <br> ';
-                            }
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9,$from_id,$service_id),['next_stage'=>9,'pre_stage'=>8,'spec_info'=>$message]);
-                            }
-                            if($service_id == 3){
+                                $products = \DB::table('order_products')->join('products', 'products.id', '=', 'order_products.product_id')
+                                    ->where('order_id', '=', $message)->select('products.id', 'products.name', 'products.price', 'order_products.amount')->get();
+                                $text = 'Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №' . $order_info->id . ' от ' . $order_info->created_at . ': <br> ';
+                                foreach ($products as $product) {
+                                    $text = $text . $product->id . ') ' . $product->name . ' - ' . $product->price . 'р ' . $product->amount . 'шт. <br> ';
+                                }
+                                if ($service_id == 2) {
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
+                                }
+                                if ($service_id == 3) {
 
+                                }
+                            } else {
+                                $text = 'У вас нет такого  заказа! Повторите выбор.';
+                                if ($service_id == 2) {
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
+                                }
+                                if ($service_id == 3) {
+
+                                }
                             }
                         }else{
-                            $text='У вас нет такого  заказа! Повторите выбор.';
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>null,'spec_info'=>null]);
+                            $text = 'У вас нет такого  заказа! Повторите выбор.';
+                            if ($service_id == 2) {
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
                             }
-                            if($service_id == 3){
+                            if ($service_id == 3) {
 
                             }
                         }
@@ -801,7 +812,7 @@ class serviceController extends Controller
                                 ->where('dialogs.service_id','=',$service_id)
                                 ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>8]);
+
                             if(isset($order[0])){
                                 \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                                 \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
@@ -914,7 +925,7 @@ class serviceController extends Controller
                                 ->where('dialogs.service_id','=',$service_id)
                                 ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
-//
+
                             if(isset($order[0])){
                                 \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                                 \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
@@ -986,39 +997,42 @@ class serviceController extends Controller
 
             case 11:            //Вывод завершенных заказов
                 #order          //to 9
-                if($payload == null){ //to 9
+                if($payload == null) { //to 9
                     if (is_numeric($message)) {
-                        $order_info=Order::find($message);
-                        if($order_info!=null){
+                        $client_id = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id')->get())[0]->client_id;
+                        $order_info = Order::find($message);
+                        if ($client_id == $order_info->client_id) {
+                            if ($order_info != null) {
 
-                            $products=\DB::table('order_products')->join('products','products.id','=','order_products.product_id')
-                                ->where('order_id', '=', $message)->select('products.id','products.name', 'products.price','order_products.amount')->get();
-                            $text='Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №'.$order_info->id.' от '.$order_info->created_at.': <br> ';
-                            foreach ($products as $product){
-                                $text=$text.$product->id.') '.$product->name.' - '.$product->price.'р '.$product->amount.'шт. <br> ';
+                                $products = \DB::table('order_products')->join('products', 'products.id', '=', 'order_products.product_id')
+                                    ->where('order_id', '=', $message)->select('products.id', 'products.name', 'products.price', 'order_products.amount')->get();
+                                $text = 'Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №' . $order_info->id . ' от ' . $order_info->created_at . ': <br> ';
+                                foreach ($products as $product) {
+                                    $text = $text . $product->id . ') ' . $product->name . ' - ' . $product->price . 'р ' . $product->amount . 'шт. <br> ';
+                                }
+                                if ($service_id == 2) {
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 11, 'spec_info' => $message]);
+                                }
+                                if ($service_id == 3) {
+
+                                }
+                            } else {
+                                $text = 'У вас нет такого  заказа! Повторите выбор.';
+                                if ($service_id == 2) {
+                                    sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => null, 'spec_info' => null]);
+                                }
+                                if ($service_id == 3) {
+
+                                }
                             }
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9,$from_id,$service_id),['next_stage'=>9,'pre_stage'=>11,'spec_info'=>$message]);
+                        } else {
+                            $text = 'У вас нет такого  заказа! Повторите выбор.';
+                            if ($service_id == 2) {
+                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => null, 'spec_info' => null]);
                             }
-                            if($service_id == 3){
+                            if ($service_id == 3) {
 
                             }
-                        }else{
-                            $text='У вас нет такого  заказа! Повторите выбор.';
-                            if($service_id == 2){
-                                sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id),['next_stage'=>11,'pre_stage'=>null,'spec_info'=>null]);
-                            }
-                            if($service_id == 3){
-
-                            }
-                        }
-                    }else{
-                        $text='У вас нет такого  заказа! Повторите выбор.';
-                        if($service_id == 2){
-                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id),['next_stage'=>11,'pre_stage'=>null,'spec_info'=>null]);
-                        }
-                        if($service_id == 3){
-
                         }
                     }
                 }elseif ($payload=='cancel'){ //to 2
