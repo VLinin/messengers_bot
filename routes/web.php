@@ -74,7 +74,7 @@ Route::get('/vkDialog',function () {
     dump(\App\Dialog::all());
 });
 Route::get('/vkOrder',function () {
-    dump(\App\Dialog::all());
+    dump(\App\Order::all());
 });
 //
 //Route::get('/mage',function () {
