@@ -151,11 +151,11 @@ M&M\'s Chocolate Cocktail- милкшейк со вкусом шоколада �
         ]);
         DB::table('images')->insert([
             'id' => 8,
+            'vk' => 456239099,
             'path' => 'pr8.png'
         ]);
         DB::table('image_products')->insert([
             'product_id' => 8,
-            'vk' => 456239099,
             'image_id' => 8
         ]);
 
