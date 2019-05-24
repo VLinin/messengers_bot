@@ -53,13 +53,14 @@ class sendToVKJob implements ShouldQueue
     public function handle()
     {
         if($this->photo != null){
-            $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
-            if(isset($vkQuery[0]->vk)){
-                $result=$this->sendWithPhoto($vkQuery[0]->vk);
-            }else{
-                $ph_id=$this->uploadphoto();
-                $result=$this->sendWithPhoto($ph_id);
-            }
+            $result=$this->sendWithoutPhoto();
+//            $vkQuery=Image::where('path','=',$this->photo)->select('vk')->get();
+//            if(isset($vkQuery[0]->vk)){
+//                $result=$this->sendWithPhoto($vkQuery[0]->vk);
+//            }else{
+//                $ph_id=$this->uploadphoto();
+//                $result=$this->sendWithPhoto($ph_id);
+//            }
         }else{
             $result=$this->sendWithoutPhoto();
         }
