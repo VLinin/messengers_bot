@@ -20,7 +20,7 @@ class telegramController extends Controller
 //        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
         $response = array(
             'chat_id' =>  331906939,
-            'text' => $request->getContent(),
+            'text' => 'дошло'//dump($request->getContent()),
         );
 
         $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
