@@ -63,7 +63,7 @@ class telegramController extends Controller
             ->get();
         if(!isset($dialog_query[0])){
             if (is_numeric($this->message) && strlen($this->message)==11){
-                $client=Client::where('phone','=',$data->object->text)->get();
+                $client=Client::where('phone','=',$this->message)->get();
                 if(isset($client[0])){
                     $dialog= new Dialog();
                     $dialog->dialog_stage_id=1;
@@ -99,7 +99,7 @@ class telegramController extends Controller
             if(isset($dialog_query[0]->client)){
                 return $dialog_query[0]->stage;
             }else{
-                if (is_numeric($data->object->text) && strlen($data->object->text)==11){
+                if (is_numeric($this->message) && strlen($this->message)==11){
                     $client=Client::where('phone','=',$this->message)->get();
                     if(isset($client[0])){
                         $dlg=Dialog::find($dialog_query[0]->id);
