@@ -82,16 +82,16 @@ Route::get('/test',function () {
         $response = array(
             'chat_id' =>  331906939,
             'text' => 'is test',
-            'reply_markup' => [
-                [
-                    "keyboard" => [
-                        "text" => 'text',
-                        "callback_data" =>'text'
-                    ],
-                    "one_time_keyboard" => true,
-                    "resize_keyboard" => true
-                ]
-            ]
+//            'reply_markup' => [
+//                [
+//                    "keyboard" => [
+//                        "text" => 'text',
+//                        "callback_data" =>'text'
+//                    ],
+//                    "one_time_keyboard" => true,
+//                    "resize_keyboard" => true
+//                ]
+//            ]
         );
 
 
