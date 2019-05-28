@@ -48,10 +48,10 @@ class telegramController extends Controller
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $stage=$this->dialogTest($peer, $data);
-        if ($stage!=0){
-            serviceController::stageProcess($stage, $data, 2);
-        }
+//        $stage=$this->dialogTest($peer, $data);
+//        if ($stage!=0){
+//            serviceController::stageProcess($stage, $data, 2);
+//        }
     }
 
     public function dialogTest($peer, $data){
