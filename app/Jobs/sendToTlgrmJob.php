@@ -53,7 +53,7 @@ class sendToTlgrmJob implements ShouldQueue
         curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
-        dump(json_decode($result)->ok);
+
 
         if(json_decode($result)->ok){
             if($this->photo!=null){
@@ -71,12 +71,12 @@ class sendToTlgrmJob implements ShouldQueue
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                curl_exec($ch);
+                $result = curl_exec($ch);
 
-                Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
+                Dialog::where('chat_id','=',$this->id)->where('service_id','=',3)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
 
             }else{
-                Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
+                Dialog::where('chat_id','=',$this->id)->where('service_id','=',3)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
             }
         }
     }
