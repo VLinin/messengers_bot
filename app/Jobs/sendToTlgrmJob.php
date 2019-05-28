@@ -37,11 +37,19 @@ class sendToTlgrmJob implements ShouldQueue
     public function handle()
     {
         $proxy='64.118.88.39:19485';
-        $response = array(
-            'chat_id' =>  $this->id,
-            'text' => $this->text.'test',
-//            'reply_markup' => $this->keyboard
-        );
+        if($this->keyboard==null){
+            $response = array(
+                'chat_id' =>  $this->id,
+                'text' => $this->text.'test',
+            );
+        }else{
+            $response = array(
+                'chat_id' =>  $this->id,
+                'text' => $this->text.'test',
+                'reply_markup' => $this->keyboard
+            );
+        }
+
 
         $ch = curl_init();
         $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
