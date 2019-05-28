@@ -20,18 +20,18 @@ class telegramController extends Controller
         https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
 
 //        $result = curl_exec($ch);
-        if (isset($data->message)) {
-            // получаем id чата
-            $peer = $data->message->chat->id;
-            // текстовое значение
-            $this->message = $data->message->text;
-            $payload=null;
-            // если это объект callback_query
-        } elseif (isset($data->callback_query)) {
-            $peer = $data->callback_query->message->chat->id;
-            $payload = $data->callback_query->data;
-            $this->message = null;
-        }
+//        if (isset($data->message)) {
+//            // получаем id чата
+//            $peer = $data->message->chat->id;
+//            // текстовое значение
+//            $this->message = $data->message->text;
+//            $payload=null;
+//            // если это объект callback_query
+//        } elseif (isset($data->callback_query)) {
+//            $peer = $data->callback_query->message->chat->id;
+//            $payload = $data->callback_query->data;
+//            $this->message = null;
+//        }
         $proxy='64.118.88.39:19485';
         $response = array(
             'chat_id' =>  331906939,
