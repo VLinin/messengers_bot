@@ -75,17 +75,7 @@ Route::get('/vkDialog',function () {
 Route::get('/vkOrder',function () {
     dump(\App\Order::all());
 });
-//
-//Route::get('/mage',function () {
-//    $img=\App\Image::all();
-//    foreach ($img as $i){
-//        dump($i->path." - ".$i->vk);
-//    }
-//});
-//
-//
-//
-//
+
 Route::get('/test',function () {
 
 

@@ -11,32 +11,46 @@ use Illuminate\Routing\Controller;
 
 class telegramController extends Controller
 {
-    public static $telgrToken='845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k';
+    public  $telgrToken='845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k';
     public  $message;
     public function index(Request $request){
 
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
         $data = json_decode($request->getContent());
-        // если это просто объект message
-        if (array_key_exists('message', $data)) {
-            // получаем id чата
-            $peer = $data['message']['chat']['id'];
-            // текстовое значение
-            $this->message = $data['message']['text'];
-            $payload=null;
-            // если это объект callback_query
-        } elseif (array_key_exists('callback_query', $data)) {
-            $peer = $data['callback_query']['message']['chat']['id'];
-            $payload = $data['callback_query']['data'];
-            $this->message = null;
-        }
 
-        $stage=$this->dialogTest($peer, $data);
-        if ($stage!=0){
-            serviceController::stageProcess($stage, $data, 2);
-        }
-        return 'ok';
+        $response = array(
+            'chat_id' =>  ['message']['chat']['id'],
+            'text' => $data,
+        );
+
+        $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $result_message=curl_exec($ch);
+        curl_close($ch);
+//        // если это просто объект message
+//        if (array_key_exists('message', $data)) {
+//            // получаем id чата
+//            $peer = $data['message']['chat']['id'];
+//            // текстовое значение
+//            $this->message = $data['message']['text'];
+//            $payload=null;
+//            // если это объект callback_query
+//        } elseif (array_key_exists('callback_query', $data)) {
+//            $peer = $data['callback_query']['message']['chat']['id'];
+//            $payload = $data['callback_query']['data'];
+//            $this->message = null;
+//        }
+//
+//        $stage=$this->dialogTest($peer, $data);
+//        if ($stage!=0){
+//            serviceController::stageProcess($stage, $data, 2);
+//        }
+//        return 'ok';
     }
+
     public function dialogTest($peer, $data){
         $dialog_query=\DB::table('dialogs')
             ->where('dialogs.chat_id','=',$peer)
@@ -49,7 +63,7 @@ class telegramController extends Controller
                 if(isset($client[0])){
                     $dialog= new Dialog();
                     $dialog->dialog_stage_id=1;
-                    $dialog->service_id=2;
+                    $dialog->service_id=3;
                     $dialog->chat_id=$peer;
                     $dialog->client_id=$client[0]->id;
                     $dialog->save();
@@ -60,7 +74,7 @@ class telegramController extends Controller
                     ]);
                     $dialog= new Dialog();
                     $dialog->dialog_stage_id=1;
-                    $dialog->service_id=2;
+                    $dialog->service_id=3;
                     $dialog->chat_id=$peer;
                     $dialog->client_id=$clnt_id;
                     $dialog->save();
@@ -69,7 +83,7 @@ class telegramController extends Controller
             }else{
                 $dialog= new Dialog();
                 $dialog->dialog_stage_id=1;
-                $dialog->service_id=2;
+                $dialog->service_id=3;
                 $dialog->chat_id=$peer;
                 $dialog->save();
                 $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
