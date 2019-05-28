@@ -141,7 +141,7 @@ class telegramController extends Controller
             }
         }
 
-        $resp = array("keyboard" => $kbrd,"resize_keyboard" => true,"one_time_keyboard" => true);
+        $resp = array("inline_keyboard" => $kbrd,"resize_keyboard" => true,"one_time_keyboard" => true);
         $reply = json_encode($resp);
         return $reply;
     }
