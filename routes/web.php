@@ -79,19 +79,22 @@ Route::get('/vkOrder',function () {
 Route::get('/test',function () {
     $proxy='64.118.88.39:19485';
 
+    $keyboard = array(
+        array("[Destaques]","[Campinas e RMC]","[esportes]"),
+        array("[Destaques2]","[Campinas e RMC2]","[esportes2]"),
+    );
+    $resp = array("keyboard" => $keyboard,"resize_keyboard" => true,"one_time_keyboard" => true);
+    $reply = json_encode($resp);
+
+    $inline_button1 = array("text"=>"Google url","callback_data"=>"http://google.com");
+    $inline_button2 = array("text"=>"work plz","callback_data"=>'/plz');
+    $inline_keyboard = [[$inline_button1,$inline_button2]];
+    $keyboard=array("inline_keyboard"=>$inline_keyboard,"inline_keyboard"=>$inline_keyboard);
+    $replyMarkup = json_encode($keyboard);
         $response = array(
             'chat_id' =>  331906939,
             'text' => 'is test',
-//            'reply_markup' => [
-//                [
-//                    "keyboard" => [
-//                        "text" => 'text',
-//                        "callback_data" =>'text'
-//                    ],
-//                    "one_time_keyboard" => true,
-//                    "resize_keyboard" => true
-//                ]
-//            ]
+            'reply_markup' => \App\Http\Controllers\telegramController::makeKeyboardTlgrm(7,331906939,3)
         );
 
 

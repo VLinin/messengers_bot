@@ -18,7 +18,6 @@ class telegramController extends Controller
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
         $data = json_decode($request->getContent());
 //        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
-//        $proxy='64.118.88.39:19485';
 
         if (isset($data->message)) {
             // получаем id чата
@@ -32,21 +31,6 @@ class telegramController extends Controller
             $payload = $data->callback_query->data;
             $this->message = null;
         }
-//        $response = array(
-//            'chat_id' =>  331906939,
-//            'text' =>$data->message->chat->id.' '.$peer.' '.$this->message,
-////            'reply_markup' => $this->keyboard
-//        );
-//        $ch = curl_init();
-//        $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
-//        curl_setopt($ch, CURLOPT_URL, $url);
-//        curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
-//        curl_setopt($ch, CURLOPT_HEADER, false);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//        curl_setopt($ch, CURLOPT_POST, 1);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
-//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-//        $result = curl_exec($ch);
 
         $stage=$this->dialogTest($peer, $data);
         if ($stage!=0){
@@ -110,7 +94,6 @@ class telegramController extends Controller
                         $clnt_id=\DB::table('clients')->insertGetId([
                             "phone" => $this->message
                         ]);
-                        $dialog= new Dialog();
                         $dlg=Dialog::find($dialog_query[0]->id);
                         $dlg->client_id=$clnt_id;
                         $dlg->save();
@@ -127,11 +110,7 @@ class telegramController extends Controller
     }
 
     public static function makeKeyboardTlgrm($stage_id,$from_id,$service_id){
-        $kbrd=$keyboard = [
-            "keyboard" => [],
-            "one_time_keyboard" => true,
-            "resize_keyboard" => true
-        ];
+        $kbrd=[];
         $query=Dialog_stage::find($stage_id)->dialog_buttons()->get();
         foreach ($query as $btn){
             if($btn->id==6 || $btn->id==7){
@@ -145,7 +124,7 @@ class telegramController extends Controller
                     ->where('order_statuses.status_id', '=' ,3)
                     ->get();
                 if(isset($order[0])){
-                    $kbrd['keyboard'][]=[
+                    $kbrd[]=[
                         [
                             "text" => $btn->sign_text,
                             "callback_data" =>$btn->payload
@@ -153,7 +132,7 @@ class telegramController extends Controller
                     ];
                 }
             }else{
-                $kbrd['keyboard'][]=[
+                $kbrd[]=[
                     [
                         "text" => $btn->sign_text,
                         "callback_data" =>$btn->payload
@@ -161,7 +140,10 @@ class telegramController extends Controller
                 ];
             }
         }
-        return $kbrd;
+
+        $resp = array("keyboard" => $kbrd,"resize_keyboard" => true,"one_time_keyboard" => true);
+        $reply = json_encode($resp);
+        return $reply;
     }
 
 

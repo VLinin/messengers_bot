@@ -98,7 +98,6 @@ class vkController extends Controller
                         $clnt_id=\DB::table('clients')->insertGetId([
                             "phone" => $data->object->text
                         ]);
-                        $dialog= new Dialog();
                         $dlg=Dialog::find($dialog_query[0]->id);
                         $dlg->client_id=$clnt_id;
                         $dlg->save();
