@@ -17,10 +17,10 @@ class telegramController extends Controller
 
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
         $data = json_decode($request->getContent());
-
+//        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
         $response = array(
-            'chat_id' =>  ['message']['chat']['id'],
-            'text' => $data,
+            'chat_id' =>  331906939,
+            'text' => $request->getContent(),
         );
 
         $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
