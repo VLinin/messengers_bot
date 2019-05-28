@@ -40,7 +40,7 @@ class sendToTlgrmJob implements ShouldQueue
         $response = array(
             'chat_id' =>  $this->id,
             'text' => $this->text,
-            'reply_markup' => $this->keyboard
+//            'reply_markup' => $this->keyboard
         );
 
         $ch = curl_init();
