@@ -36,12 +36,12 @@ class sendToTlgrmJob implements ShouldQueue
         if($this->keyboard==null){
             $response = array(
                 'chat_id' =>  $this->id,
-                'text' => $this->text.'test',
+                'text' => $this->text,
             );
         }else{
             $response = array(
                 'chat_id' =>  $this->id,
-                'text' => $this->text.'test',
+                'text' => $this->text,
                 'reply_markup' => $this->keyboard
             );
         }
