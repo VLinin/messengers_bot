@@ -175,8 +175,8 @@ class telegramController extends Controller
             );
         }else{
             $response = array(
-                'chat_id' =>  $from_id,
-                'text' => $text.'test'
+                'chat_id' =>  331906939,
+                'text' => $text.' '.$from_id
             );
         }
 
