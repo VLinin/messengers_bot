@@ -57,7 +57,7 @@ class telegramController extends Controller
     public function dialogTest($peer, $data){
         $dialog_query=\DB::table('dialogs')
             ->where('dialogs.chat_id','=',$peer)
-            ->where('dialogs.service_id','=',2)
+            ->where('dialogs.service_id','=',3)
             ->select('dialogs.id','dialogs.client_id as client','dialogs.dialog_stage_id as stage')
             ->get();
         if(!isset($dialog_query[0])){
