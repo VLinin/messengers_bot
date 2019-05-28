@@ -11,7 +11,7 @@ use Illuminate\Routing\Controller;
 
 class telegramController extends Controller
 {
-    public  $telgrToken='845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k';
+    public  $token='845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k';
     public  $message;
     public function index(Request $request){
 
