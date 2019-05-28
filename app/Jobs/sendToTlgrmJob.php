@@ -54,13 +54,7 @@ class sendToTlgrmJob implements ShouldQueue
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
         dump(json_decode($result)->ok);
-//        $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
-//        curl_setopt($ch, CURLOPT_POST, 1);
-//        curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
-//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($ch, CURLOPT_HEADER, false);
-//        $result_message=curl_exec($ch);
-//        curl_close($ch);
+
         if(json_decode($result)->ok){
             if($this->photo!=null){
                 $response = array(
@@ -77,7 +71,7 @@ class sendToTlgrmJob implements ShouldQueue
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                $result = curl_exec($ch);
+                curl_exec($ch);
 
                 Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
 
