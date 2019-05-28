@@ -14,7 +14,7 @@ class telegramController extends Controller
     public  $token='845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k';
     public  $message;
     public function index(Request $request){
-
+        echo http_response_code(200);
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
         $data = json_decode($request->getContent());
 //        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
@@ -36,7 +36,7 @@ class telegramController extends Controller
         if ($stage!=0){
             serviceController::stageProcess($stage, $data, 3);
         }
-        return http_response_code(200);
+        echo http_response_code(200);
     }
 
     public function dialogTest($peer, $data){
