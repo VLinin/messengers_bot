@@ -192,30 +192,30 @@ class telegramController extends Controller
         $result = curl_exec($ch);
 
 
-        if(json_decode($result)->ok){
-            if($photo!=null){
-                $response = array(
-                    'chat_id' => $from_id,
-                    'photo' => curl_file_create(__DIR__ . '/image.png')
-                );
-
-                $ch = curl_init();
-                $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
-                curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
-                curl_setopt($ch, CURLOPT_HEADER, false);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                $result = curl_exec($ch);
-
-                Dialog::where('chat_id','=',$from_id)->where('service_id','=',3)->update(['dialog_stage_id' => $dialoginfo['next_stage'], 'pre_stage' => $dialoginfo['pre_stage'],'spec_info' => $dialoginfo['spec_info']]);
-
-            }else{
-                Dialog::where('chat_id','=',$from_id)->where('service_id','=',3)->update(['dialog_stage_id' => $dialoginfo['next_stage'], 'pre_stage' => $dialoginfo['pre_stage'],'spec_info' => $dialoginfo['spec_info']]);
-            }
-        }
+//        if(json_decode($result)->ok){
+//            if($photo!=null){
+//                $response = array(
+//                    'chat_id' => $from_id,
+//                    'photo' => curl_file_create(__DIR__ . '/image.png')
+//                );
+//
+//                $ch = curl_init();
+//                $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
+//                curl_setopt($ch, CURLOPT_URL, $url);
+//                curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
+//                curl_setopt($ch, CURLOPT_HEADER, false);
+//                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//                curl_setopt($ch, CURLOPT_POST, 1);
+//                curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
+//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//                $result = curl_exec($ch);
+//
+//                Dialog::where('chat_id','=',$from_id)->where('service_id','=',3)->update(['dialog_stage_id' => $dialoginfo['next_stage'], 'pre_stage' => $dialoginfo['pre_stage'],'spec_info' => $dialoginfo['spec_info']]);
+//
+//            }else{
+//                Dialog::where('chat_id','=',$from_id)->where('service_id','=',3)->update(['dialog_stage_id' => $dialoginfo['next_stage'], 'pre_stage' => $dialoginfo['pre_stage'],'spec_info' => $dialoginfo['spec_info']]);
+//            }
+//        }
     }
 
 }
