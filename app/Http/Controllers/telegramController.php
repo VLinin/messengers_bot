@@ -16,12 +16,12 @@ class telegramController extends Controller
     public function index(Request $request){
 
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
-        $data = json_decode($request->getContent());
+//        $data = json_decode($request->getContent());
 //        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
         $proxy='64.118.88.39:19485';
         $response = array(
             'chat_id' =>  331906939,
-            'text' => $data['message']['text'],
+            'text' => 'test hook',
 //            'reply_markup' => $this->keyboard
         );
 
