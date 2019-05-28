@@ -31,7 +31,7 @@ class serviceController extends Controller
                 $from_id = $data->message->chat->id;
                 // текстовое значение
                 $message = $data->message->text;
-                $payload=null;
+                $payload='nopay';
                 // если это объект callback_query
             } elseif (isset($data->callback_query)) {
                 $from_id = $data->callback_query->message->chat->id;
