@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Dialog;
+use App\Jobs\sendToTlgrmJob;
 use App\Jobs\sendToVKJob;
 use App\Order;
 use App\Product;
@@ -25,9 +26,19 @@ class serviceController extends Controller
             $from_id=$data->object->from_id;
         }
         if($service_id == 3){
-            $payload= null;
-            $message = null;
-            $from_id=null;
+            // если это просто объект message
+            if (array_key_exists('message', $data)) {
+                // получаем id чата
+                $from_id = $data['message']['chat']['id'];
+                // текстовое значение
+                $message = $data['message']['text'];
+                $payload=null;
+                // если это объект callback_query
+            } elseif (array_key_exists('callback_query', $data)) {
+                $from_id = $data['callback_query']['message']['chat']['id'];
+                $payload = $data['callback_query']['data'];
+                $message = null;
+            }
         }
 
 
@@ -42,7 +53,7 @@ class serviceController extends Controller
                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>1,'spec_info'=>null]);
                 }
                 if($service_id == 3){
-
+                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>1,'spec_info'=>null]);
                 }
                 break;
 
@@ -58,7 +69,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>2,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>2,'spec_info'=>null]);
                         }
                         break;
                     case 'get_info':      //to 7
@@ -68,7 +79,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>2,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>2,'spec_info'=>null]);
                         }
                         break;
                     case 'send_feedback': //to 11
@@ -84,7 +95,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>2,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>2,'spec_info'=>null]);
                             }
                         }else {
                             $text = 'Выберите заказ из списка и отправьте его номер. <br> Список заказов: <br> ';
@@ -98,7 +109,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => 2, 'spec_info' => null]);
                             }
                             if ($service_id == 3) {
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => 2, 'spec_info' => null]);
                             }
                         }
                         break;
@@ -108,7 +119,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>null,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>null,'spec_info'=>null]);
                         }
                 }
                 break;
@@ -128,7 +139,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>3,'spec_info'=>$category->id]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>3,'spec_info'=>$category->id]);
                             }
                         }else{
                             $text='Такой категории у нас нет. Повторите выбор!';
@@ -136,7 +147,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>null,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>null,'spec_info'=>null]);
                             }
                         }
                     }else{
@@ -145,7 +156,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>null,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>null,'spec_info'=>null]);
                         }
                     }
                 }else{
@@ -169,7 +180,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -177,7 +188,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -200,7 +211,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -208,7 +219,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -229,7 +240,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
@@ -237,7 +248,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>3,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -263,7 +274,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
                         }else{
                             $text='Такого товара у нас нет. Повторите выбор!';
@@ -271,7 +282,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>null,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>null,'spec_info'=>null]);
                             }
                         }
                     }else{
@@ -280,7 +291,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>null,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>null,'spec_info'=>null]);
                         }
                     }
                 }else{
@@ -295,7 +306,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>4,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>4,'spec_info'=>null]);
                             }
                             break;
                         case 'to_begin':      //to 2
@@ -318,7 +329,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -326,7 +337,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -350,7 +361,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -358,7 +369,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -379,7 +390,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
@@ -387,7 +398,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>4,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -430,7 +441,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>5,'spec_info'=>$product_order_record]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>5,'spec_info'=>$product_order_record]);
                         }
 
                         break;
@@ -445,7 +456,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>5,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>5,'spec_info'=>null]);
                         }
                         break;
                     case 'to_begin':      //to 2
@@ -468,7 +479,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                         }else{
                             $text="Вы вернулись в главное меню!";
@@ -476,7 +487,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                         }
                         break;
@@ -500,7 +511,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                         }else{
                             $text="Вы вернулись в главное меню!";
@@ -508,7 +519,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                         }
                         break;
@@ -530,7 +541,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                         }else{
                             $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
@@ -538,7 +549,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>5,'spec_info'=>null]);
                             }
                         }
                         break;
@@ -548,7 +559,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>null,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>null,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
                         }
                 }
 
@@ -568,7 +579,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
                         }
                     }
                 }else{
@@ -583,7 +594,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
                             }
                             break;
                         case 'to_begin':      //to 2
@@ -606,7 +617,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -614,7 +625,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -637,7 +648,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -645,7 +656,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -667,7 +678,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню! При формировании заказа возникла ошибка, нам очень жаль.";
@@ -675,7 +686,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>6,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -685,7 +696,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>6,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>6,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
                             }
                     }
                 }
@@ -707,7 +718,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>7,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>7,'spec_info'=>null]);
                             }
                         }else{
                             $text='Введите номер заказа для просмотра содержимого. <br> Заказы в обработке: <br> ';
@@ -721,7 +732,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>7,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>7,'spec_info'=>null]);
                             }
                         }
 
@@ -736,7 +747,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>7,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>7,'spec_info'=>null]);
                         }
                         break;
                     default:
@@ -745,7 +756,7 @@ class serviceController extends Controller
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>null,'spec_info'=>null]);
                         }
                         if($service_id == 3){
-
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>null,'spec_info'=>null]);
                         }
                 }
 
@@ -770,7 +781,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
                                 }
                                 if ($service_id == 3) {
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
                                 }
                             } else {
                                 $text = 'У вас нет такого  заказа! Повторите выбор.';
@@ -778,7 +789,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
                                 }
                                 if ($service_id == 3) {
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
                                 }
                             }
                         }else{
@@ -787,7 +798,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
                             }
                             if ($service_id == 3) {
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
                             }
                         }
                     }
@@ -799,7 +810,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>8,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(7,$from_id,$service_id),['next_stage'=>7,'pre_stage'=>8,'spec_info'=>null]);
                             }
                             break;
                         case 'to_begin':      //to 2
@@ -822,7 +833,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>8,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>8,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -830,7 +841,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>8,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>8,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -840,7 +851,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>null,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>null,'spec_info'=>null]);
                             }
                     }
                 }
@@ -859,7 +870,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(10,$from_id,$service_id),['next_stage'=>10,'pre_stage'=>9,'spec_info'=>$message]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(10,$from_id,$service_id),['next_stage'=>10,'pre_stage'=>9,'spec_info'=>$message]);
                             }
                         }else{
                             $text='Такого товара нет в заказе. Повторите выбор!';
@@ -867,7 +878,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9,$from_id,$service_id),['next_stage'=>9,'pre_stage'=>null,'spec_info'=>null]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(9,$from_id,$service_id),['next_stage'=>9,'pre_stage'=>null,'spec_info'=>null]);
                             }
                         }
                     }
@@ -892,7 +903,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                             }elseif ($pre_stage == 11){
 
@@ -911,7 +922,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11,$from_id,$service_id),['next_stage'=>11,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(11,$from_id,$service_id),['next_stage'=>11,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -935,7 +946,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                             }else{
                                 $text="Вы вернулись в главное меню!";
@@ -943,7 +954,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                                 if($service_id == 3){
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>9,'spec_info'=>null]);
                                 }
                             }
                             break;
@@ -971,7 +982,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
                             }
                             if($service_id == 3){
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
                             }
 
                 }elseif ($payload=='cancel'){ //to 2
@@ -981,7 +992,7 @@ class serviceController extends Controller
                         sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>null]);
                     }
                     if($service_id == 3){
-
+                        sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>null]);
                     }
                 }else{
                     $text='Ошибка!';
@@ -989,7 +1000,7 @@ class serviceController extends Controller
                         sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
                     }
                     if($service_id == 3){
-
+                        sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>$message]);
                     }
                 }
 
@@ -1014,7 +1025,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 11, 'spec_info' => $message]);
                                 }
                                 if ($service_id == 3) {
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 11, 'spec_info' => $message]);
                                 }
                             } else {
                                 $text = 'У вас нет такого  заказа! Повторите выбор.';
@@ -1022,7 +1033,7 @@ class serviceController extends Controller
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => null, 'spec_info' => null]);
                                 }
                                 if ($service_id == 3) {
-
+                                    sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => null, 'spec_info' => null]);
                                 }
                             }
                         } else {
@@ -1031,7 +1042,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => null, 'spec_info' => null]);
                             }
                             if ($service_id == 3) {
-
+                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(11, $from_id, $service_id), ['next_stage' => 11, 'pre_stage' => null, 'spec_info' => null]);
                             }
                         }
                     }
@@ -1042,7 +1053,7 @@ class serviceController extends Controller
                         sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>null]);
                     }
                     if($service_id == 3){
-
+                        sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>10,'spec_info'=>null]);
                     }
                 }
                 break;
@@ -1053,7 +1064,7 @@ class serviceController extends Controller
                         sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>12,'spec_info'=>null]);
                     }
                     if($service_id == 3){
-
+                        sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>12,'spec_info'=>null]);
                     }
                 }else{
                     $text="Пожалуйста, воспользуйтесь кнопкой для возвращения к главному меню!";
@@ -1061,7 +1072,7 @@ class serviceController extends Controller
                         sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>12,'spec_info'=>null]);
                     }
                     if($service_id == 3){
-
+                        sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>12,'spec_info'=>null]);
                     }
                 }
                 break;
