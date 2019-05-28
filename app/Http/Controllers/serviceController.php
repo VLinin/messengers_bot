@@ -112,7 +112,7 @@ class serviceController extends Controller
                         }
                         break;
                     default:
-                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
+                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!'.$payload;
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>null,'spec_info'=>null]);
                         }
