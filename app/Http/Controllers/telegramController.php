@@ -18,9 +18,7 @@ class telegramController extends Controller
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
         $data = json_decode($request->getContent());
 //        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
-        $proxy='64.118.88.39:19485';
-
-
+//        $proxy='64.118.88.39:19485';
 
         if (isset($data->message)) {
             // получаем id чата
@@ -34,21 +32,21 @@ class telegramController extends Controller
             $payload = $data->callback_query->data;
             $this->message = null;
         }
-        $response = array(
-            'chat_id' =>  331906939,
-            'text' =>$data->message->chat->id.' '.$peer.' '.$this->message,
-//            'reply_markup' => $this->keyboard
-        );
-        $ch = curl_init();
-        $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $result = curl_exec($ch);
+//        $response = array(
+//            'chat_id' =>  331906939,
+//            'text' =>$data->message->chat->id.' '.$peer.' '.$this->message,
+////            'reply_markup' => $this->keyboard
+//        );
+//        $ch = curl_init();
+//        $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
+//        curl_setopt($ch, CURLOPT_URL, $url);
+//        curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
+//        curl_setopt($ch, CURLOPT_HEADER, false);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
+//        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//        $result = curl_exec($ch);
 
         $stage=$this->dialogTest($peer, $data);
         if ($stage!=0){
