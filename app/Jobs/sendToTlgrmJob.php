@@ -29,11 +29,7 @@ class sendToTlgrmJob implements ShouldQueue
         $this->dialoginfo=$dialoginfo;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
+
     public function handle()
     {
         $proxy='64.118.88.39:19485';
@@ -87,6 +83,7 @@ class sendToTlgrmJob implements ShouldQueue
                 Dialog::where('chat_id','=',$this->id)->where('service_id','=',3)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
             }
         }
+        return http_response_code(200);
     }
 
 }
