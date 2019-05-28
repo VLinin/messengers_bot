@@ -80,9 +80,18 @@ Route::get('/test',function () {
     $proxy='64.118.88.39:19485';
 
         $response = array(
-            'chat_id' =>  $this->id,
-            'text' => $this->text,
-            'reply_markup' => $this->keyboard
+            'chat_id' =>  331906939,
+            'text' => 'is test',
+            'reply_markup' => [
+                [
+                    "keyboard" => [
+                        "text" => 'text',
+                        "callback_data" =>'text'
+                    ],
+                    "one_time_keyboard" => true,
+                    "resize_keyboard" => true
+                ]
+            ]
         );
 
 
