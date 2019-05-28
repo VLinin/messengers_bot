@@ -25,20 +25,17 @@ class serviceController extends Controller
             $message = $data->object->text;
             $from_id=$data->object->from_id;
         }
-        if($service_id == 3){
-            // если это просто объект message
-            if (array_key_exists('message', $data)) {
-                // получаем id чата
-                $from_id = $data['message']['chat']['id'];
-                // текстовое значение
-                $message = $data['message']['text'];
-                $payload=null;
-                // если это объект callback_query
-            } elseif (array_key_exists('callback_query', $data)) {
-                $from_id = $data['callback_query']['message']['chat']['id'];
-                $payload = $data['callback_query']['data'];
-                $message = null;
-            }
+        if (isset($data->message)) {
+            // получаем id чата
+            $from_id = $data->message->chat->id;
+            // текстовое значение
+            $message = $data->message->text;
+            $payload=null;
+            // если это объект callback_query
+        } elseif (isset($data->callback_query)) {
+            $from_id = $data->callback_query->message->chat->id;
+            $payload = $data->callback_query->data;
+            $message = null;
         }
 
 
