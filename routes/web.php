@@ -58,7 +58,7 @@ Route::post('/chngToken','actionController@chngToken');
 //services
 Route::get('/uploadVKphoto', 'vkController@uploadPhotosToVk');
 Route::post('/vk','vkController@index');
-Route::post('/tlgrm','telegramController@index');
+Route::get('/tlgrm','telegramController@index');
 
 Route::get('/androidAuth','androidController@auth');
 Route::get('/androidOrders','androidController@orders');
