@@ -52,7 +52,7 @@ class telegramController extends Controller
 
         $stage=$this->dialogTest($peer, $data);
         if ($stage!=0){
-            serviceController::stageProcess($stage, $data, 2);
+            serviceController::stageProcess($stage, $data, 3);
         }
     }
 
@@ -93,7 +93,7 @@ class telegramController extends Controller
                 $dialog->save();
                 $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
                         Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
-                sendToTlgrmJob::dispatch($peer, $text, null, $this->makeKeyboardTlgrm(1,$peer,2),['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
+                sendToTlgrmJob::dispatch($peer, $text, null, $this->makeKeyboardTlgrm(1,$peer,3),['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
                 return 0;
             }
         }else{
@@ -120,7 +120,7 @@ class telegramController extends Controller
                 }else{
                     $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
                         Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
-                    sendToTlgrmJob::dispatch($peer, $text, null, $this->makeKeyboardTlgrm(1,$peer,2),['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
+                    sendToTlgrmJob::dispatch($peer, $text, null, $this->makeKeyboardTlgrm(1,$peer,3),['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
                     return 0;
                 }
             }
