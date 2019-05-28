@@ -38,7 +38,7 @@ class sendToTlgrmJob implements ShouldQueue
     {
         $proxy='64.118.88.39:19485';
         $response = array(
-            'chat_id' =>  331906939,
+            'chat_id' =>  $this->id,
             'text' => $this->text.'test',
 //            'reply_markup' => $this->keyboard
         );
