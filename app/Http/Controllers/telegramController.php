@@ -35,7 +35,7 @@ class telegramController extends Controller
         $proxy='64.118.88.39:19485';
         $response = array(
             'chat_id' =>  331906939,
-            'text' =>$peer. ' '.$payload.' '.$this->message,
+            'text' =>'test'//$peer. ' '.$payload.' '.$this->message,
 //            'reply_markup' => $this->keyboard
         );
 
