@@ -36,7 +36,6 @@ class telegramController extends Controller
         if ($stage!=0){
             serviceController::stageProcess($stage, $data, 2);
         }
-        return 'ok';
     }
 
     public function dialogTest($peer, $data){
