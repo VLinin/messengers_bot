@@ -46,7 +46,6 @@ class sendToTlgrmJob implements ShouldQueue
             );
         }
 
-
         $ch = curl_init();
         $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
         curl_setopt($ch, CURLOPT_URL, $url);

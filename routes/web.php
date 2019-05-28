@@ -77,9 +77,26 @@ Route::get('/vkOrder',function () {
 });
 
 Route::get('/test',function () {
+    $proxy='64.118.88.39:19485';
+
+        $response = array(
+            'chat_id' =>  $this->id,
+            'text' => $this->text,
+            'reply_markup' => $this->keyboard
+        );
 
 
-dump(Dialog::where('client_id','=', 1)->where('service_id','=',2)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get());
+    $ch = curl_init();
+    $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $result = curl_exec($ch);
+    dump($result);
 
 });
 
