@@ -18,37 +18,25 @@ class telegramController extends Controller
         $set_webhook='https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/setwebhook?url=https://xn--h1aahjb.xn--p1acf/tlgrm';
         $data = json_decode($request->getContent());
 //        https://api.telegram.org/bot845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k/getUpdates
-        $response = array(
-            'chat_id' =>  331906939,
-            'text' => 'дошло'//dump($request->getContent()),
-        );
 
-        $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        $result_message=curl_exec($ch);
-        curl_close($ch);
-//        // если это просто объект message
-//        if (array_key_exists('message', $data)) {
-//            // получаем id чата
-//            $peer = $data['message']['chat']['id'];
-//            // текстовое значение
-//            $this->message = $data['message']['text'];
-//            $payload=null;
-//            // если это объект callback_query
-//        } elseif (array_key_exists('callback_query', $data)) {
-//            $peer = $data['callback_query']['message']['chat']['id'];
-//            $payload = $data['callback_query']['data'];
-//            $this->message = null;
-//        }
-//
-//        $stage=$this->dialogTest($peer, $data);
-//        if ($stage!=0){
-//            serviceController::stageProcess($stage, $data, 2);
-//        }
-//        return 'ok';
+        if (array_key_exists('message', $data)) {
+            // получаем id чата
+            $peer = $data['message']['chat']['id'];
+            // текстовое значение
+            $this->message = $data['message']['text'];
+            $payload=null;
+            // если это объект callback_query
+        } elseif (array_key_exists('callback_query', $data)) {
+            $peer = $data['callback_query']['message']['chat']['id'];
+            $payload = $data['callback_query']['data'];
+            $this->message = null;
+        }
+
+        $stage=$this->dialogTest($peer, $data);
+        if ($stage!=0){
+            serviceController::stageProcess($stage, $data, 2);
+        }
+        return 'ok';
     }
 
     public function dialogTest($peer, $data){

@@ -36,36 +36,51 @@ class sendToTlgrmJob implements ShouldQueue
      */
     public function handle()
     {
+        $proxy='64.118.88.39:19485';
         $response = array(
             'chat_id' =>  $this->id,
             'text' => $this->text,
             'reply_markup' => $this->keyboard
         );
 
-        $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $ch = curl_init();
+        $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
         curl_setopt($ch, CURLOPT_HEADER, false);
-        $result_message=curl_exec($ch);
-        curl_close($ch);
-        if(isset(json_decode($result_message)['message_id'])){
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $result = curl_exec($ch);
+        dump(json_decode($result)->ok);
+//        $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendMessage');
+//        curl_setopt($ch, CURLOPT_POST, 1);
+//        curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($ch, CURLOPT_HEADER, false);
+//        $result_message=curl_exec($ch);
+//        curl_close($ch);
+        if(json_decode($result)->ok){
             if($this->photo!=null){
                 $response = array(
                     'chat_id' => $this->id,
                     'photo' => curl_file_create(__DIR__ . '/image.png')
                 );
 
-                $ch = curl_init('https://api.telegram.org/bot' . $this->token . '/sendPhoto');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $response);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                $ch = curl_init();
+                $url = 'https://api.telegram.org/bot' . $this->token . '/sendMessage';
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_PROXY, "socks5://$proxy");
                 curl_setopt($ch, CURLOPT_HEADER, false);
-                $res_photo=curl_exec($ch);
-                curl_close($ch);
-                if(isset(json_decode($res_photo)['message_id'])){
-                    Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
-                }
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, ($response));
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                $result = curl_exec($ch);
+
+                Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
+
             }else{
                 Dialog::where('chat_id','=',$this->id)->where('service_id','=',2)->update(['dialog_stage_id' => $this->dialoginfo['next_stage'], 'pre_stage' => $this->dialoginfo['pre_stage'],'spec_info' => $this->dialoginfo['spec_info']]);
             }
