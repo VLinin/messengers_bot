@@ -268,7 +268,7 @@ class serviceController extends Controller
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
                             if($service_id == 3){
-                                sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
+                                sendToTlgrmJob::dispatch($from_id, $text, $image_path, telegramController::makeKeyboardTlgrm(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
                         }else{
                             $text='Такого товара у нас нет. Повторите выбор!';
