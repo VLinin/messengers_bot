@@ -33,7 +33,7 @@ class sendToTlgrmJob implements ShouldQueue
     public function handle()
     {
         $proxy='64.118.88.39:19485';
-
+        $result=null;
         if($this->photo!=null) {
             $response = array(
                 'chat_id' => $this->id,
@@ -56,7 +56,7 @@ class sendToTlgrmJob implements ShouldQueue
 
 
         }
-        if(json_decode($result)->ok){
+        if(json_decode($result)->ok || $result==null){
             if($this->keyboard==null){
                 $response = array(
                     'chat_id' =>  $this->id,
