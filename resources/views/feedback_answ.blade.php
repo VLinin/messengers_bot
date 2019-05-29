@@ -10,7 +10,7 @@
     <form method="post" action="sendFeedback">
         <div class="form-group">
             <label for="fio">ФИО клиента</label>
-            <input type="text" class="form-control" id="fio" name="fio" readonly value="{{$info[0]->fio}}">
+            <input type="text" class="form-control" id="fio" name="fio" readonly value="{{($info[0]->fio=='') ?  'не указано' : $info[0]->fio}}">
         </div>
         <div class="form-group">
             <label for="feedback">Текст отзыва клиента</label>

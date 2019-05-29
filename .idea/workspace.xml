@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c536da43-a3cd-40cd-b984-f7c3e08e4e4a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/telegramController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/telegramController.php" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/vkController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
-      <change beforePath="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" afterPath="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/resources/views/feedback_answ.blade.php" afterPath="$PROJECT_DIR$/resources/views/feedback_answ.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,13 +40,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sendToTlgrmJob.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="sendToTlgrmJob.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="230">
               <caret line="64" column="118" lean-forward="true" selection-start-line="64" selection-start-column="118" selection-end-line="64" selection-end-column="118" />
               <folding>
                 <element signature="e#28#43#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="actionController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/actionController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="feedback_answ.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/feedback_answ.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="13" column="14" lean-forward="true" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
+              <folding>
+                <marker date="1559089826967" expanded="true" signature="9:22" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="33:42" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="57:185" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="80:184" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="459:510" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="510:717" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="703:717" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="883:903" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="1172:1184" ph="..." />
+                <marker date="1559089826967" expanded="true" signature="1244:1263" ph="..." />
               </folding>
             </state>
           </provider>
@@ -122,7 +151,6 @@
         <option value="$PROJECT_DIR$/resources/views/tokens.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/feedback.blade.php" />
         <option value="$PROJECT_DIR$/app/Models/Product_feedback.php" />
-        <option value="$PROJECT_DIR$/resources/views/feedback_answ.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/listDistributions.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_102002_create_orders_table.php" />
         <option value="$PROJECT_DIR$/resources/views/statistics.blade.php" />
@@ -147,7 +175,6 @@
         <option value="$PROJECT_DIR$/database/seeds/Dialog_stages_Seeder.php" />
         <option value="$PROJECT_DIR$/app/Jobs/uploadPhotoToVkJob.php" />
         <option value="$PROJECT_DIR$/database/seeds/Products_Seeder.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/actionController.php" />
         <option value="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/database/seeds/Distributions_Seeder.php" />
@@ -155,6 +182,8 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/telegramController.php" />
         <option value="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/actionController.php" />
+        <option value="$PROJECT_DIR$/resources/views/feedback_answ.blade.php" />
       </list>
     </option>
   </component>
@@ -289,37 +318,18 @@
             <path>
               <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
               <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Http" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Http" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controllers" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Jobs" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="database" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
               <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="database" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="seeds" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
@@ -399,15 +409,16 @@
       <workItem from="1558929217972" duration="1497000" />
       <workItem from="1558932504324" duration="1936000" />
       <workItem from="1559061980849" duration="16913000" />
-      <workItem from="1559083362845" duration="5780000" />
+      <workItem from="1559083362845" duration="6452000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250318000" />
+    <option name="totallyTimeSpent" value="250990000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.693646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -418,7 +429,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -545,13 +556,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
           <caret line="41" column="21" lean-forward="false" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/feedback_answ.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85">
-          <caret line="5" column="57" lean-forward="true" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -688,14 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/actionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192">
-          <caret line="41" column="22" lean-forward="true" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/androidController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
@@ -796,6 +792,33 @@
           <caret line="64" column="118" lean-forward="true" selection-start-line="64" selection-start-column="118" selection-end-line="64" selection-end-column="118" />
           <folding>
             <element signature="e#28#43#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/actionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="43" column="22" lean-forward="true" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/feedback_answ.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="13" column="14" lean-forward="true" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
+          <folding>
+            <marker date="1559089826967" expanded="true" signature="9:22" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="33:42" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="57:185" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="80:184" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="459:510" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="510:717" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="703:717" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="883:903" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="1172:1184" ph="..." />
+            <marker date="1559089826967" expanded="true" signature="1244:1263" ph="..." />
           </folding>
         </state>
       </provider>
