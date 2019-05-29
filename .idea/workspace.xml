@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c536da43-a3cd-40cd-b984-f7c3e08e4e4a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" afterPath="$PROJECT_DIR$/routes/web.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/listDistributions.blade.php" afterPath="$PROJECT_DIR$/resources/views/listDistributions.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,34 +28,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kernel.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Console/Kernel.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="42" column="142" lean-forward="false" selection-start-line="42" selection-start-column="142" selection-end-line="42" selection-end-column="142" />
-              <folding>
-                <element signature="e#31#46#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2019_04_26_102145_create_image_distributions_table.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/database/migrations/2019_04_26_102145_create_image_distributions_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="15" column="43" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="serviceController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="193">
               <caret line="263" column="40" lean-forward="true" selection-start-line="263" selection-start-column="40" selection-end-line="264" selection-end-column="99" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="actionController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/actionController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="85" column="13" lean-forward="true" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="listDistributions.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/listDistributions.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+              <folding>
+                <marker date="1559095568352" expanded="true" signature="9:22" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="33:42" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="365:449" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="502:511" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="541:552" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="582:597" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="761:770" ph="..." />
+                <marker date="1559095568352" expanded="true" signature="862:871" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,7 +114,6 @@
         <option value="$PROJECT_DIR$/resources/views/tokens.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/feedback.blade.php" />
         <option value="$PROJECT_DIR$/app/Models/Product_feedback.php" />
-        <option value="$PROJECT_DIR$/resources/views/listDistributions.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_102002_create_orders_table.php" />
         <option value="$PROJECT_DIR$/resources/views/statistics.blade.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_04_26_101945_create_clients_table.php" />
@@ -142,6 +147,7 @@
         <option value="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Console/Kernel.php" />
+        <option value="$PROJECT_DIR$/resources/views/listDistributions.blade.php" />
       </list>
     </option>
   </component>
@@ -398,12 +404,12 @@
       <workItem from="1558932504324" duration="1936000" />
       <workItem from="1559061980849" duration="16913000" />
       <workItem from="1559083362845" duration="8352000" />
-      <workItem from="1559093718117" duration="1319000" />
+      <workItem from="1559093718117" duration="1833000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="254209000" />
+    <option name="totallyTimeSpent" value="254723000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
@@ -441,13 +447,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/migrations/2019_04_26_102701_create_relations.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="71" column="36" lean-forward="true" selection-start-line="71" selection-start-column="36" selection-end-line="71" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/seeds/Clients_Seeder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -758,26 +757,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/actionController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="43" column="22" lean-forward="false" selection-start-line="43" selection-start-column="22" selection-end-line="43" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2019_04_26_102523_create_distribution_services_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="86" column="13" lean-forward="false" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -800,10 +783,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Console/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="42" column="142" lean-forward="false" selection-start-line="42" selection-start-column="142" selection-end-line="42" selection-end-column="142" />
+        <state relative-caret-position="434">
+          <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
             <element signature="e#31#46#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="86" column="13" lean-forward="false" selection-start-line="86" selection-start-column="13" selection-end-line="86" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/actionController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="85" column="13" lean-forward="true" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/listDistributions.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <folding>
+            <marker date="1559095568352" expanded="true" signature="9:22" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="33:42" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="365:449" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="502:511" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="541:552" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="582:597" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="761:770" ph="..." />
+            <marker date="1559095568352" expanded="true" signature="862:871" ph="..." />
           </folding>
         </state>
       </provider>
