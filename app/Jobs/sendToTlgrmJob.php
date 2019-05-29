@@ -32,6 +32,7 @@ class sendToTlgrmJob implements ShouldQueue
 
     public function handle()
     {
+        $proxy='64.118.88.39:19485';
         if($this->photo!=null) {
             $response = array(
                 'chat_id' => $this->id,
@@ -52,7 +53,7 @@ class sendToTlgrmJob implements ShouldQueue
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             $result = curl_exec($ch);
         }
-        $proxy='64.118.88.39:19485';
+
         if($this->keyboard==null){
             $response = array(
                 'chat_id' =>  $this->id,
