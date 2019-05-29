@@ -74,8 +74,7 @@ class telegramController extends Controller
                 $dialog->service_id=3;
                 $dialog->chat_id=$peer;
                 $dialog->save();
-                $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
-                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
+                $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... \nЭто позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
                 sendToTlgrmJob::dispatch($peer, $text, null, null,['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
                 return 0;
             }
@@ -100,8 +99,7 @@ class telegramController extends Controller
                         return 1;
                     }
                 }else{
-                    $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... 
-                        Это позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
+                    $text="Для взаимодействия с системой укажите свой мобильный телефон начиная с 8.... \nЭто позволит связать ваши аккаунты из различных сервисов и осуществлять заказы!";
                     sendToTlgrmJob::dispatch($peer, $text, null, null,['next_stage'=>1,'pre_stage'=>null,'spec_info'=>null]);
                     return 0;
                 }

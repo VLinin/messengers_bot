@@ -62,7 +62,7 @@ class sendToTlgrmJob implements ShouldQueue
             if($this->photo!=null){
                 $response = array(
                     'chat_id' => $this->id,
-                    'photo' => curl_file_create(__DIR__ . '/image.png')
+                    'photo' => curl_file_create(\Storage::disk('public')->path($this->photo), 'image/png', 'temp.png')
                 );
 
                 $ch = curl_init();

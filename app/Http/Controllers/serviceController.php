@@ -42,10 +42,7 @@ class serviceController extends Controller
         switch ($stage){
             case 1:             //Начальная стадия
                 //to 2 stage
-                $text="Приступим к взаимодействию!
-                        В этом чате можно осуществлять заказы, отправлять отзывы и получать интересную информацию!
-                        Для работы используйте кнопки с предоставленными вариантами.
-                      ";
+                $text="Приступим к взаимодействию! \n В этом чате можно осуществлять заказы, отправлять отзывы и получать интересную информацию! Для работы используйте кнопки с предоставленными вариантами.";
                 if($service_id == 2){
                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>1,'spec_info'=>null]);
                 }
