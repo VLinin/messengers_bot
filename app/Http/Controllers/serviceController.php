@@ -35,14 +35,14 @@ class serviceController extends Controller
                 $from_id = $data->message->chat->id;
                 // текстовое значение
                 $message = $data->message->text;
-                $payload='nopay';
+                $payload=null;
             }
         }
 
         switch ($stage){
             case 1:             //Начальная стадия
                 //to 2 stage
-                $text="Приступим к взаимодействию! <br>
+                $text="Приступим к взаимодействию!
                         В этом чате можно осуществлять заказы, отправлять отзывы и получать интересную информацию!
                         Для работы используйте кнопки с предоставленными вариантами.
                       ";
@@ -58,9 +58,9 @@ class serviceController extends Controller
                 switch ($payload){
                     case 'make_order':    //to 3
                         $categories=Category::all();
-                        $text='Выберите категорию из списка и отправите её номер: <br> ';
+                        $text="Выберите категорию из списка и отправите её номер: \n ";
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. <br> ';
+                            $text=$text.$category->id.") ".$category->name.". \n ";
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>2,'spec_info'=>null]);
@@ -95,11 +95,11 @@ class serviceController extends Controller
                                 sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>2,'spec_info'=>null]);
                             }
                         }else {
-                            $text = 'Выберите заказ из списка и отправьте его номер. <br> Список заказов: <br> ';
+                            $text = "Выберите заказ из списка и отправьте его номер. \n Список заказов: \n ";
                             foreach ($orders as $order) {
-                                $text = $text . $order->id . ') Заказ от ' . $order->created_at . ' <br>';
+                                $text = $text . $order->id . ') Заказ от ' . $order->created_at . "\n";
                                 if ($order->updated_at != null) {
-                                    $text = $text . ' Последнее изменение от ' . $order->updated_at . ' <br> ';
+                                    $text = $text . ' Последнее изменение от ' . $order->updated_at . "\n";
                                 }
                             }
                             if ($service_id == 2) {
@@ -111,7 +111,7 @@ class serviceController extends Controller
                         }
                         break;
                     default:
-                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!'.$payload;
+                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(2,$from_id,$service_id),['next_stage'=>2,'pre_stage'=>null,'spec_info'=>null]);
                         }
@@ -127,10 +127,10 @@ class serviceController extends Controller
                         $category=Category::find($message);
                         if(isset($category->id)){
 
-                            $text='Выберите товар из списка и отправьте его номер: <br> ';
+                            $text="Выберите товар из списка и отправьте его номер: \n ";
                             $products=Product::all()->where('category_id','=',$category->id);
                             foreach ($products as $product){
-                                $text=$text.$product->id.") ".$product->name.'. - '.$product->price.'р. <br> ';
+                                $text=$text.$product->id.") ".$product->name.'. - '.$product->price."р. \n ";
                             }
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(4,$from_id,$service_id),['next_stage'=>4,'pre_stage'=>3,'spec_info'=>$category->id]);
@@ -262,11 +262,11 @@ class serviceController extends Controller
                             $text='';
                             $d_info=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0];
                             if($product->category_id!=$d_info->spec_info){
-                                $text='Выбранный товар не из этой категории, но тоже у нас имеется! <br> ';
+                                $text="Выбранный товар не из этой категории, но тоже у нас имеется! \n ";
                             }
                             $image_path=(\DB::table('images')->join('image_products','image_products.image_id','=','images.id')
                                 ->where('image_products.product_id','=',$message)->get())[0]->path;
-                            $text=$text.$product->name.' - '.$product->price.'р <br> '.$product->description;
+                            $text=$text.$product->name.' - '.$product->price."р \n ".$product->description;
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, $image_path, vkController::makeKeyboardVK(5,$from_id,$service_id),['next_stage'=>5,'pre_stage'=>4,'spec_info'=>$message]);
                             }
@@ -295,9 +295,9 @@ class serviceController extends Controller
                     switch ($payload){
                         case 'back':          //to 3
                             $categories=Category::all();
-                            $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                            $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ";
                             foreach ($categories as $category){
-                                $text=$text.$category->id.") ".$category->name.'. <br> ';
+                                $text=$text.$category->id.") ".$category->name.". \n ";
                             }
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>4,'spec_info'=>null]);
@@ -445,9 +445,9 @@ class serviceController extends Controller
                     case 'back':          //to 3
 
                         $categories=Category::all();
-                        $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер:<br> ';
+                        $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер:\n ";
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. <br> ';
+                            $text=$text.$category->id.") ".$category->name.". \n ";
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>5,'spec_info'=>null]);
@@ -568,9 +568,9 @@ class serviceController extends Controller
                         $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
                         \DB::table('order_products')->where('id', '=', $dialog_info->spec_info)->update(['amount' => $message]);
                         $categories=Category::all();
-                        $text='Товар добавлен в количестве '.$message.'шт. <br> Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                        $text='Товар добавлен в количестве '.$message."шт. \n Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ";
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. <br> ';
+                            $text=$text.$category->id.") ".$category->name.". \n ";
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
@@ -583,9 +583,9 @@ class serviceController extends Controller
                     switch ($payload){
                         case 'back':          //to 3
                             $categories=Category::all();
-                            $text='Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: <br> ';
+                            $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ";
                             foreach ($categories as $category){
-                                $text=$text.$category->id.") ".$category->name.'. <br> ';
+                                $text=$text.$category->id.") ".$category->name.". \n ";
                             }
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
@@ -604,7 +604,6 @@ class serviceController extends Controller
                                 ->where('dialogs.service_id','=',$service_id)
                                 ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' =>6]);
                             if(isset($order[0])){
                                 \DB::table('order_products')->where('order_id','=',$order[0]->order)->delete();
                                 \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->delete();
@@ -667,7 +666,6 @@ class serviceController extends Controller
                                 ->where('dialogs.service_id','=',$service_id)
                                 ->where('order_statuses.status_id', '=' ,3)
                                 ->get();
-//                            Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->update(['dialog_stage_id' => 2, 'pre_stage' => 6]);
                             if(isset($order[0])){
                                 \DB::table('order_statuses')->where('order_id','=',$order[0]->order)->update(['status_id'=>2]);
                                 $text="Вы вернулись в главное меню! Формирование заказа завершено, он принят в обработку.";
@@ -703,7 +701,6 @@ class serviceController extends Controller
             case 7:             //Меню информации
                 switch ($payload){
                     case 'order_info':    //to 8
-//
                         $client_id=(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('client_id')->get())[0]->client_id;
                         $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                             ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
@@ -718,11 +715,11 @@ class serviceController extends Controller
                                 sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(12,$from_id,$service_id),['next_stage'=>12,'pre_stage'=>7,'spec_info'=>null]);
                             }
                         }else{
-                            $text='Введите номер заказа для просмотра содержимого. <br> Заказы в обработке: <br> ';
+                            $text="Введите номер заказа для просмотра содержимого. \n Заказы в обработке: \n ";
                             foreach ($orders as $order){
-                                $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. <br>';
+                                $text=$text.$order->id.') Заказ от '.$order->created_at." выполняется. \n";
                                 if($order->updated_at!=null){
-                                    $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
+                                    $text=$text.' Последнее изменение от '.$order->updated_at." \n ";
                                 }
                             }
                             if($service_id == 2){
@@ -736,9 +733,9 @@ class serviceController extends Controller
                         break;
                     case 'product_list':  //to 3
                         $categories=Category::all();
-                        $text='Выберите категорию из списка и отправите её номер: <br> ';
+                        $text="Выберите категорию из списка и отправите её номер: \n ";
                         foreach ($categories as $category){
-                            $text=$text.$category->id.") ".$category->name.'. <br> ';
+                            $text=$text.$category->id.") ".$category->name.". \n ";
                         }
                         if($service_id == 2){
                             sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>7,'spec_info'=>null]);
@@ -770,9 +767,9 @@ class serviceController extends Controller
 
                                 $products = \DB::table('order_products')->join('products', 'products.id', '=', 'order_products.product_id')
                                     ->where('order_id', '=', $message)->select('products.id', 'products.name', 'products.price', 'order_products.amount')->get();
-                                $text = 'Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №' . $order_info->id . ' от ' . $order_info->created_at . ': <br> ';
+                                $text = "Введите номер товара из заказа для формирования отзыва.\n Состав заказа №" . $order_info->id . ' от ' . $order_info->created_at . ": \n ";
                                 foreach ($products as $product) {
-                                    $text = $text . $product->id . ') ' . $product->name . ' - ' . $product->price . 'р ' . $product->amount . 'шт. <br> ';
+                                    $text = $text . $product->id . ') ' . $product->name . ' - ' . $product->price . 'р ' . $product->amount . "шт. \n ";
                                 }
                                 if ($service_id == 2) {
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
@@ -862,7 +859,7 @@ class serviceController extends Controller
                         $product=Product::find($message);
                         if(isset($product->id)){
 //
-                            $text='Формирование отзыва на '.$product->name.' - '.$product->price.' <br> '.$product->decription.' <br> Отправьте сообщение с текстом отзыва!';
+                            $text='Формирование отзыва на '.$product->name.' - '.$product->price."\n".$product->decription." \n Отправьте сообщение с текстом отзыва!";
                             if($service_id == 2){
                                 sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(10,$from_id,$service_id),['next_stage'=>10,'pre_stage'=>9,'spec_info'=>$message]);
                             }
@@ -889,11 +886,11 @@ class serviceController extends Controller
                                 $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                                     ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                                     ->where('order_statuses.status_id','=',2)->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                                $text='Заказы в обработке: <br> ';
+                                $text="Заказы в обработке: \n ";
                                 foreach ($orders as $order){
-                                    $text=$text.$order->id.') Заказ от '.$order->created_at.' выполняется. <br>';
+                                    $text=$text.$order->id.') Заказ от '.$order->created_at." выполняется. \n";
                                     if($order->updated_at!=null){
-                                        $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
+                                        $text=$text.' Последнее изменение от '.$order->updated_at." \n ";
                                     }
                                 }
                                 if($service_id == 2){
@@ -908,11 +905,11 @@ class serviceController extends Controller
                                 $orders=\DB::table('orders')->join('order_statuses','orders.id','=','order_statuses.order_id')
                                     ->where('orders.client_id','=',$client_id)->where('orders.service_id','=',$service_id)
                                     ->select('orders.created_at','order_statuses.updated_at' ,'orders.id')->get();
-                                $text='Список заказов: <br> ';
+                                $text="Список заказов: \n ";
                                 foreach ($orders as $order){
-                                    $text=$text.$order->id.') Заказ от '.$order->created_at.' завершен. <br>';
+                                    $text=$text.$order->id.') Заказ от '.$order->created_at."\n";
                                     if($order->updated_at!=null){
-                                        $text=$text.' Последнее изменение от '.$order->updated_at.' <br> ';
+                                        $text=$text.' Последнее изменение от '.$order->updated_at."\n";
                                     }
                                 }
                                 if($service_id == 2){
@@ -1014,9 +1011,9 @@ class serviceController extends Controller
 
                                 $products = \DB::table('order_products')->join('products', 'products.id', '=', 'order_products.product_id')
                                     ->where('order_id', '=', $message)->select('products.id', 'products.name', 'products.price', 'order_products.amount')->get();
-                                $text = 'Введите номер товара из заказа для формирования отзыва. <br> Состав заказа №' . $order_info->id . ' от ' . $order_info->created_at . ': <br> ';
+                                $text = "Введите номер товара из заказа для формирования отзыва. \n Состав заказа №" . $order_info->id . ' от ' . $order_info->created_at . ": \n";
                                 foreach ($products as $product) {
-                                    $text = $text . $product->id . ') ' . $product->name . ' - ' . $product->price . 'р ' . $product->amount . 'шт. <br> ';
+                                    $text = $text . $product->id . ') ' . $product->name . ' - ' . $product->price . 'р ' . $product->amount . "шт. \n ";
                                 }
                                 if ($service_id == 2) {
                                     sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 11, 'spec_info' => $message]);
