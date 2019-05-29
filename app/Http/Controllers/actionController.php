@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Dialog;
 use App\Distribution;
+use App\Jobs\sendToTlgrmJob;
 use App\Jobs\sendToVKJob;
 use App\Product_feedback;
 use App\Service;
@@ -37,7 +38,8 @@ class actionController extends Controller
                 \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
                 break;
             case 3:
-
+                $dialog=Dialog::where('client_id','=', $client_id)->where('service_id','=',$service_id)->select('chat_id','dialog_stage_id','pre_stage','spec_info')->get();
+                sendToTlgrmJob::dispatch($dialog[0]->chat_id, $text, null, telegramController::makeKeyboardTlgrm($dialog[0]->dialog_stage_id, $dialog[0]->chat_id, $service_id),['next_stage'=>$dialog[0]->dialog_stage_id,'pre_stage'=>$dialog[0]->pre_stage,'spec_info'=>$dialog[0]->spec_info]);
                 \DB::table('product_feedbacks')->where('id',$request->post('feedback_id'))->update(['checked'=>1]);
                 break;
         }

@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/telegramController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/telegramController.php" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/vkController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
+      <change beforePath="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" afterPath="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="telegramController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="telegramController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/telegramController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="101" column="106" lean-forward="false" selection-start-line="101" selection-start-column="106" selection-end-line="101" selection-end-column="106" />
+            <state relative-caret-position="85">
+              <caret line="95" column="64" lean-forward="true" selection-start-line="95" selection-start-column="64" selection-end-line="95" selection-end-column="64" />
               <folding>
                 <element signature="e#40#55#0#PHP" expanded="true" />
               </folding>
@@ -41,11 +42,33 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="sendToTlgrmJob.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="230">
+              <caret line="64" column="118" lean-forward="true" selection-start-line="64" selection-start-column="118" selection-end-line="64" selection-end-column="118" />
+              <folding>
+                <element signature="e#28#43#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="serviceController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="44" column="205" lean-forward="false" selection-start-line="44" selection-start-column="205" selection-end-line="44" selection-end-column="205" />
+            <state relative-caret-position="255">
+              <caret line="267" column="75" lean-forward="false" selection-start-line="267" selection-start-column="75" selection-end-line="267" selection-end-column="75" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vkController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/vkController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="185">
+              <caret line="203" column="21" lean-forward="true" selection-start-line="203" selection-start-column="21" selection-end-line="203" selection-end-column="102" />
               <folding />
             </state>
           </provider>
@@ -126,12 +149,12 @@
         <option value="$PROJECT_DIR$/database/seeds/Products_Seeder.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/actionController.php" />
         <option value="$PROJECT_DIR$/app/Jobs/sendToVKJob.php" />
-        <option value="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/database/seeds/Distributions_Seeder.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/serviceController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/vkController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/telegramController.php" />
+        <option value="$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php" />
       </list>
     </option>
   </component>
@@ -284,6 +307,12 @@
             <path>
               <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
               <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Jobs" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="CMS_MESSENGER_MODUL" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CMS_MESSENGER_MODUL" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="database" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -370,16 +399,15 @@
       <workItem from="1558929217972" duration="1497000" />
       <workItem from="1558932504324" duration="1936000" />
       <workItem from="1559061980849" duration="16913000" />
-      <workItem from="1559083362845" duration="5532000" />
+      <workItem from="1559083362845" duration="5780000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="250070000" />
+    <option name="totallyTimeSpent" value="250318000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.693646" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -390,7 +418,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39967638" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -696,16 +724,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="39" column="14" lean-forward="true" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
-          <folding>
-            <element signature="e#28#43#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/seeds/Categories_Seeder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1008">
@@ -738,6 +756,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="267" column="75" lean-forward="false" selection-start-line="267" selection-start-column="75" selection-end-line="267" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -748,26 +774,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/vkController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1649">
-          <caret line="105" column="106" lean-forward="false" selection-start-line="105" selection-start-column="106" selection-end-line="105" selection-end-column="106" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/serviceController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="44" column="205" lean-forward="false" selection-start-line="44" selection-start-column="205" selection-end-line="44" selection-end-column="205" />
+        <state relative-caret-position="185">
+          <caret line="203" column="21" lean-forward="true" selection-start-line="203" selection-start-column="21" selection-end-line="203" selection-end-column="102" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/telegramController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="101" column="106" lean-forward="false" selection-start-line="101" selection-start-column="106" selection-end-line="101" selection-end-column="106" />
+        <state relative-caret-position="85">
+          <caret line="95" column="64" lean-forward="true" selection-start-line="95" selection-start-column="64" selection-end-line="95" selection-end-column="64" />
           <folding>
             <element signature="e#40#55#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Jobs/sendToTlgrmJob.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="64" column="118" lean-forward="true" selection-start-line="64" selection-start-column="118" selection-end-line="64" selection-end-column="118" />
+          <folding>
+            <element signature="e#28#43#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
