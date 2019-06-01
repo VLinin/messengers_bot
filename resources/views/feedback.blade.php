@@ -12,7 +12,6 @@
         </tr>
         </thead>
         <tbody>
-
         @foreach((new \App\Product_feedback())->getInfoToShow() as $item)
             <tr>
                 <td>{{$item->service}}</td>

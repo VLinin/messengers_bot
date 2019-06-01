@@ -3,18 +3,8 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
-
-
-        // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
-
-        // Set a callback to run when the Google Visualization API is loaded.
         google.charts.setOnLoadCallback(drawChart);
-
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
-
         function drawChart() {
             console.log('draw!!!!');
             var b_date=document.getElementById('begin_date').value;
@@ -23,40 +13,35 @@
             var rb2=document.getElementById('option2');
             var jsonData = $.ajax({
                 url: "getStatisticsData/"+b_date+"/"+e_date,
-                // dataType: "json",
                 async: false
             }).responseText;
-            jsonArray=JSON.parse(jsonData);
-            // Create our data table out of JSON data loaded from server.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Платформа');
-            data.addColumn('number', 'Количество заказов');
-            data.addRows(jsonArray);
-
-            // Instantiate and draw our chart, passing in some options.
-            if(rb1.checked===true){
-                var options = {'title':'Количество заказов с различных платформ',
-                    'width':800,
-                    'height':600,
-                    is3D: true};
-                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
-            }else {
-                var options = {'title':'Количество заказов с различных платформ',
-                    'width':800,
-                    'height':500,
-                    'legend': { position: "none" }};
-                var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-                chart.draw(data, options);
+            if(jsonData!=null){
+                jsonArray=JSON.parse(jsonData);
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Платформа');
+                data.addColumn('number', 'Количество заказов');
+                data.addRows(jsonArray);
+                if(rb1.checked===true){
+                    var options = {'title':'Количество заказов с различных платформ',
+                        'width':800,
+                        'height':600,
+                        is3D: true};
+                    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                }else {
+                    var options = {'title':'Количество заказов с различных платформ',
+                        'width':800,
+                        'height':500,
+                        'legend': { position: "none" }};
+                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                    chart.draw(data, options);
+                }
             }
-
-
         }
         $(document).ready (
             drawChart()
         );
     </script>
-
     <h1>Сводная диаграмма продаж платформ</h1>
     <div class="btn-group">
         <div style="margin-right: 20px">
@@ -81,8 +66,6 @@
             </label>
         </div>
     </div>
-
-
 @endsection
 
 

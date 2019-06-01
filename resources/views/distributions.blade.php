@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-
     <h1>Формирование рассылок</h1>
     <form action="/addDistribution" method="post"  enctype="multipart/form-data">
         <div class="form-group">
@@ -27,8 +26,6 @@
                     @endforeach
                 </div>
             </div>
-
         <button type="submit" class="btn btn-primary" align="center">Отправить</button>
     </form>
-
 @endsection

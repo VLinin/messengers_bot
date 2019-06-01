@@ -55,7 +55,7 @@ class serviceController extends Controller
                 switch ($payload){
                     case 'make_order':    //to 3
                         $categories=Category::all();
-                        $text="Выберите категорию из списка и отправите её номер: \n ";
+                        $text="Выберите категорию из списка и отправьте её номер: \n ";
                         foreach ($categories as $category){
                             $text=$text.$category->id.") ".$category->name.". \n ";
                         }
@@ -292,7 +292,7 @@ class serviceController extends Controller
                     switch ($payload){
                         case 'back':          //to 3
                             $categories=Category::all();
-                            $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ";
+                            $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправьте её номер: \n ";
                             foreach ($categories as $category){
                                 $text=$text.$category->id.") ".$category->name.". \n ";
                             }
@@ -442,7 +442,7 @@ class serviceController extends Controller
                     case 'back':          //to 3
 
                         $categories=Category::all();
-                        $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер:\n ";
+                        $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправьте её номер:\n ";
                         foreach ($categories as $category){
                             $text=$text.$category->id.") ".$category->name.". \n ";
                         }
@@ -565,7 +565,7 @@ class serviceController extends Controller
                         $dialog_info = (Dialog::where('chat_id', '=', $from_id)->where('service_id', '=', $service_id)->select('client_id', 'spec_info')->get())[0];
                         \DB::table('order_products')->where('id', '=', $dialog_info->spec_info)->update(['amount' => $message]);
                         $categories=Category::all();
-                        $text='Товар добавлен в количестве '.$message."шт. \n Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ";
+                        $text='Товар добавлен в количестве '.$message."шт. \n Вы вернулись к выбору категории. Выберите категорию из списка и отправьте её номер: \n ";
                         foreach ($categories as $category){
                             $text=$text.$category->id.") ".$category->name.". \n ";
                         }
@@ -575,12 +575,20 @@ class serviceController extends Controller
                         if($service_id == 3){
                             sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(3,$from_id,$service_id),['next_stage'=>3,'pre_stage'=>6,'spec_info'=>null]);
                         }
+                    }else{
+                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
+                        if($service_id == 2){
+                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>6,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
+                        }
+                        if($service_id == 3){
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(6,$from_id,$service_id),['next_stage'=>6,'pre_stage'=>6,'spec_info'=>(Dialog::where('chat_id','=',$from_id)->where('service_id','=',$service_id)->select('spec_info','client_id')->get())[0]->spec_info]);
+                        }
                     }
                 }else{
                     switch ($payload){
                         case 'back':          //to 3
                             $categories=Category::all();
-                            $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправите её номер: \n ";
+                            $text="Вы вернулись к выбору категории. Выберите категорию из списка и отправьте её номер: \n ";
                             foreach ($categories as $category){
                                 $text=$text.$category->id.") ".$category->name.". \n ";
                             }
@@ -730,7 +738,7 @@ class serviceController extends Controller
                         break;
                     case 'product_list':  //to 3
                         $categories=Category::all();
-                        $text="Выберите категорию из списка и отправите её номер: \n ";
+                        $text="Выберите категорию из списка и отправьте её номер: \n ";
                         foreach ($categories as $category){
                             $text=$text.$category->id.") ".$category->name.". \n ";
                         }
@@ -791,6 +799,14 @@ class serviceController extends Controller
                             if ($service_id == 3) {
                                 sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8, $from_id, $service_id), ['next_stage' => 8, 'pre_stage' => null, 'spec_info' => null]);
                             }
+                        }
+                    }else{
+                        $text='Не знаю как реагировать! Используй кнопки или ознакомься с сообщениями выше, так мы точно сможем договориться!';
+                        if($service_id == 2){
+                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>null,'spec_info'=>null]);
+                        }
+                        if($service_id == 3){
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(8,$from_id,$service_id),['next_stage'=>8,'pre_stage'=>null,'spec_info'=>null]);
                         }
                     }
                 }else{
@@ -871,6 +887,14 @@ class serviceController extends Controller
                             if($service_id == 3){
                                 sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(9,$from_id,$service_id),['next_stage'=>9,'pre_stage'=>null,'spec_info'=>null]);
                             }
+                        }
+                    }else{
+                        $text = "Введите корректные данные!";
+                        if ($service_id == 2) {
+                            sendToVKJob::dispatch($from_id, $text, null, vkController::makeKeyboardVK(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
+                        }
+                        if ($service_id == 3) {
+                            sendToTlgrmJob::dispatch($from_id, $text, null, telegramController::makeKeyboardTlgrm(9, $from_id, $service_id), ['next_stage' => 9, 'pre_stage' => 8, 'spec_info' => $message]);
                         }
                     }
                 }else{

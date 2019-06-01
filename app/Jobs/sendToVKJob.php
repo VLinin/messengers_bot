@@ -3,27 +3,13 @@
 namespace App\Jobs;
 
 use App\Dialog;
-use App\Http\Controllers\vkController;
 use App\Image;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use VK\Client\VKApiClient;
-use VK\Exceptions\Api\VKApiMessagesCantFwdException;
-use VK\Exceptions\Api\VKApiMessagesChatBotFeatureException;
-use VK\Exceptions\Api\VKApiMessagesChatUserNoAccessException;
-use VK\Exceptions\Api\VKApiMessagesContactNotFoundException;
-use VK\Exceptions\Api\VKApiMessagesDenySendException;
-use VK\Exceptions\Api\VKApiMessagesKeyboardInvalidException;
-use VK\Exceptions\Api\VKApiMessagesPrivacyException;
-use VK\Exceptions\Api\VKApiMessagesTooLongForwardsException;
-use VK\Exceptions\Api\VKApiMessagesTooLongMessageException;
-use VK\Exceptions\Api\VKApiMessagesUserBlockedException;
-use VK\Exceptions\VKApiException;
-use VK\Exceptions\VKClientException;
+
 
 class sendToVKJob implements ShouldQueue
 {

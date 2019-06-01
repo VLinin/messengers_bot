@@ -27,5 +27,4 @@
         <input type="hidden" name="client_id" value="{{$info[0]->client_id}}">
         <button type="submit" class="btn btn-primary">Отправить</button>
     </form>
-
 @endsection

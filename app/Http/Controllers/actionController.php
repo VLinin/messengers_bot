@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Dialog;
 use App\Distribution;
 use App\Jobs\sendToTlgrmJob;
@@ -13,19 +11,14 @@ use DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Storage;
-use TheSeer\Tokenizer\Token;
-
 class actionController extends Controller
 {
-
     public function checkFeedback(Request $request){
         $id=$request->input('id');
         $pr_f=new Product_feedback();
         $pr_f->check($id);
         return view('feedback');
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////with services
     public function sendFeedback(Request $request){
         $fio=$request->post('fio');
         $client_id=$request->post('client_id');
@@ -45,31 +38,23 @@ class actionController extends Controller
         }
         return view('feedback');
     }
-
-
     public function addDistribution(Request $request){
-
         if($request->post('gridCheck1')=="on" || $request->post('gridCheck2')=="on"){
             $distId=DB::table('distributions')->insertGetId([
                 'text' => $request->post('text'),
                 'run_date' => $request->post('date')
             ]);
-
             //обработка изображения
             if($request->file('image')!==null){
                 $path = $request->file('image')->store('distributions');
-
                 $imageId=DB::table('images')->insertGetId([
                     'path' => $path
                 ]);
-
                 DB::table('image_distributions')->insert([
                     'distribution_id' =>$distId,
                     'image_id' => $imageId
                 ]);
             }
-
-
             //сервисы
             if ($request->post('gridCheck1')=="on"){
                 DB::table('distribution_services')->insert([
@@ -77,7 +62,6 @@ class actionController extends Controller
                     'service_id' => 2
                 ]);
             }
-
             if ($request->post('gridCheck2')=="on"){
                 DB::table('distribution_services')->insert([
                     'distribution_id' => $distId,
@@ -88,9 +72,7 @@ class actionController extends Controller
         }else{
             return view('distributions');
         }
-
     }
-
     public function cancelDistribution(Request $request){
         $id=$request->post('btn');
         DB::table('distribution_services')->where('distribution_id','=',$id)->delete();
@@ -102,15 +84,12 @@ class actionController extends Controller
         Distribution::find($id)->delete();
         return view('listDistributions');
     }
-
     public function chngToken(Request $request){
         $serv=new Service();
         $serv->changeToken($request->post('id'),$request->post('text'));
         return view('tokens');
     }
-
     public static function getStatData($bd, $ed){
-
         $query=DB::table('orders')
             ->join('services','orders.service_id','=','services.id')
             ->whereBetween('created_at', [$bd, Carbon::createFromDate($ed)->add(1,'day')])
@@ -122,5 +101,4 @@ class actionController extends Controller
         }
         return json_encode($data);
     }
-
 }

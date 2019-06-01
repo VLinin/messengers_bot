@@ -6,7 +6,6 @@ use App\Dialog;
 use App\Distribution;
 use App\Http\Controllers\telegramController;
 use App\Http\Controllers\vkController;
-use App\Image;
 use App\Jobs\sendToTlgrmJob;
 use App\Jobs\sendToVKJob;
 use Carbon\Carbon;
@@ -16,11 +15,11 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-
+    //* * * * * php /path/to/artisan schedule:run >>/dev/null 2>&1 in crontab
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            $distributions = Distribution::where('run_date','<=',Carbon::now())->get();
+            $distributions = Distribution::where('run_date','<',Carbon::now())->get();
             foreach ($distributions as $distribution){
                 $services=DB::table('distribution_services')->where('distribution_id','=',$distribution->id)->get();
                 $image_path=(\DB::table('images')->join('image_distributions','image_distributions.image_id','=','images.id')
@@ -42,7 +41,6 @@ class Kernel extends ConsoleKernel
                     }
                 }
             }
-        })->everyThirtyMinutes();
+        })->daily();
     }
-
 }
