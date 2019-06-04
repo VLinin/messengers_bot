@@ -10,7 +10,6 @@ class androidController extends Controller
 {
     public function auth(){
         $records=\DB::table('android_auth')->select('login','password')->get();
-        dump($records->toArray());
         return json_encode($records);
     }
 
@@ -49,7 +48,6 @@ class androidController extends Controller
             ];
         }
 
-        dump($main);
         return json_encode($main, JSON_UNESCAPED_UNICODE);
     }
 
@@ -64,7 +62,6 @@ class androidController extends Controller
             $array[$i]=array_merge($array[$i], ['current_amount'=>random_int(0,150)]);
         }
 
-        dump($array);
         return json_encode($array, JSON_UNESCAPED_UNICODE);
     }
 }
