@@ -9,17 +9,17 @@ class Android_auth_Seeder extends Seeder
     {
         DB::table('android_auth')->insert([
             'login' => 'mtg_admin',
-            'password' => md5('admin'),
+            'password' => 'admin',
         ]);
 
         DB::table('android_auth')->insert([
             'login' => 'mtg_manager',
-            'password' => md5('secret'),
+            'password' => 'secret',
         ]);
 
         DB::table('android_auth')->insert([
             'login' => 'mtg_main',
-            'password' => md5('superPass'),
+            'password' => 'superPass',
         ]);
     }
 }
