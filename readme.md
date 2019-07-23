@@ -1,10 +1,8 @@
-<p align="center">**README**</p>
-
-<p align="center">
-# **RU**
+<p>
+<h1> RU </h1>
 </p>
-
-<p align="center">
-# **EN**
+<hr>
+<p>
+<h1> EN </h1>
 </p>
 
