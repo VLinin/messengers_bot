@@ -14,9 +14,9 @@ use Illuminate\Routing\Controller;
 
 class vkController extends Controller
 {
-    private $user_token="365c7ec1ffc49087c9d4bb749e563b5cc7ea8552649ed52c4c7385848684ba6f229099b09adf306764169";
-    private $group_id="182538296"; //id группы вк
-    public static $alb_id="264978841";
+    private $user_token="";
+    private $group_id=""; //id группы вк
+    public static $alb_id=""; //id альбома в вк
 
     public function index(Request $request){
         $data = json_decode($request->getContent());

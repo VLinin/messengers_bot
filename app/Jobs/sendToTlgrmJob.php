@@ -18,7 +18,7 @@ class sendToTlgrmJob implements ShouldQueue
     private $photo;
     private $keyboard;
     private $dialoginfo;
-    private $token="845701278:AAG-eaVtv4oNOjhYOSHGaNU6DPvb-ml3P2k";
+    private $token="";
 
     public function __construct($id, $text,$photo, $keyboard, $dialoginfo)
     {

@@ -21,7 +21,7 @@ class sendToVKJob implements ShouldQueue
     private $photo;
     private $keyboard;
     private $dialoginfo;
-    private $token="34743dbbc8c9d33dbde7ea6394b98800fe168dab289a443e5a0f2b4e297a340b490d04f9447312a4c9913";
+    private $token="";
 
 
     public function __construct($id, $text,$photo, $keyboard, $dialoginfo)
